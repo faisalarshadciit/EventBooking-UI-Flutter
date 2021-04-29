@@ -1,0 +1,58 @@
+name: event_book_app
+description: A new Flutter application.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/images/marriage_hall_1.jpg
+    - assets/images/marriage_hall_2.jpg
+    - assets/images/marriage_hall_3.jpg
+    - assets/images/marriage_hall_4.jpg
+    - assets/images/marriage_hall_5.jpg
+    - assets/images/marriage_hall_6.jpg
+    - assets/images/marriage_hall_7.jpg
+    - assets/images/marriage_hall_8.jpg
+    - assets/images/marriage_hall_9.jpg
+    - assets/images/marriage_hall_10.jpg
+    - assets/images/marriage_hall_11.jpg
+    - assets/others/superSale.png
+    - assets/others/superSale.jpeg
+    - assets/others/dailySale.jpg
+    - assets/others/discount_1.png
+    - assets/others/discount_2.jpg
+
+  fonts:
+    - family: Poppins-ExtraLight
+      fonts:
+        - asset: assets/fonts/poppins/Poppins-ExtraLight.ttf
+
+    - family: Poppins-Light
+      fonts:
+        - asset: assets/fonts/poppins/Poppins-Light.ttf
+
+    - family: Poppins-Regular
+      fonts:
+        - asset: assets/fonts/poppins/Poppins-Regular.ttf
