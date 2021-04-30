@@ -39,8 +39,12 @@ class AppColors {
   static const Color kDrawerHeaderColor = Color(0xFF545454);
 
   //static const Color kPrimaryColor = Color(0xFF2979FF);
-  static const Color kPrimaryColor = Color(0xFF3D82AE);
-  static const Color kPrimaryColorLight = Color(0x6082B1FF);
+  //static const Color kPrimaryColor = Color(0xFF3D82AE);
+  //static const Color kPrimaryColor = Color(0xFF0dc2cd);
+  static const Color kPrimaryColor = Color(0xfff34334);
+  static const Color kPrimaryColorDark = Color(0xFFB9000A);
+  static const Color kPrimaryColorLight = Color(0xFFFF785F);
+  static const kLightColor = Color(0xFFF1E6FF);
   static const Color inActiveIconColor = Color(0xFFB6B6B6);
   static const Color kGreyColor = Color(0xFF9E9E9E);
   // static const Color kGreyColors = Color(0xFF9E9E9E);

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.atrule.event_book_app">
    <application
-        android:label="event_book_app"
+        android:label="Event Booking"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

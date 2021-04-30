@@ -17,6 +17,10 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  font_awesome_flutter: ^9.0.0
+  lottie: ^1.0.1
+  flutter_svg: ^0.19.1
+  flutter_auth: ^0.0.1
 
 dev_dependencies:
   flutter_test:
@@ -27,6 +31,11 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/icons/login.svg
+    - assets/icons/signup.svg
+    - assets/icons/facebook.svg
+    - assets/icons/twitter.svg
+    - assets/icons/google-plus.svg
     - assets/images/marriage_hall_1.jpg
     - assets/images/marriage_hall_2.jpg
     - assets/images/marriage_hall_3.jpg
@@ -43,6 +52,12 @@ flutter:
     - assets/others/dailySale.jpg
     - assets/others/discount_1.png
     - assets/others/discount_2.jpg
+    - assets/others/main_bottom.png
+    - assets/others/main_top.png
+    - assets/others/signup_top.png
+    - assets/others/login_bottom.png
+    - assets/animations/lottie/56301_marriage.json
+    - assets/animations/lottie/56301_marriage.gif
 
   fonts:
     - family: Poppins-ExtraLight
@@ -56,3 +71,15 @@ flutter:
     - family: Poppins-Regular
       fonts:
         - asset: assets/fonts/poppins/Poppins-Regular.ttf
+
+    - family: Poppins-Medium
+      fonts:
+        - asset: assets/fonts/poppins/Poppins-Medium.ttf
+
+    - family: Poppins-Bold
+      fonts:
+        - asset: assets/fonts/poppins/Poppins-Bold.ttf
+
+    - family: Poppins-SemiBold
+      fonts:
+        - asset: assets/fonts/poppins/Poppins-SemiBold.ttf

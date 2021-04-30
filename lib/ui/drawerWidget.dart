@@ -1,4 +1,5 @@
 import 'package:event_book_app/config/size_config.dart';
+import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/constants/font_family.dart';
 import 'package:flutter/material.dart';
 
@@ -81,7 +82,7 @@ class AppDrawer extends StatelessWidget {
         ],
       ),
       decoration: BoxDecoration(
-        color: Colors.blueAccent,
+        color: AppColors.kPrimaryColor,
       ),
     );
   }

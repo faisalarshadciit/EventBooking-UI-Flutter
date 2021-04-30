@@ -1,6 +1,8 @@
 import 'package:event_book_app/ModelClass.dart';
+import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/constants/font_family.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'drawerWidget.dart';
 
@@ -43,16 +45,14 @@ class _HomePageState extends State<HomePage> {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
-                // leading: GestureDetector(
-                //   child: Icon(Icons.menu),
-                //   onTap: () => Scaffold.of(context).openDrawer(),
-                // ),
                 actions: <Widget>[
-                  GestureDetector(
-                    onTap: () {},
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/login_page');
+                    },
                     child: Container(
                         padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                        child: Icon(Icons.account_circle)),
+                        child: Icon(FontAwesomeIcons.user)),
                   ),
                   SizedBox(
                     width: 12,
@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                 expandedHeight: _height / 5.5,
                 floating: false,
                 pinned: true,
-                backgroundColor: Colors.blueAccent,
+                backgroundColor: AppColors.kPrimaryColor,
                 flexibleSpace: FlexibleSpaceBar(
                   collapseMode: CollapseMode.parallax,
                   centerTitle: true,
@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                       "Event Booking",
                       style: TextStyle(
                           color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                          fontFamily: FontFamily.kFontPoppinsBold,
                           fontSize: 18),
                     ),
                   ),
