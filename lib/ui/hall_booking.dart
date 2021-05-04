@@ -284,7 +284,7 @@ class _HallBookingState extends State<HallBooking> {
     final DateTime pickedDate = await showDatePicker(
         context: context,
         initialDate: dateTime,
-        firstDate: DateTime(2015),
+        firstDate: DateTime(2021),
         lastDate: DateTime(2050));
     if (pickedDate != null && pickedDate != dateTime)
       setState(() {
