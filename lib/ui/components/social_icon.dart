@@ -2,8 +2,6 @@ import 'package:event_book_app/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../constants.dart';
-
 class SocialIcon extends StatelessWidget {
   final String iconSrc;
   final Function press;

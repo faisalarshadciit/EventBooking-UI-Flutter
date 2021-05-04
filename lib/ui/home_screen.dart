@@ -1,10 +1,10 @@
-import 'package:event_book_app/ModelClass.dart';
+import 'file:///D:/MobileAppDevelopment/Flutter/event_book_app/lib/models/ModelClass.dart';
 import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/constants/font_family.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'drawerWidget.dart';
+import 'widgets/drawer_widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -246,7 +246,9 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildRecommendedHalls(String title, String imageUrl, String city) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).pushNamed('/details_page');
+      },
       child: Container(
         width: 180,
         height: 200,
@@ -295,58 +297,68 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildDiscountedHalls(String imageUrl) {
-    return Container(
-      width: 180,
-      height: _height * 0.20,
-      child: Card(
-        child: ClipRRect(
-          borderRadius: new BorderRadius.only(
-            topLeft: Radius.circular(4),
-            topRight: Radius.circular(4),
-            bottomLeft: Radius.circular(4),
-            bottomRight: Radius.circular(4),
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).pushNamed('/details_page');
+      },
+      child: Container(
+        width: 180,
+        height: _height * 0.20,
+        child: Card(
+          child: ClipRRect(
+            borderRadius: new BorderRadius.only(
+              topLeft: Radius.circular(4),
+              topRight: Radius.circular(4),
+              bottomLeft: Radius.circular(4),
+              bottomRight: Radius.circular(4),
+            ),
+            child: Container(
+                height: _height * 0.20,
+                width: _width,
+                child: Image.asset(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                )),
           ),
-          child: Container(
-              height: _height * 0.20,
-              width: _width,
-              child: Image.asset(
-                imageUrl,
-                fit: BoxFit.cover,
-              )),
         ),
       ),
     );
   }
 
   Widget _buildCircleHalls(ModelClass item) {
-    return Container(
-      color: Colors.white,
-      width: 80,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Container(
-            height: 50,
-            width: 50,
-            child: ClipRRect(
-              borderRadius: new BorderRadius.circular(70.0),
-              child: Image.asset(
-                item.imageUrl,
-                fit: BoxFit.cover,
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).pushNamed('/details_page');
+      },
+      child: Container(
+        color: Colors.white,
+        width: 80,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Container(
+              height: 50,
+              width: 50,
+              child: ClipRRect(
+                borderRadius: new BorderRadius.circular(70.0),
+                child: Image.asset(
+                  item.imageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          Container(
-            alignment: Alignment.center,
-            child: Text(
-              item.name,
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 12,
-                  color: Colors.grey[600]),
+            Container(
+              alignment: Alignment.center,
+              child: Text(
+                item.name,
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 12,
+                    color: Colors.grey[600]),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

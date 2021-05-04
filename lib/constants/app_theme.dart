@@ -8,9 +8,7 @@ final ThemeData themeData = new ThemeData(
     //brightness: Brightness.light,
     primaryColor: AppColors.kPrimaryColor,
     //primaryColorBrightness: Brightness.light,
-
     // accentColor: AppColors.orange[500],
-
     accentColorBrightness: Brightness.light);
 
 // final ThemeData themeDataDark = ThemeData(

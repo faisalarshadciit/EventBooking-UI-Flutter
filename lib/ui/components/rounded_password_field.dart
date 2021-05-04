@@ -1,9 +1,11 @@
 import 'package:event_book_app/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:event_book_app/ui/components/text_field_container.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+// ignore: must_be_immutable
 class RoundedPasswordField extends StatefulWidget {
+
+  String inputAction;
   final ValueChanged<String> onChanged;
   final FormFieldValidator<String> validator;
   final TextEditingController textEditingController;
@@ -11,6 +13,7 @@ class RoundedPasswordField extends StatefulWidget {
   bool isObscureText = true;
 
   RoundedPasswordField({
+    inputAction,
     Key key,
     this.onChanged,
     this.validator,
@@ -32,7 +35,7 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
         obscureText: widget.isObscureText,
         obscuringCharacter: "*",
         cursorColor: AppColors.kPrimaryColorDark,
-        textInputAction: TextInputAction.done,
+        textInputAction: widget.inputAction == "next" ? TextInputAction.next : TextInputAction.done,
         keyboardType: TextInputType.visiblePassword,
         decoration: InputDecoration(
           hintText: "Password",

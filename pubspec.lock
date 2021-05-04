@@ -83,13 +83,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_auth:
-    dependency: "direct main"
-    description:
-      name: flutter_auth
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -109,6 +102,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "9.0.0"
+  gender_picker:
+    dependency: "direct main"
+    description:
+      name: gender_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
+  image_slider:
+    dependency: "direct main"
+    description:
+      name: image_slider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   logging:
     dependency: transitive
     description:

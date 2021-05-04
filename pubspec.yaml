@@ -20,7 +20,8 @@ dependencies:
   font_awesome_flutter: ^9.0.0
   lottie: ^1.0.1
   flutter_svg: ^0.19.1
-  flutter_auth: ^0.0.1
+  image_slider: ^1.0.2
+  gender_picker: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -35,6 +36,8 @@ flutter:
     - assets/icons/signup.svg
     - assets/icons/facebook.svg
     - assets/icons/twitter.svg
+    - assets/icons/name.svg
+    - assets/icons/chair.svg
     - assets/icons/google-plus.svg
     - assets/images/marriage_hall_1.jpg
     - assets/images/marriage_hall_2.jpg

@@ -3,7 +3,7 @@ import 'package:event_book_app/ui/components/text_field_container.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class RoundedInputField extends StatelessWidget {
+class OutlinedInputField extends StatelessWidget {
   final String inputAction;
   final String hintText;
   final String labelText;
@@ -16,7 +16,7 @@ class RoundedInputField extends StatelessWidget {
   final FocusNode nextFocusNode;
   TextInputType textInputType;
 
-  RoundedInputField({
+  OutlinedInputField({
     Key key,
     this.inputAction,
     this.hintText,
@@ -51,36 +51,27 @@ class RoundedInputField extends StatelessWidget {
     }
     // endregion
 
-    return TextFieldContainer(
-      child: TextFormField(
-        controller: textEditingController,
-        textInputAction: inputAction == "next" ? TextInputAction.next : TextInputAction.done,
-        cursorColor: AppColors.kPrimaryColorDark,
-        keyboardType: textInputType,
-        decoration: InputDecoration(
-          icon: Icon(
-            icon,
-            color: AppColors.kPrimaryColor,
-          ),
-          hintText: hintText,
-          border: InputBorder.none,
+    return TextFormField(
+      controller: textEditingController,
+      textInputAction:
+          inputAction == "next" ? TextInputAction.next : TextInputAction.done,
+      cursorColor: AppColors.kPrimaryColorDark,
+      keyboardType: textInputType,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderSide: const BorderSide(color: AppColors.kPrimaryColor),
+            borderRadius: const BorderRadius.all(const Radius.circular(10.0))),
+        labelText: labelText,
+        hintText: hintText,
+        alignLabelWithHint: true,
+        floatingLabelBehavior: FloatingLabelBehavior.auto,
+        suffixIcon: Icon(
+          icon,
+          color: AppColors.kPrimaryColor,
         ),
-        // decoration: InputDecoration(
-        //   border: OutlineInputBorder(
-        //       borderRadius:
-        //           const BorderRadius.all(const Radius.circular(10.0))),
-        //   labelText: labelText,
-        //   alignLabelWithHint: true,
-        //   hintText: hintText,
-        //   floatingLabelBehavior: FloatingLabelBehavior.always,
-        //   icon: Icon(
-        //     icon,
-        //     color: AppColors.kPrimaryColor,
-        //   ),
-        // ),
-        onChanged: onChanged,
-        validator: validator,
       ),
+      onChanged: onChanged,
+      validator: validator,
     );
   }
 }
