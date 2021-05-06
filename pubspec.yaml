@@ -53,6 +53,11 @@ flutter:
     - assets/images/marriage_hall_9.jpg
     - assets/images/marriage_hall_10.jpg
     - assets/images/marriage_hall_11.jpg
+    - assets/decoration/stage_decoration_1.jpg
+    - assets/decoration/stage_decoration_2.jpg
+    - assets/decoration/stage_decoration_3.jpg
+    - assets/decoration/stage_decoration_4.jpg
+    - assets/decoration/stage_decoration_5.jpg
     - assets/others/superSale.png
     - assets/others/superSale.jpeg
     - assets/others/dailySale.jpg

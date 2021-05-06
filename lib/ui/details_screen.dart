@@ -180,7 +180,7 @@ class _DetailsScreenState extends State<DetailsScreen>
                       ),
                     ),
                     DefaultTabController(
-                        length: 3,
+                        length: 4,
                         initialIndex: 0,
                         child: Column(
                           children: [
@@ -199,6 +199,9 @@ class _DetailsScreenState extends State<DetailsScreen>
                                 Tab(
                                   text: 'Reviews',
                                 ),
+                                Tab(
+                                  text: 'Location',
+                                ),
                               ],
                             ),
                             Container(
@@ -213,6 +216,7 @@ class _DetailsScreenState extends State<DetailsScreen>
                                       )),
                                   Center(child: Text('Availability here')),
                                   Center(child: Text('Reviews here')),
+                                  Center(child: Text('Location')),
                                 ],
                               ),
                             )
