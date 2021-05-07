@@ -15,18 +15,19 @@ class AppDrawer extends StatelessWidget {
           children: <Widget>[
             _buildDrawerHeader(),
             ListTile(
-              title: Text('Invite and Earn'),
-              leading: Icon(Icons.whatshot),
+              title: Text('Profile'),
+              leading: Icon(Icons.face),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
             Divider(),
             ListTile(
-              title: Text('Profile'),
-              leading: Icon(Icons.face),
+              title: Text('Booked Halls'),
+              leading: Icon(Icons.supervised_user_circle_outlined),
               onTap: () {
                 Navigator.pop(context);
+                Navigator.pushNamed(context, '/booked_halls');
               },
             ),
             Divider(),

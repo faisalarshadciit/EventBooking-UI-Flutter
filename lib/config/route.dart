@@ -1,3 +1,4 @@
+import 'package:event_book_app/ui/booked_hall_screen.dart';
 import 'package:event_book_app/ui/details_screen.dart';
 import 'package:event_book_app/ui/hall_booking.dart';
 import 'package:event_book_app/ui/hall_booking2.dart';
@@ -17,6 +18,7 @@ class Routes {
       '/hall_booking': (_) => HallBooking(),
       '/hall_booking2': (_) => HallBooking2(),
       '/hall_booking3': (_) => HallBooking3(),
+      '/booked_halls': (_) => BookedHall(),
       '/login_page': (_) => LoginPage(),
       '/registration_page': (_) => RegistrationPage(),
     };
