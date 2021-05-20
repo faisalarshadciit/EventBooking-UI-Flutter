@@ -1,4 +1,3 @@
-import 'package:event_book_app/config/size_config.dart';
 import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/constants/app_styles.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +19,7 @@ class _HallBooking2State extends State<HallBooking2> {
   Color sdTileColor = AppColors.kPrimaryColor;
   int brTileValue = 1, sdTileValue = 1;
   int selectedImage = 0;
+  double decorationPrice = 0;
   bool isDecoration = true;
 
   final List<String> imagesList = [
@@ -293,6 +293,42 @@ class _HallBooking2State extends State<HallBooking2> {
                         : Container(),
                   ),
                   SizedBox(height: 20),
+                  Container(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: RichText(
+                        text: TextSpan(
+                          style: TextStyle(color: Colors.black, fontSize: 36),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'Charges : ',
+                              style: TextStyle(color: AppColors.kPrimaryColor),
+                            ),
+                            TextSpan(text: 'Rs. '),
+                            TextSpan(
+                              text: '$decorationPrice',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                        textScaleFactor: 0.5,
+                      ),
+                    ),
+                  )
+                  // Container(
+                  //   child: RichText(
+                  //     text: TextSpan(
+                  //       text: 'Charges ',
+                  //       style: DefaultTextStyle.of(context).style,
+                  //       children: <TextSpan>[
+                  //         TextSpan(
+                  //             text: 'Rs. ',
+                  //             style: TextStyle(fontWeight: FontWeight.bold)),
+                  //         TextSpan(text: '2500'),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -386,6 +422,70 @@ class _HallBooking2State extends State<HallBooking2> {
   }
   // endregion
 
+  Container buildSmallImagePreview(int index) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            selectedImage = index;
+            //_showMyDialog(selectedImage, imagesList[selectedImage]);
+
+            switch (selectedImage) {
+              case 0:
+                decorationPrice = 4100;
+                break;
+
+              case 1:
+                decorationPrice = 1800;
+                break;
+
+              case 2:
+                decorationPrice = 3300;
+                break;
+
+              case 3:
+                decorationPrice = 2500;
+                break;
+
+              case 4:
+                decorationPrice = 5000;
+                break;
+
+              default:
+                decorationPrice = 0;
+            }
+
+            showDialog(
+                context: context,
+                builder: (_) => ImageDialog(imagesList[selectedImage]));
+          });
+        },
+        onDoubleTap: () {
+          setState(() {
+            //selectedImage = index;
+          });
+        },
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 250),
+          margin: EdgeInsets.only(right: 5),
+          padding: EdgeInsets.all(5),
+          height: 100,
+          width: 100,
+          decoration: BoxDecoration(
+            color: AppColors.kWhiteColor,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+                width: 3,
+                color: AppColors.kPrimaryColor
+                    .withOpacity(selectedImage == index ? 1 : 0)),
+          ),
+          child: Image.asset(imagesList[index], fit: BoxFit.fill),
+        ),
+      ),
+    );
+  }
+
   // Future<void> showTimeRangePicker(BuildContext context) {
   //   return showDialog(
   //       context: context,
@@ -413,31 +513,22 @@ class _HallBooking2State extends State<HallBooking2> {
   //       });
   // }
 
-  Container buildSmallImagePreview(int index) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            selectedImage = index;
-          });
-        },
-        child: AnimatedContainer(
-          duration: Duration(milliseconds: 250),
-          margin: EdgeInsets.only(right: 5),
-          padding: EdgeInsets.all(5),
-          height: 100,
-          width: 100,
-          decoration: BoxDecoration(
-            color: AppColors.kWhiteColor,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-                width: 3,
-                color: AppColors.kPrimaryColor
-                    .withOpacity(selectedImage == index ? 1 : 0)),
-          ),
-          child: Image.asset(imagesList[index], fit: BoxFit.fill),
-        ),
+}
+
+class ImageDialog extends StatelessWidget {
+  ImageDialog(this.imageUrl);
+
+  final String imageUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Container(
+        width: 200,
+        height: 200,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: ExactAssetImage(imageUrl), fit: BoxFit.cover)),
       ),
     );
   }
