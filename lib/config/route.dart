@@ -5,6 +5,7 @@ import 'package:event_book_app/ui/hall_booking2.dart';
 import 'package:event_book_app/ui/menu_selection.dart';
 import 'package:event_book_app/ui/home_screen.dart';
 import 'package:event_book_app/ui/login_screen.dart';
+import 'package:event_book_app/ui/profile_screen.dart';
 import 'package:event_book_app/ui/registration_screen.dart';
 import 'package:event_book_app/ui/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class Routes {
       '/booked_halls': (_) => BookedHall(),
       '/login_page': (_) => LoginPage(),
       '/registration_page': (_) => RegistrationPage(),
+      '/profile_page': (_) => ProfilePage(),
     };
   }
 }

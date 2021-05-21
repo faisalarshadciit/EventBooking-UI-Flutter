@@ -19,6 +19,7 @@ class AppDrawer extends StatelessWidget {
               leading: Icon(Icons.face),
               onTap: () {
                 Navigator.pop(context);
+                Navigator.pushNamed(context, '/profile_page');
               },
             ),
             Divider(),

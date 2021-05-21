@@ -44,6 +44,8 @@ class _MenuSelectionState extends State<MenuSelection> {
         ),
       ),
       body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        physics: ScrollPhysics(),
         child: Container(
           margin: EdgeInsets.only(top: 30),
           child: Padding(
@@ -62,338 +64,231 @@ class _MenuSelectionState extends State<MenuSelection> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     )),
                 SizedBox(height: 10),
-                Container(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      FutureBuilder(
-                        future: readGetRequest("MenuDetails"),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<dynamic> snapshot) {
-                          if (snapshot.hasData) {
-                            return ListView.builder(
-                                itemCount: snapshot.data.length,
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                itemBuilder: (BuildContext context, int index) {
-                                  MenuModel menuSelectionModel =
-                                      snapshot.data[index];
-                                  return InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        if (selectedCard == index + 1) {
-                                          selectedCard = 0;
-                                        } else {
-                                          selectedCard = index + 1;
-                                        }
+                SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  physics: ScrollPhysics(),
+                  child: Container(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        FutureBuilder(
+                          future: readGetRequest("MenuDetails"),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<dynamic> snapshot) {
+                            if (snapshot.hasData) {
+                              return ListView.builder(
+                                  itemCount: snapshot.data.length,
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    MenuModel menuSelectionModel =
+                                        snapshot.data[index];
+                                    print(menuSelectionModel.menuTitle);
+                                    return InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          if (selectedCard == index + 1) {
+                                            selectedCard = 0;
+                                          } else {
+                                            selectedCard = index + 1;
+                                          }
 
-                                        if (selectedCard != 0) {
-                                          menuTitle = menuData[selectedCard - 1]
-                                              ["menuTitle"];
-                                          perHeadCharges =
-                                              menuData[selectedCard - 1]
-                                                  ["perHead"];
-                                          item = menuData[selectedCard - 1]
-                                              ["menuItem"];
+                                          if (selectedCard != 0) {
+                                            menuTitle =
+                                                menuData[selectedCard - 1]
+                                                    ["menuTitle"];
+                                            perHeadCharges =
+                                                menuData[selectedCard - 1]
+                                                    ["perHead"];
+                                            item = menuData[selectedCard - 1]
+                                                ["menuItem"];
 
-                                          print(menuTitle);
-                                          print(perHeadCharges);
-                                          print(item);
-                                        }
-                                      });
-                                    },
-                                    child: Container(
-                                      padding:
-                                          EdgeInsets.fromLTRB(10, 10, 10, 0),
-                                      height: 150,
-                                      width: double.maxFinite,
-                                      child: Card(
-                                        elevation: 5.0,
-                                        color: selectedCard == index + 1
-                                            ? AppColors.kLightColor
-                                            : AppColors.kSmokeWhiteColor,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(10),
-                                          child: Column(
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    "Deal Name : ",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 14.0,
-                                                        color: AppColors
-                                                            .kPrimaryColor),
-                                                  ),
-                                                  Text(menuSelectionModel
-                                                      .menuTitle),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    "Per Head : ",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 14.0,
-                                                        color: AppColors
-                                                            .kPrimaryColor),
-                                                  ),
-                                                  Text(
-                                                      "Rs. ${menuSelectionModel.perHeadCharges}"),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    "Item : ",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 14.0,
-                                                        color: AppColors
-                                                            .kPrimaryColor),
-                                                  ),
-                                                  Text(menuSelectionModel
-                                                      .menuItem),
-                                                ],
-                                              ),
-                                              SizedBox(height: 20),
-                                              GestureDetector(
-                                                onTap: () {},
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: [
-                                                    Text(
-                                                      "View Details",
-                                                    ),
-                                                    SizedBox(width: 5),
-                                                    Icon(
-                                                      Icons.arrow_forward_ios,
-                                                      size: 20,
-                                                      color: AppColors
-                                                          .kPrimaryColor,
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                            ],
+                                            print(menuTitle);
+                                            print(perHeadCharges);
+                                            print(item);
+                                          }
+                                        });
+                                      },
+                                      child: Container(
+                                        padding:
+                                            EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                        height: 150,
+                                        width: double.maxFinite,
+                                        child: Card(
+                                          elevation: 5.0,
+                                          color: selectedCard == index + 1
+                                              ? AppColors.kLightColor
+                                              : AppColors.kSmokeWhiteColor,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
-                                          // child: Stack(children: <Widget>[
-                                          //   Align(
-                                          //     alignment: Alignment.centerRight,
-                                          //     child: Stack(
-                                          //       children: <Widget>[
-                                          //         Padding(
-                                          //             padding: const EdgeInsets.only(
-                                          //                 left: 10, top: 5),
-                                          //             child: Column(
-                                          //               children: <Widget>[
-                                          //                 Row(
-                                          //                   children: <Widget>[
-                                          //                     Padding(
-                                          //                       padding:
-                                          //                           const EdgeInsets.only(
-                                          //                               left: 15.0),
-                                          //                       child: Align(
-                                          //                           alignment: Alignment
-                                          //                               .centerLeft,
-                                          //                           child: Text(
-                                          //                             menuData[index]
-                                          //                                 ["menuTitle"],
-                                          //                           )),
-                                          //                     )
-                                          //                   ],
-                                          //                 )
-                                          //               ],
-                                          //             ))
-                                          //       ],
-                                          //     ),
-                                          //   )
-                                          // ]),
+                                          child: _buildMenu(menuSelectionModel),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                });
-                          } else if (snapshot.hasError) {
-                            return Center(child: Text("${snapshot.error}"));
-                          }
-                          return Center(
-                            child: Container(
-                              child: CircularProgressIndicator(),
-                            ),
-                          );
-                        },
-                      )
-                      // ListView.builder(
-                      //   physics: NeverScrollableScrollPhysics(),
-                      //   shrinkWrap: true,
-                      //   itemCount: menuData.length,
-                      //   itemBuilder: (context, index) {
-                      //     return InkWell(
-                      //       onTap: () {
-                      //         setState(() {
-                      //           if (selectedCard == index + 1) {
-                      //             selectedCard = 0;
-                      //           } else {
-                      //             selectedCard = index + 1;
-                      //           }
-                      //
-                      //           if (selectedCard != 0) {
-                      //             menuTitle =
-                      //                 menuData[selectedCard - 1]["menuTitle"];
-                      //             perHeadCharges =
-                      //                 menuData[selectedCard - 1]["perHead"];
-                      //             item = menuData[selectedCard - 1]["menuItem"];
-                      //
-                      //             print(menuTitle);
-                      //             print(perHeadCharges);
-                      //             print(item);
-                      //           }
-                      //         });
-                      //       },
-                      //       child: Container(
-                      //         padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                      //         height: 150,
-                      //         width: double.maxFinite,
-                      //         child: Card(
-                      //           elevation: 5.0,
-                      //           color: selectedCard == index + 1
-                      //               ? AppColors.kLightColor
-                      //               : AppColors.kSmokeWhiteColor,
-                      //           shape: RoundedRectangleBorder(
-                      //             borderRadius: BorderRadius.circular(10),
-                      //           ),
-                      //           child: Padding(
-                      //             padding: EdgeInsets.all(10),
-                      //             child: Column(
-                      //               children: [
-                      //                 Row(
-                      //                   mainAxisAlignment:
-                      //                       MainAxisAlignment.spaceBetween,
-                      //                   children: [
-                      //                     Text(
-                      //                       "Deal Name : ",
-                      //                       style: TextStyle(
-                      //                           fontWeight: FontWeight.bold,
-                      //                           fontSize: 14.0,
-                      //                           color: AppColors.kPrimaryColor),
-                      //                     ),
-                      //                     Text(menuData[index]["menuTitle"]),
-                      //                   ],
-                      //                 ),
-                      //                 Row(
-                      //                   mainAxisAlignment:
-                      //                       MainAxisAlignment.spaceBetween,
-                      //                   children: [
-                      //                     Text(
-                      //                       "Per Head : ",
-                      //                       style: TextStyle(
-                      //                           fontWeight: FontWeight.bold,
-                      //                           fontSize: 14.0,
-                      //                           color: AppColors.kPrimaryColor),
-                      //                     ),
-                      //                     Text(
-                      //                         "Rs. ${menuData[index]["perHead"]}"),
-                      //                   ],
-                      //                 ),
-                      //                 Row(
-                      //                   mainAxisAlignment:
-                      //                       MainAxisAlignment.spaceBetween,
-                      //                   children: [
-                      //                     Text(
-                      //                       "Item : ",
-                      //                       style: TextStyle(
-                      //                           fontWeight: FontWeight.bold,
-                      //                           fontSize: 14.0,
-                      //                           color: AppColors.kPrimaryColor),
-                      //                     ),
-                      //                     Text(menuData[index]["menuItem"]),
-                      //                   ],
-                      //                 ),
-                      //                 SizedBox(height: 20),
-                      //                 GestureDetector(
-                      //                   onTap: () {},
-                      //                   child: Row(
-                      //                     mainAxisAlignment:
-                      //                         MainAxisAlignment.end,
-                      //                     crossAxisAlignment:
-                      //                         CrossAxisAlignment.end,
-                      //                     children: [
-                      //                       Text(
-                      //                         "View Details",
-                      //                       ),
-                      //                       SizedBox(width: 5),
-                      //                       Icon(
-                      //                         Icons.arrow_forward_ios,
-                      //                         size: 20,
-                      //                         color: AppColors.kPrimaryColor,
-                      //                       ),
-                      //                     ],
-                      //                   ),
-                      //                 )
-                      //               ],
-                      //             ),
-                      //             // child: Stack(children: <Widget>[
-                      //             //   Align(
-                      //             //     alignment: Alignment.centerRight,
-                      //             //     child: Stack(
-                      //             //       children: <Widget>[
-                      //             //         Padding(
-                      //             //             padding: const EdgeInsets.only(
-                      //             //                 left: 10, top: 5),
-                      //             //             child: Column(
-                      //             //               children: <Widget>[
-                      //             //                 Row(
-                      //             //                   children: <Widget>[
-                      //             //                     Padding(
-                      //             //                       padding:
-                      //             //                           const EdgeInsets.only(
-                      //             //                               left: 15.0),
-                      //             //                       child: Align(
-                      //             //                           alignment: Alignment
-                      //             //                               .centerLeft,
-                      //             //                           child: Text(
-                      //             //                             menuData[index]
-                      //             //                                 ["menuTitle"],
-                      //             //                           )),
-                      //             //                     )
-                      //             //                   ],
-                      //             //                 )
-                      //             //               ],
-                      //             //             ))
-                      //             //       ],
-                      //             //     ),
-                      //             //   )
-                      //             // ]),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     );
-                      //   },
-                      // ),
-                    ],
+                                    );
+                                  });
+                            } else if (snapshot.hasError) {
+                              return Center(child: Text("${snapshot.error}"));
+                            }
+                            return Center(
+                              child: Container(
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          },
+                        )
+                        // ListView.builder(
+                        //   physics: NeverScrollableScrollPhysics(),
+                        //   shrinkWrap: true,
+                        //   itemCount: menuData.length,
+                        //   itemBuilder: (context, index) {
+                        //     return InkWell(
+                        //       onTap: () {
+                        //         setState(() {
+                        //           if (selectedCard == index + 1) {
+                        //             selectedCard = 0;
+                        //           } else {
+                        //             selectedCard = index + 1;
+                        //           }
+                        //
+                        //           if (selectedCard != 0) {
+                        //             menuTitle =
+                        //                 menuData[selectedCard - 1]["menuTitle"];
+                        //             perHeadCharges =
+                        //                 menuData[selectedCard - 1]["perHead"];
+                        //             item = menuData[selectedCard - 1]["menuItem"];
+                        //
+                        //             print(menuTitle);
+                        //             print(perHeadCharges);
+                        //             print(item);
+                        //           }
+                        //         });
+                        //       },
+                        //       child: Container(
+                        //         padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                        //         height: 150,
+                        //         width: double.maxFinite,
+                        //         child: Card(
+                        //           elevation: 5.0,
+                        //           color: selectedCard == index + 1
+                        //               ? AppColors.kLightColor
+                        //               : AppColors.kSmokeWhiteColor,
+                        //           shape: RoundedRectangleBorder(
+                        //             borderRadius: BorderRadius.circular(10),
+                        //           ),
+                        //           child: Padding(
+                        //             padding: EdgeInsets.all(10),
+                        //             child: Column(
+                        //               children: [
+                        //                 Row(
+                        //                   mainAxisAlignment:
+                        //                       MainAxisAlignment.spaceBetween,
+                        //                   children: [
+                        //                     Text(
+                        //                       "Deal Name : ",
+                        //                       style: TextStyle(
+                        //                           fontWeight: FontWeight.bold,
+                        //                           fontSize: 14.0,
+                        //                           color: AppColors.kPrimaryColor),
+                        //                     ),
+                        //                     Text(menuData[index]["menuTitle"]),
+                        //                   ],
+                        //                 ),
+                        //                 Row(
+                        //                   mainAxisAlignment:
+                        //                       MainAxisAlignment.spaceBetween,
+                        //                   children: [
+                        //                     Text(
+                        //                       "Per Head : ",
+                        //                       style: TextStyle(
+                        //                           fontWeight: FontWeight.bold,
+                        //                           fontSize: 14.0,
+                        //                           color: AppColors.kPrimaryColor),
+                        //                     ),
+                        //                     Text(
+                        //                         "Rs. ${menuData[index]["perHead"]}"),
+                        //                   ],
+                        //                 ),
+                        //                 Row(
+                        //                   mainAxisAlignment:
+                        //                       MainAxisAlignment.spaceBetween,
+                        //                   children: [
+                        //                     Text(
+                        //                       "Item : ",
+                        //                       style: TextStyle(
+                        //                           fontWeight: FontWeight.bold,
+                        //                           fontSize: 14.0,
+                        //                           color: AppColors.kPrimaryColor),
+                        //                     ),
+                        //                     Text(menuData[index]["menuItem"]),
+                        //                   ],
+                        //                 ),
+                        //                 SizedBox(height: 20),
+                        //                 GestureDetector(
+                        //                   onTap: () {},
+                        //                   child: Row(
+                        //                     mainAxisAlignment:
+                        //                         MainAxisAlignment.end,
+                        //                     crossAxisAlignment:
+                        //                         CrossAxisAlignment.end,
+                        //                     children: [
+                        //                       Text(
+                        //                         "View Details",
+                        //                       ),
+                        //                       SizedBox(width: 5),
+                        //                       Icon(
+                        //                         Icons.arrow_forward_ios,
+                        //                         size: 20,
+                        //                         color: AppColors.kPrimaryColor,
+                        //                       ),
+                        //                     ],
+                        //                   ),
+                        //                 )
+                        //               ],
+                        //             ),
+                        //             // child: Stack(children: <Widget>[
+                        //             //   Align(
+                        //             //     alignment: Alignment.centerRight,
+                        //             //     child: Stack(
+                        //             //       children: <Widget>[
+                        //             //         Padding(
+                        //             //             padding: const EdgeInsets.only(
+                        //             //                 left: 10, top: 5),
+                        //             //             child: Column(
+                        //             //               children: <Widget>[
+                        //             //                 Row(
+                        //             //                   children: <Widget>[
+                        //             //                     Padding(
+                        //             //                       padding:
+                        //             //                           const EdgeInsets.only(
+                        //             //                               left: 15.0),
+                        //             //                       child: Align(
+                        //             //                           alignment: Alignment
+                        //             //                               .centerLeft,
+                        //             //                           child: Text(
+                        //             //                             menuData[index]
+                        //             //                                 ["menuTitle"],
+                        //             //                           )),
+                        //             //                     )
+                        //             //                   ],
+                        //             //                 )
+                        //             //               ],
+                        //             //             ))
+                        //             //       ],
+                        //             //     ),
+                        //             //   )
+                        //             // ]),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     );
+                        //   },
+                        // ),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(height: 20),
@@ -408,6 +303,106 @@ class _MenuSelectionState extends State<MenuSelection> {
             text: "NEXT",
             press: () {},
           )),
+    );
+  }
+
+  Widget _buildMenu(MenuModel mSelectionModel) {
+    return Padding(
+      padding: EdgeInsets.all(10),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Deal Name : ",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14.0,
+                    color: AppColors.kPrimaryColor),
+              ),
+              Text(mSelectionModel.menuTitle),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Per Head : ",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14.0,
+                    color: AppColors.kPrimaryColor),
+              ),
+              Text("Rs. ${mSelectionModel.perHeadCharges}"),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Item : ",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14.0,
+                    color: AppColors.kPrimaryColor),
+              ),
+              Text(mSelectionModel.menuItem),
+            ],
+          ),
+          SizedBox(height: 20),
+          GestureDetector(
+            onTap: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  "View Details",
+                ),
+                SizedBox(width: 5),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 20,
+                  color: AppColors.kPrimaryColor,
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+      // child: Stack(children: <Widget>[
+      //   Align(
+      //     alignment: Alignment.centerRight,
+      //     child: Stack(
+      //       children: <Widget>[
+      //         Padding(
+      //             padding: const EdgeInsets.only(
+      //                 left: 10, top: 5),
+      //             child: Column(
+      //               children: <Widget>[
+      //                 Row(
+      //                   children: <Widget>[
+      //                     Padding(
+      //                       padding:
+      //                           const EdgeInsets.only(
+      //                               left: 15.0),
+      //                       child: Align(
+      //                           alignment: Alignment
+      //                               .centerLeft,
+      //                           child: Text(
+      //                             menuData[index]
+      //                                 ["menuTitle"],
+      //                           )),
+      //                     )
+      //                   ],
+      //                 )
+      //               ],
+      //             ))
+      //       ],
+      //     ),
+      //   )
+      // ]),
     );
   }
 }
