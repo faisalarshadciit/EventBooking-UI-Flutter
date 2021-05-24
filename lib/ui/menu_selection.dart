@@ -4,6 +4,7 @@ import 'package:event_book_app/constants/app_styles.dart';
 import 'package:event_book_app/methods/json_method.dart';
 import 'package:event_book_app/models/menu_data.dart';
 import 'package:event_book_app/models/menu_model.dart';
+import 'package:event_book_app/ui/receipt_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -301,7 +302,10 @@ class _MenuSelectionState extends State<MenuSelection> {
           padding: EdgeInsets.all(10.0),
           child: RoundedButton(
             text: "NEXT",
-            press: () {},
+            press: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ReceiptPage()));
+            },
           )),
     );
   }
