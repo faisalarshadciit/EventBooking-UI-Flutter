@@ -17,7 +17,8 @@ class _HallBooking2State extends State<HallBooking2> {
   String currentDate, startTime, endTime;
   Color brTileColor = AppColors.kPrimaryColor;
   Color sdTileColor = AppColors.kPrimaryColor;
-  int brTileValue = 1, sdTileValue = 1;
+  Color etTileColor = AppColors.kPrimaryColor;
+  int brTileValue = 1, sdTileValue = 1, etTileValue = 1;
   int selectedImage = 0;
   double decorationPrice = 0;
   bool isDecoration = true;
@@ -37,19 +38,24 @@ class _HallBooking2State extends State<HallBooking2> {
     getCurrentDate();
     brTileValue = 1;
     sdTileValue = 1;
+    etTileValue = 1;
   }
 
   setBridalRoomRadioTile(int val) {
     setState(() {
       brTileValue = val;
-      print(brTileValue);
     });
   }
 
   setStageDecorationRadioTile(int val) {
     setState(() {
       sdTileValue = val;
-      print(sdTileValue);
+    });
+  }
+
+  setTimeRadioTile(int val) {
+    setState(() {
+      etTileValue = val;
     });
   }
 
@@ -131,43 +137,92 @@ class _HallBooking2State extends State<HallBooking2> {
                     ],
                   ),
                   SizedBox(height: 10),
+                  // Row(
+                  //   children: <Widget>[
+                  //     Flexible(
+                  //       flex: 2,
+                  //       fit: FlexFit.tight,
+                  //       child: OutlinedInputField(
+                  //           // hintText: currentDate.toString(),
+                  //           ),
+                  //     ),
+                  //     SizedBox(width: 10),
+                  //     Flexible(
+                  //       flex: 1,
+                  //       fit: FlexFit.tight,
+                  //       child: TextButton.icon(
+                  //         label: Text(
+                  //           "Time",
+                  //           style: TextStyle(
+                  //             color: AppColors.kWhiteColor,
+                  //             fontWeight: FontWeight.bold,
+                  //           ),
+                  //         ),
+                  //         icon: Icon(
+                  //           FontAwesomeIcons.clock,
+                  //           color: AppColors.kWhiteColor,
+                  //         ),
+                  //         style: ButtonStyle(
+                  //           backgroundColor: MaterialStateProperty.all(
+                  //               AppColors.kPrimaryColorLight),
+                  //           shape: MaterialStateProperty.all<
+                  //               RoundedRectangleBorder>(
+                  //             RoundedRectangleBorder(
+                  //               borderRadius: BorderRadius.circular(10.0),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //         onPressed: () {
+                  //           _selectTime(context);
+                  //         },
+                  //       ),
+                  //     )
+                  //   ],
+                  // ),
+                  Container(
+                      padding: EdgeInsets.all(8.0),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        "Event Time",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )),
                   Row(
                     children: <Widget>[
                       Flexible(
-                        flex: 2,
-                        fit: FlexFit.tight,
-                        child: OutlinedInputField(
-                            // hintText: currentDate.toString(),
-                            ),
+                        fit: FlexFit.loose,
+                        child: RadioListTile(
+                          activeColor: AppColors.kPrimaryColor,
+                          selected: true,
+                          value: 1,
+                          groupValue: etTileValue,
+                          title: Text("Day",
+                              style: TextStyle(
+                                  color: etTileValue == 1
+                                      ? etTileColor
+                                      : Colors.black)),
+                          onChanged: (value) {
+                            setTimeRadioTile(value);
+                          },
+                        ),
                       ),
-                      SizedBox(width: 10),
                       Flexible(
-                        flex: 1,
-                        fit: FlexFit.tight,
-                        child: TextButton.icon(
-                          label: Text(
-                            "Time",
-                            style: TextStyle(
-                              color: AppColors.kWhiteColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          icon: Icon(
-                            FontAwesomeIcons.clock,
-                            color: AppColors.kWhiteColor,
-                          ),
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                AppColors.kPrimaryColorLight),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                          ),
-                          onPressed: () {
-                            _selectTime(context);
+                        fit: FlexFit.loose,
+                        child: RadioListTile(
+                          activeColor: AppColors.kPrimaryColor,
+                          selected: false,
+                          value: 2,
+                          groupValue: etTileValue,
+                          title: Text("Night",
+                              style: TextStyle(
+                                  color: etTileValue == 2
+                                      ? etTileColor
+                                      : Colors.black)),
+                          onChanged: (value) {
+                            setTimeRadioTile(value);
                           },
                         ),
                       )
@@ -294,26 +349,31 @@ class _HallBooking2State extends State<HallBooking2> {
                   ),
                   SizedBox(height: 20),
                   Container(
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: RichText(
-                        text: TextSpan(
-                          style: TextStyle(color: Colors.black, fontSize: 36),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Charges : ',
-                              style: TextStyle(color: AppColors.kPrimaryColor),
+                    child: isDecoration == true
+                        ? Align(
+                            alignment: Alignment.centerLeft,
+                            child: RichText(
+                              text: TextSpan(
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 36),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'Charges : ',
+                                    style: TextStyle(
+                                        color: AppColors.kPrimaryColor),
+                                  ),
+                                  TextSpan(text: 'Rs. '),
+                                  TextSpan(
+                                    text: '$decorationPrice',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  )
+                                ],
+                              ),
+                              textScaleFactor: 0.5,
                             ),
-                            TextSpan(text: 'Rs. '),
-                            TextSpan(
-                              text: '$decorationPrice',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            )
-                          ],
-                        ),
-                        textScaleFactor: 0.5,
-                      ),
-                    ),
+                          )
+                        : Container(),
                   )
                   // Container(
                   //   child: RichText(
@@ -485,34 +545,6 @@ class _HallBooking2State extends State<HallBooking2> {
       ),
     );
   }
-
-  // Future<void> showTimeRangePicker(BuildContext context) {
-  //   return showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return AlertDialog(
-  //           title: Text("Choose event time"),
-  //           content: TimeRangePicker(
-  //             initialFromHour: DateTime.now().hour,
-  //             initialFromMinutes: DateTime.now().minute,
-  //             initialToHour: DateTime.now().hour,
-  //             initialToMinutes: DateTime.now().minute,
-  //             backText: "Back",
-  //             nextText: "Next",
-  //             cancelText: "Cancel",
-  //             selectText: "Select",
-  //             onSelect: (from, to) {
-  //               _messangerKey.currentState.showSnackBar(
-  //                   SnackBar(content: Text("From : $from, To : $to")));
-  //               print("From : $from, To : $to");
-  //               Navigator.pop(context);
-  //             },
-  //             onCancel: () => Navigator.pop(context),
-  //           ),
-  //         );
-  //       });
-  // }
-
 }
 
 class ImageDialog extends StatelessWidget {

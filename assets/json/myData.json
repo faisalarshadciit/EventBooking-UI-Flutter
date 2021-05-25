@@ -1099,5 +1099,183 @@
       "rDate": "March 03, 2021",
       "rReview": 5.0
     }
+  ],
+  "CustomMenu": [
+    {
+      "menuName": "Rice",
+      "itemImage": "assets/images/rice.jpg",
+      "menuItems": [
+        {
+          "itemName": "Simple Rice",
+          "isChecked": false,
+          "perHeadPrice": 50.0
+        },
+        {
+          "itemName": "Vegetable Rice",
+          "isChecked": false,
+          "perHeadPrice": 50.0
+        },
+        {
+          "itemName": "Biryani",
+          "isChecked": false,
+          "perHeadPrice": 150.0
+        },
+        {
+          "itemName": "Chinese Plao",
+          "isChecked": false,
+          "perHeadPrice": 100.0
+        },
+        {
+          "itemName": "Beef Plao",
+          "isChecked": false,
+          "perHeadPrice": 150.0
+        },
+        {
+          "itemName": "Mutton Plao",
+          "isChecked": false,
+          "perHeadPrice": 200.0
+        }
+      ]
+    },
+    {
+      "menuName": "Meat",
+      "itemImage": "assets/images/meat.jpg",
+      "menuItems": [
+        {
+          "itemName": "Chicken",
+          "isChecked": false,
+          "perHeadPrice": 150.0
+        },
+        {
+          "itemName": "Beef",
+          "isChecked": false,
+          "perHeadPrice": 200.0
+        },
+        {
+          "itemName": "Mutton",
+          "isChecked": false,
+          "perHeadPrice": 300.0
+        }
+      ]
+    },
+    {
+      "menuName": "Meetha",
+      "itemImage": "assets/images/meetha.jpg",
+      "menuItems": [
+        {
+          "itemName": "Kheer",
+          "isChecked": false,
+          "perHeadPrice": 80.0
+        },
+        {
+          "itemName": "Gajar Halva",
+          "isChecked": false,
+          "perHeadPrice": 120.0
+        },
+        {
+          "itemName": "Phirni",
+          "isChecked": false,
+          "perHeadPrice": 50.0
+        },
+        {
+          "itemName": "Zarda",
+          "isChecked": false,
+          "perHeadPrice": 50.0
+        }
+      ]
+    },
+    {
+      "menuName": "Soft Drinks",
+      "itemImage": "assets/images/soft_drinks.jpg",
+      "menuItems": [
+        {
+          "itemName": "Regular",
+          "isChecked": false,
+          "perHeadPrice": 40.0
+        },
+        {
+          "itemName": "1.5 Liters",
+          "isChecked": false,
+          "perHeadPrice": 30.0
+        },
+        {
+          "itemName": "Cans",
+          "isChecked": false,
+          "perHeadPrice": 80.0
+        }
+      ]
+    },
+    {
+      "menuName": "Water",
+      "itemImage": "assets/images/water.png",
+      "menuItems": [
+        {
+          "itemName": "Pure Water",
+          "isChecked": false,
+          "perHeadPrice": 20.0
+        }
+      ]
+    },
+    {
+      "menuName": "Tea",
+      "itemImage": "assets/images/tea.png",
+      "menuItems": [
+        {
+          "itemName": "Green Tea",
+          "isChecked": true,
+          "perHeadPrice": 60.0
+        }
+      ]
+    }
+  ],
+  "Orders": [
+    {
+      "customerName": "Faisal Arshad",
+      "customerPhone": "0308-8649850",
+      "eventDate": "25-05-2021",
+      "eventTime": "Day",
+      "noOfChairs": 150,
+      "orderStatus": "Pending"
+    },
+    {
+      "customerName": "Hamza Iqbal",
+      "customerPhone": "0306-7534095",
+      "eventDate": "22-05-2021",
+      "eventTime": "Day",
+      "noOfChairs": 120,
+      "orderStatus": "Pending"
+    },
+    {
+      "customerName": "Hamza Iqbal",
+      "customerPhone": "0306-7534095",
+      "eventDate": "22-05-2021",
+      "eventTime": "Night",
+      "noOfChairs": 120,
+      "orderStatus": "Pending"
+    },
+    {
+      "customerName": "Faisal Arshad",
+      "customerPhone": "0308-8649850",
+      "eventDate": "25-05-2021",
+      "eventTime": "Day",
+      "noOfChairs": 90,
+      "orderStatus": "Pending"
+    },
+    {
+      "customerName": "Hamza Iqbal",
+      "customerPhone": "0306-7534095",
+      "eventDate": "22-05-2021",
+      "eventTime": "Night",
+      "noOfChairs": 100,
+      "orderStatus": "Pending"
+    },
+    {
+      "customerName": "Faisal Arshad",
+      "customerPhone": "0308-8649850",
+      "eventDate": "25-05-2021",
+      "eventTime": "Day",
+      "noOfChairs": 250,
+      "orderStatus": "Pending"
+    }
   ]
 }

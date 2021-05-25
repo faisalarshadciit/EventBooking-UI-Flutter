@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:time_range_picker/time_range_picker.dart';
 import 'components/outlined_input_field.dart';
 import 'components/rounded_button.dart';
+import 'custom_menu.dart';
 
 class MenuSelection extends StatefulWidget {
   @override
@@ -45,8 +46,6 @@ class _MenuSelectionState extends State<MenuSelection> {
         ),
       ),
       body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        physics: ScrollPhysics(),
         child: Container(
           margin: EdgeInsets.only(top: 30),
           child: Padding(
@@ -66,8 +65,6 @@ class _MenuSelectionState extends State<MenuSelection> {
                     )),
                 SizedBox(height: 10),
                 SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  physics: ScrollPhysics(),
                   child: Container(
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
@@ -82,11 +79,11 @@ class _MenuSelectionState extends State<MenuSelection> {
                                   itemCount: snapshot.data.length,
                                   scrollDirection: Axis.vertical,
                                   shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     MenuModel menuSelectionModel =
                                         snapshot.data[index];
-                                    print(menuSelectionModel.menuTitle);
                                     return InkWell(
                                       onTap: () {
                                         setState(() {
@@ -105,10 +102,15 @@ class _MenuSelectionState extends State<MenuSelection> {
                                                     ["perHead"];
                                             item = menuData[selectedCard - 1]
                                                 ["menuItem"];
+                                          }
 
-                                            print(menuTitle);
-                                            print(perHeadCharges);
-                                            print(item);
+                                          if (index ==
+                                              snapshot.data.length - 1) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        CustomMenuSelection()));
                                           }
                                         });
                                       },
@@ -121,10 +123,14 @@ class _MenuSelectionState extends State<MenuSelection> {
                                           elevation: 5.0,
                                           color: selectedCard == index + 1
                                               ? AppColors.kLightColor
-                                              : AppColors.kSmokeWhiteColor,
+                                              : AppColors.kWhiteColor,
                                           shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
+                                            borderRadius: BorderRadius.only(
+                                              bottomRight: Radius.circular(60),
+                                              bottomLeft: Radius.circular(10),
+                                              topRight: Radius.circular(10),
+                                              topLeft: Radius.circular(10),
+                                            ),
                                           ),
                                           child: _buildMenu(menuSelectionModel),
                                         ),
@@ -162,9 +168,6 @@ class _MenuSelectionState extends State<MenuSelection> {
                         //                 menuData[selectedCard - 1]["perHead"];
                         //             item = menuData[selectedCard - 1]["menuItem"];
                         //
-                        //             print(menuTitle);
-                        //             print(perHeadCharges);
-                        //             print(item);
                         //           }
                         //         });
                         //       },

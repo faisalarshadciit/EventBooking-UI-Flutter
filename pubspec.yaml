@@ -47,6 +47,12 @@ flutter:
     - assets/icons/camera.svg
     - assets/icons/google-plus.svg
     - assets/images/profile.png
+    - assets/images/meetha.jpg
+    - assets/images/meat.jpg
+    - assets/images/rice.jpg
+    - assets/images/tea.png
+    - assets/images/water.png
+    - assets/images/soft_drinks.jpg
     - assets/images/marriage_hall_1.jpg
     - assets/images/marriage_hall_2.jpg
     - assets/images/marriage_hall_3.jpg
