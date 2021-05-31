@@ -998,7 +998,7 @@
   "MenuDetails": [
     {
       "menuTitle": "Deal 1",
-      "perHead": "600",
+      "perHead": 600.0,
       "menuItem": "Chicken",
       "menuImage": "assets/images/marriage_hall_8.jpg",
       "itemsList": [
@@ -1018,7 +1018,7 @@
     },
     {
       "menuTitle": "Deal 2",
-      "perHead": "650",
+      "perHead": 650.0,
       "menuItem": "Beef",
       "menuImage": "assets/images/marriage_hall_8.jpg",
       "itemsList": [
@@ -1038,7 +1038,7 @@
     },
     {
       "menuTitle": "Deal 3",
-      "perHead": "900",
+      "perHead": 900.0,
       "menuItem": "Mutton",
       "menuImage": "assets/images/marriage_hall_8.jpg",
       "itemsList": [
@@ -1058,7 +1058,7 @@
     },
     {
       "menuTitle": "Custom Deal",
-      "perHead": "0",
+      "perHead": 0.0,
       "menuItem": "",
       "menuImage": "assets/images/marriage_hall_8.jpg",
       "itemsList": [
@@ -1259,7 +1259,7 @@
       "eventDate": "25-05-2021",
       "eventTime": "Day",
       "noOfChairs": 90,
-      "orderStatus": "Pending"
+      "orderStatus": "Accepted"
     },
     {
       "customerName": "Hamza Iqbal",
@@ -1275,7 +1275,7 @@
       "eventDate": "25-05-2021",
       "eventTime": "Day",
       "noOfChairs": 250,
-      "orderStatus": "Pending"
+      "orderStatus": "Accepted"
     }
   ]
 }

@@ -21,7 +21,6 @@ Future readGetRequest(String type) async {
     dataList =
         result.map<MenuModel>((json) => MenuModel.fromJson(json)).toList();
   } else if (type == "CustomMenu") {
-    print("CustomMenu");
     result = data["CustomMenu"] as List;
     dataList = result
         .map<CustomMenuModel>((json) => CustomMenuModel.fromJson(json))

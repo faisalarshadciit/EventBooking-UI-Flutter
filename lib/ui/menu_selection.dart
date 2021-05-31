@@ -1,15 +1,14 @@
 import 'package:event_book_app/config/size_config.dart';
 import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/constants/app_styles.dart';
+import 'package:event_book_app/constants/string_assets.dart';
 import 'package:event_book_app/methods/json_method.dart';
 import 'package:event_book_app/models/menu_data.dart';
 import 'package:event_book_app/models/menu_model.dart';
 import 'package:event_book_app/ui/receipt_screen.dart';
+import 'package:event_book_app/ui/widgets/colored_text_widget.dart';
+import 'package:event_book_app/ui/widgets/icon_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
-import 'package:time_range_picker/time_range_picker.dart';
-import 'components/outlined_input_field.dart';
 import 'components/rounded_button.dart';
 import 'custom_menu.dart';
 
@@ -35,7 +34,7 @@ class _MenuSelectionState extends State<MenuSelection> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Hall Booking",
+          "Menu Selection",
           style: AppStyles.kAppBarStyle,
         ),
         centerTitle: true,
@@ -104,6 +103,12 @@ class _MenuSelectionState extends State<MenuSelection> {
                                                 ["menuItem"];
                                           }
 
+                                          StringAssets.kDealName =
+                                              menuSelectionModel.menuTitle;
+
+                                          StringAssets.kPerHeadCharges =
+                                              menuSelectionModel.perHeadCharges;
+
                                           if (index ==
                                               snapshot.data.length - 1) {
                                             Navigator.push(
@@ -147,150 +152,6 @@ class _MenuSelectionState extends State<MenuSelection> {
                             );
                           },
                         )
-                        // ListView.builder(
-                        //   physics: NeverScrollableScrollPhysics(),
-                        //   shrinkWrap: true,
-                        //   itemCount: menuData.length,
-                        //   itemBuilder: (context, index) {
-                        //     return InkWell(
-                        //       onTap: () {
-                        //         setState(() {
-                        //           if (selectedCard == index + 1) {
-                        //             selectedCard = 0;
-                        //           } else {
-                        //             selectedCard = index + 1;
-                        //           }
-                        //
-                        //           if (selectedCard != 0) {
-                        //             menuTitle =
-                        //                 menuData[selectedCard - 1]["menuTitle"];
-                        //             perHeadCharges =
-                        //                 menuData[selectedCard - 1]["perHead"];
-                        //             item = menuData[selectedCard - 1]["menuItem"];
-                        //
-                        //           }
-                        //         });
-                        //       },
-                        //       child: Container(
-                        //         padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                        //         height: 150,
-                        //         width: double.maxFinite,
-                        //         child: Card(
-                        //           elevation: 5.0,
-                        //           color: selectedCard == index + 1
-                        //               ? AppColors.kLightColor
-                        //               : AppColors.kSmokeWhiteColor,
-                        //           shape: RoundedRectangleBorder(
-                        //             borderRadius: BorderRadius.circular(10),
-                        //           ),
-                        //           child: Padding(
-                        //             padding: EdgeInsets.all(10),
-                        //             child: Column(
-                        //               children: [
-                        //                 Row(
-                        //                   mainAxisAlignment:
-                        //                       MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Text(
-                        //                       "Deal Name : ",
-                        //                       style: TextStyle(
-                        //                           fontWeight: FontWeight.bold,
-                        //                           fontSize: 14.0,
-                        //                           color: AppColors.kPrimaryColor),
-                        //                     ),
-                        //                     Text(menuData[index]["menuTitle"]),
-                        //                   ],
-                        //                 ),
-                        //                 Row(
-                        //                   mainAxisAlignment:
-                        //                       MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Text(
-                        //                       "Per Head : ",
-                        //                       style: TextStyle(
-                        //                           fontWeight: FontWeight.bold,
-                        //                           fontSize: 14.0,
-                        //                           color: AppColors.kPrimaryColor),
-                        //                     ),
-                        //                     Text(
-                        //                         "Rs. ${menuData[index]["perHead"]}"),
-                        //                   ],
-                        //                 ),
-                        //                 Row(
-                        //                   mainAxisAlignment:
-                        //                       MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Text(
-                        //                       "Item : ",
-                        //                       style: TextStyle(
-                        //                           fontWeight: FontWeight.bold,
-                        //                           fontSize: 14.0,
-                        //                           color: AppColors.kPrimaryColor),
-                        //                     ),
-                        //                     Text(menuData[index]["menuItem"]),
-                        //                   ],
-                        //                 ),
-                        //                 SizedBox(height: 20),
-                        //                 GestureDetector(
-                        //                   onTap: () {},
-                        //                   child: Row(
-                        //                     mainAxisAlignment:
-                        //                         MainAxisAlignment.end,
-                        //                     crossAxisAlignment:
-                        //                         CrossAxisAlignment.end,
-                        //                     children: [
-                        //                       Text(
-                        //                         "View Details",
-                        //                       ),
-                        //                       SizedBox(width: 5),
-                        //                       Icon(
-                        //                         Icons.arrow_forward_ios,
-                        //                         size: 20,
-                        //                         color: AppColors.kPrimaryColor,
-                        //                       ),
-                        //                     ],
-                        //                   ),
-                        //                 )
-                        //               ],
-                        //             ),
-                        //             // child: Stack(children: <Widget>[
-                        //             //   Align(
-                        //             //     alignment: Alignment.centerRight,
-                        //             //     child: Stack(
-                        //             //       children: <Widget>[
-                        //             //         Padding(
-                        //             //             padding: const EdgeInsets.only(
-                        //             //                 left: 10, top: 5),
-                        //             //             child: Column(
-                        //             //               children: <Widget>[
-                        //             //                 Row(
-                        //             //                   children: <Widget>[
-                        //             //                     Padding(
-                        //             //                       padding:
-                        //             //                           const EdgeInsets.only(
-                        //             //                               left: 15.0),
-                        //             //                       child: Align(
-                        //             //                           alignment: Alignment
-                        //             //                               .centerLeft,
-                        //             //                           child: Text(
-                        //             //                             menuData[index]
-                        //             //                                 ["menuTitle"],
-                        //             //                           )),
-                        //             //                     )
-                        //             //                   ],
-                        //             //                 )
-                        //             //               ],
-                        //             //             ))
-                        //             //       ],
-                        //             //     ),
-                        //             //   )
-                        //             // ]),
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     );
-                        //   },
-                        // ),
                       ],
                     ),
                   ),
@@ -321,39 +182,21 @@ class _MenuSelectionState extends State<MenuSelection> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "Deal Name : ",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14.0,
-                    color: AppColors.kPrimaryColor),
-              ),
+              coloredTextWidget("Deal Name : ", 14.0, AppColors.kPrimaryColor),
               Text(mSelectionModel.menuTitle),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "Per Head : ",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14.0,
-                    color: AppColors.kPrimaryColor),
-              ),
+              coloredTextWidget("Per Head : ", 14.0, AppColors.kPrimaryColor),
               Text("Rs. ${mSelectionModel.perHeadCharges}"),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "Item : ",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14.0,
-                    color: AppColors.kPrimaryColor),
-              ),
+              coloredTextWidget("Item : ", 14.0, AppColors.kPrimaryColor),
               Text(mSelectionModel.menuItem),
             ],
           ),
@@ -368,48 +211,13 @@ class _MenuSelectionState extends State<MenuSelection> {
                   "View Details",
                 ),
                 SizedBox(width: 5),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 20,
-                  color: AppColors.kPrimaryColor,
-                ),
+                iconWidget(
+                    Icons.arrow_forward_ios, AppColors.kPrimaryColor, 20.0)
               ],
             ),
           )
         ],
       ),
-      // child: Stack(children: <Widget>[
-      //   Align(
-      //     alignment: Alignment.centerRight,
-      //     child: Stack(
-      //       children: <Widget>[
-      //         Padding(
-      //             padding: const EdgeInsets.only(
-      //                 left: 10, top: 5),
-      //             child: Column(
-      //               children: <Widget>[
-      //                 Row(
-      //                   children: <Widget>[
-      //                     Padding(
-      //                       padding:
-      //                           const EdgeInsets.only(
-      //                               left: 15.0),
-      //                       child: Align(
-      //                           alignment: Alignment
-      //                               .centerLeft,
-      //                           child: Text(
-      //                             menuData[index]
-      //                                 ["menuTitle"],
-      //                           )),
-      //                     )
-      //                   ],
-      //                 )
-      //               ],
-      //             ))
-      //       ],
-      //     ),
-      //   )
-      // ]),
     );
   }
 }

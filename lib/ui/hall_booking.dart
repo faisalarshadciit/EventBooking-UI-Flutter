@@ -1,11 +1,8 @@
-import 'package:event_book_app/config/size_config.dart';
 import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/constants/app_styles.dart';
+import 'package:event_book_app/constants/string_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
-import 'package:time_range_picker/time_range_picker.dart';
 import 'components/outlined_input_field.dart';
 import 'components/rounded_button.dart';
 
@@ -15,6 +12,8 @@ class HallBooking extends StatefulWidget {
 }
 
 class _HallBookingState extends State<HallBooking> {
+  GlobalKey<FormState> _hallBookingFormKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -43,14 +42,18 @@ class _HallBookingState extends State<HallBooking> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Form(
+                key: _hallBookingFormKey,
                 child: Column(
                   children: [
                     OutlinedInputField(
                       inputAction: "next",
+                      textInputType: TextInputType.name,
                       hintText: "Enter Your Name",
                       labelText: "Your Name",
                       onChanged: (value) {
-                        setState(() {});
+                        setState(() {
+                          StringAssets.kUserName = value;
+                        });
                       },
                       validator: (value) {
                         if (value.isEmpty) {
@@ -65,10 +68,13 @@ class _HallBookingState extends State<HallBooking> {
                     SizedBox(height: 20),
                     OutlinedInputField(
                       inputAction: "next",
+                      textInputType: TextInputType.emailAddress,
                       hintText: "Enter Your Email",
                       labelText: "Your Email",
                       onChanged: (value) {
-                        setState(() {});
+                        setState(() {
+                          StringAssets.kUserEmail = value;
+                        });
                       },
                       validator: (value) {
                         if (value.isEmpty) {
@@ -85,8 +91,11 @@ class _HallBookingState extends State<HallBooking> {
                       inputAction: "next",
                       hintText: "Enter Your Phone",
                       labelText: "Your Phone",
+                      textInputType: TextInputType.phone,
                       onChanged: (value) {
-                        setState(() {});
+                        setState(() {
+                          StringAssets.kUserPhone = value;
+                        });
                       },
                       validator: (value) {
                         if (value.isEmpty) {
@@ -103,8 +112,11 @@ class _HallBookingState extends State<HallBooking> {
                       inputAction: "next",
                       labelText: "No. of Guests",
                       hintText: "Enter No. of Guests",
+                      textInputType: TextInputType.number,
                       onChanged: (value) {
-                        setState(() {});
+                        setState(() {
+                          StringAssets.kUserNoOfGuests = int.parse(value);
+                        });
                       },
                       validator: (value) {
                         if (value.isEmpty) {
@@ -118,11 +130,14 @@ class _HallBookingState extends State<HallBooking> {
                     ),
                     SizedBox(height: 20),
                     OutlinedInputField(
-                      inputAction: "next",
+                      inputAction: "done",
                       labelText: "No. of Chairs",
                       hintText: "Enter No. of Chairs",
+                      textInputType: TextInputType.number,
                       onChanged: (value) {
-                        setState(() {});
+                        setState(() {
+                          StringAssets.kUserNoOfChairs = int.parse(value);
+                        });
                       },
                       validator: (value) {
                         if (value.isEmpty) {

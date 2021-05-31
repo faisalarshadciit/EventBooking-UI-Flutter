@@ -1,6 +1,6 @@
 class MenuModel {
   String menuTitle;
-  String perHeadCharges;
+  double perHeadCharges;
   String menuItem;
   String menuImage;
   List<MenuItemsModel> itemsList;

@@ -2,6 +2,8 @@ import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/constants/app_styles.dart';
 import 'package:event_book_app/methods/json_method.dart';
 import 'package:event_book_app/models/orders_model.dart';
+import 'package:event_book_app/ui/widgets/colored_text_widget.dart';
+import 'package:event_book_app/ui/widgets/icon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -95,24 +97,17 @@ class _BookedHallState extends State<BookedHall> {
                                             children: [
                                               Row(
                                                 children: [
-                                                  Icon(
-                                                    Icons.account_circle,
-                                                    color:
-                                                        AppColors.kPrimaryColor,
-                                                    size: 20.0,
-                                                  ),
+                                                  iconWidget(
+                                                      Icons.account_circle,
+                                                      AppColors.kPrimaryColor,
+                                                      20.0),
                                                   SizedBox(
                                                     width: 10.0,
                                                   ),
-                                                  Text(
-                                                    ordersModel.customerName,
-                                                    style: TextStyle(
-                                                        fontSize: 15.0,
-                                                        color: AppColors
-                                                            .kPrimaryColor,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
+                                                  coloredTextWidget(
+                                                      ordersModel.customerName,
+                                                      15.0,
+                                                      AppColors.kPrimaryColor),
                                                 ],
                                               ),
                                             ],
@@ -124,22 +119,17 @@ class _BookedHallState extends State<BookedHall> {
                                             children: [
                                               Row(
                                                 children: [
-                                                  Icon(Icons.phone,
-                                                      color: AppColors
-                                                          .kPrimaryColor,
-                                                      size: 20.0),
+                                                  iconWidget(
+                                                      Icons.phone,
+                                                      AppColors.kPrimaryColor,
+                                                      20.0),
                                                   SizedBox(
                                                     width: 10.0,
                                                   ),
-                                                  Text(
-                                                    ordersModel.customerPhone,
-                                                    style: TextStyle(
-                                                        fontSize: 15.0,
-                                                        color: AppColors
-                                                            .kPrimaryColor,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
+                                                  coloredTextWidget(
+                                                      ordersModel.customerPhone,
+                                                      15.0,
+                                                      AppColors.kPrimaryColor),
                                                 ],
                                               ),
                                             ],
@@ -151,25 +141,41 @@ class _BookedHallState extends State<BookedHall> {
                                             children: [
                                               Row(
                                                 children: [
-                                                  Icon(
-                                                    Icons
-                                                        .calendar_today_outlined,
-                                                    color:
-                                                        AppColors.kPrimaryColor,
-                                                    size: 20.0,
-                                                  ),
+                                                  iconWidget(
+                                                      Icons
+                                                          .calendar_today_outlined,
+                                                      AppColors.kPrimaryColor,
+                                                      20.0),
                                                   SizedBox(
                                                     width: 10.0,
                                                   ),
-                                                  Text(
-                                                    ordersModel.eventDate,
-                                                    style: TextStyle(
-                                                        fontSize: 15.0,
-                                                        color: AppColors
-                                                            .kPrimaryColor,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                  coloredTextWidget(
+                                                      ordersModel.eventDate,
+                                                      15.0,
+                                                      AppColors.kPrimaryColor),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: 10),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  iconWidget(
+                                                      FontAwesomeIcons
+                                                          .firstOrder,
+                                                      AppColors.kPrimaryColor,
+                                                      20.0),
+                                                  SizedBox(
+                                                    width: 10.0,
                                                   ),
+                                                  coloredTextWidget(
+                                                      ordersModel.orderStatus,
+                                                      15.0,
+                                                      AppColors.kPrimaryColor),
                                                 ],
                                               ),
                                             ],
@@ -188,27 +194,22 @@ class _BookedHallState extends State<BookedHall> {
                                                   children: [
                                                     Row(
                                                       children: [
-                                                        Icon(
-                                                          Icons
-                                                              .airline_seat_legroom_normal,
-                                                          color: AppColors
-                                                              .kPrimaryColor,
-                                                          size: 20.0,
-                                                        ),
+                                                        iconWidget(
+                                                            Icons
+                                                                .airline_seat_legroom_normal,
+                                                            AppColors
+                                                                .kPrimaryColor,
+                                                            20.0),
                                                         SizedBox(
                                                           width: 10.0,
                                                         ),
-                                                        Text(
-                                                          ordersModel.noOfChairs
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                              fontSize: 15.0,
-                                                              color: AppColors
-                                                                  .kPrimaryColor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
+                                                        coloredTextWidget(
+                                                            ordersModel
+                                                                .noOfChairs
+                                                                .toString(),
+                                                            15.0,
+                                                            AppColors
+                                                                .kPrimaryColor),
                                                       ],
                                                     ),
                                                   ],
@@ -225,26 +226,20 @@ class _BookedHallState extends State<BookedHall> {
                                                   children: [
                                                     Row(
                                                       children: [
-                                                        Icon(
-                                                          Icons.wb_sunny,
-                                                          color: AppColors
-                                                              .kPrimaryColor,
-                                                          size: 14.0,
-                                                        ),
+                                                        iconWidget(
+                                                            Icons.wb_sunny,
+                                                            AppColors
+                                                                .kPrimaryColor,
+                                                            14.0),
                                                         SizedBox(
                                                           width: 10.0,
                                                         ),
-                                                        Text(
-                                                          ordersModel.eventTime
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                              fontSize: 12.0,
-                                                              color: AppColors
-                                                                  .kPrimaryColor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
+                                                        coloredTextWidget(
+                                                            ordersModel
+                                                                .eventTime,
+                                                            15.0,
+                                                            AppColors
+                                                                .kPrimaryColor),
                                                       ],
                                                     ),
                                                   ],

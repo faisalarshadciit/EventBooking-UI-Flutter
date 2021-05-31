@@ -28,20 +28,17 @@ class CustomMenuModel {
 class CustomMenuItemsModel {
   String itemName;
   double perHeadPrice;
-  bool isChecked;
 
-  CustomMenuItemsModel({this.itemName, this.isChecked, this.perHeadPrice});
+  CustomMenuItemsModel({this.itemName, this.perHeadPrice});
 
   factory CustomMenuItemsModel.fromJson(Map<String, dynamic> json) =>
       new CustomMenuItemsModel(
         itemName: json["itemName"],
-        isChecked: json["isChecked"],
         perHeadPrice: json["perHeadPrice"],
       );
 
   Map<String, dynamic> toJson() => {
         "itemName": itemName,
-        "isChecked": isChecked,
         'perHeadPrice': perHeadPrice,
       };
 }

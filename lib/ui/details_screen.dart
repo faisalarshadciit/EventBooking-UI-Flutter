@@ -1,5 +1,10 @@
 import 'package:event_book_app/constants/app_colors.dart';
+import 'package:event_book_app/ui/widgets/icon_widget.dart';
+import 'package:event_book_app/ui/widgets/simple_icon_widget.dart';
+import 'package:event_book_app/constants/string_assets.dart';
 import 'package:event_book_app/models/halls_model.dart';
+import 'package:event_book_app/ui/widgets/color_text_widget.dart';
+import 'package:event_book_app/ui/widgets/align_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -94,10 +99,8 @@ class _DetailsScreenState extends State<DetailsScreen>
                 Align(
                   alignment: Alignment.topLeft,
                   child: IconButton(
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.white,
-                      ),
+                      icon:
+                          simpleIconWidget(Icons.arrow_back_ios, Colors.white),
                       onPressed: () {
                         Navigator.of(context).pop();
                       }),
@@ -105,10 +108,7 @@ class _DetailsScreenState extends State<DetailsScreen>
                 Align(
                   alignment: Alignment.topRight,
                   child: IconButton(
-                      icon: Icon(
-                        Icons.favorite,
-                        color: iconColor,
-                      ),
+                      icon: simpleIconWidget(Icons.favorite, iconColor),
                       onPressed: () {
                         setState(() {
                           if (iconColor == AppColors.kGreyColor) {
@@ -144,14 +144,8 @@ class _DetailsScreenState extends State<DetailsScreen>
                     ),
                     Container(
                       padding: EdgeInsets.fromLTRB(10, 0, 0, 5),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          widget.hallDetails.location,
-                          style: TextStyle(
-                              color: AppColors.kGreyColor, fontSize: 14),
-                        ),
-                      ),
+                      child: alignWidget(widget.hallDetails.location, 14.0,
+                          AppColors.kGreyColor, Alignment.centerLeft),
                     ),
                     Container(
                       padding: EdgeInsets.fromLTRB(10, 8, 10, 10),
@@ -161,51 +155,29 @@ class _DetailsScreenState extends State<DetailsScreen>
                           Container(
                             child: Column(
                               children: <Widget>[
-                                Align(
-                                  child: Text(
-                                    'Rate',
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: AppColors.kGreyColor),
-                                  ),
-                                  alignment: Alignment.centerLeft,
-                                ),
-                                Text(
-                                  'Rs 1200',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: AppColors.kPrimaryColor),
-                                )
+                                alignWidget('Rate', 12.0, AppColors.kGreyColor,
+                                    Alignment.centerLeft),
+                                colorTextWidget(
+                                    'Rs 1200', 20.0, AppColors.kPrimaryColor),
                               ],
                             ),
                           ),
                           Container(
                             child: Column(
                               children: [
-                                Align(
-                                  child: Text(
-                                    'Rating',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: AppColors.kGreyColor,
-                                    ),
-                                  ),
-                                  alignment: Alignment.centerLeft,
-                                ),
+                                alignWidget('Rating', 12.0,
+                                    AppColors.kGreyColor, Alignment.centerLeft),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
                                         averageRating.toStringAsFixed(2),
-                                        //style: AppStyles.kAvgRatingsStyle,
                                       ),
                                       Text(
                                         "/",
-                                        //style: AppStyles.kRatingsStyle,
                                       ),
                                       Text(
                                         "$totalRating",
-                                        //style: AppStyles.kRatingsStyle,
                                       ),
                                       SizedBox(
                                         width: 10,
@@ -213,10 +185,9 @@ class _DetailsScreenState extends State<DetailsScreen>
                                     ]),
                                 RatingBarIndicator(
                                   rating: averageRating,
-                                  itemBuilder: (context, index) => Icon(
-                                    Icons.star,
-                                    color: Colors.yellow,
-                                  ),
+                                  itemBuilder: (context, index) =>
+                                      simpleIconWidget(
+                                          Icons.star, Colors.yellow),
                                   itemCount: 5,
                                   itemSize: 18.0,
                                   direction: Axis.horizontal,
@@ -226,10 +197,8 @@ class _DetailsScreenState extends State<DetailsScreen>
                           ),
                           Container(
                             child: IconButton(
-                                icon: Icon(
-                                  Icons.share,
-                                  color: AppColors.kGreyColor,
-                                ),
+                                icon: simpleIconWidget(
+                                    Icons.share, AppColors.kGreyColor),
                                 onPressed: () {}),
                           )
                         ],
@@ -242,7 +211,7 @@ class _DetailsScreenState extends State<DetailsScreen>
                           children: [
                             TabBar(
                               indicatorColor: AppColors.kPrimaryColor,
-                              labelColor: Colors.black,
+                              labelColor: AppColors.kPrimaryColor,
                               unselectedLabelColor: Colors.grey,
                               isScrollable: true,
                               tabs: [
@@ -283,32 +252,42 @@ class _DetailsScreenState extends State<DetailsScreen>
                                           shrinkWrap: true,
                                           itemBuilder: (BuildContext context,
                                               int index) {
-                                            return RichText(
-                                              text: TextSpan(
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 30),
-                                                children: <TextSpan>[
-                                                  TextSpan(
-                                                    text: widget
-                                                        .hallDetails
-                                                        .listHallAvailability[
-                                                            index]
-                                                        .day,
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  TextSpan(
-                                                    text: widget
-                                                        .hallDetails
-                                                        .listHallAvailability[
-                                                            index]
-                                                        .time,
-                                                  )
-                                                ],
+                                            return Padding(
+                                              padding: EdgeInsets.all(5.0),
+                                              child: RichText(
+                                                text: TextSpan(
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 30),
+                                                  children: <TextSpan>[
+                                                    TextSpan(
+                                                      text: widget
+                                                              .hallDetails
+                                                              .listHallAvailability[
+                                                                  index]
+                                                              .day +
+                                                          " ",
+                                                      // style: TextStyle(
+                                                      //     fontWeight:
+                                                      //         FontWeight.bold),
+                                                      style: TextStyle(
+                                                          fontSize: 28.0,
+                                                          color: AppColors
+                                                              .kPrimaryColor,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    TextSpan(
+                                                      text: widget
+                                                          .hallDetails
+                                                          .listHallAvailability[
+                                                              index]
+                                                          .time,
+                                                    )
+                                                  ],
+                                                ),
+                                                textScaleFactor: 0.6,
                                               ),
-                                              textScaleFactor: 0.6,
                                             );
                                           })),
                                   Center(
@@ -319,7 +298,7 @@ class _DetailsScreenState extends State<DetailsScreen>
                                           shrinkWrap: true,
                                           itemBuilder: (BuildContext context,
                                               int index) {
-                                            return reviewWidget(
+                                            return _buildReviewWidget(
                                               widget
                                                   .hallDetails
                                                   .listHallReviews[index]
@@ -351,19 +330,10 @@ class _DetailsScreenState extends State<DetailsScreen>
       ),
       bottomNavigationBar: Container(
         padding: EdgeInsets.all(10.0),
-        // child: ElevatedButton.icon(
-        //   icon: Icon(FontAwesomeIcons.book),
-        //   label: Text("Like"),
-        //   onPressed: () => print("it's pressed"),
-        //   style: ElevatedButton.styleFrom(
-        //     shape: RoundedRectangleBorder(
-        //       borderRadius: BorderRadius.circular(30.0),
-        //     ),
-        //   ),
-        // ),
         child: RoundedButton(
           text: "BOOK",
           press: () {
+            StringAssets.kHallName = widget.hallDetails.itemName;
             Navigator.of(context).pushNamed('/hall_booking');
           },
         ),
@@ -375,65 +345,95 @@ class _DetailsScreenState extends State<DetailsScreen>
     List<Widget> widgets = [];
 
     for (int i = 0; i < int.tryParse(index); i++) {
-      widgets.add(Icon(
-        Icons.star,
-        color: Colors.yellow,
-        size: 18,
-      ));
+      widgets.add(iconWidget(Icons.star, Colors.yellow, 18.0));
     }
     return Row(children: widgets);
   }
 
-  Widget reviewWidget(
+  Widget _buildReviewWidget(
       String name, String reviewText, String dateText, double review) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          width: 0.0,
-          color: AppColors.kWhiteColor,
+    return Padding(
+      // decoration: BoxDecoration(
+      //   border: Border.all(
+      //     width: 0.0,
+      //     color: AppColors.kWhiteColor,
+      //   ),
+      //   borderRadius: BorderRadius.all(Radius.circular(0)),
+      //   color: AppColors.kSmokeWhiteColor,
+      // ),
+      // margin: EdgeInsets.symmetric(vertical: 5),
+      // padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+      padding: EdgeInsets.all(5.0),
+      child: Card(
+        elevation: 5.0,
+        color: AppColors.kWhiteColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(10),
+            bottomLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+            topLeft: Radius.circular(10),
+          ),
         ),
-        borderRadius: BorderRadius.all(Radius.circular(0)),
-        color: AppColors.kSmokeWhiteColor,
-      ),
-      margin: EdgeInsets.symmetric(vertical: 5),
-      padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                name != null ? name : "",
-                //style: AppStyles.kDarkGreyStyle,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(name != null ? name : "",
+                          style: TextStyle(
+                              fontSize: 15.0,
+                              color: AppColors.kPrimaryColor,
+                              fontWeight: FontWeight.bold)
+                          //style: AppStyles.kDarkGreyStyle,
+                          ),
+                      Spacer(),
+                      RatingBarIndicator(
+                        rating: review,
+                        itemBuilder: (context, index) =>
+                            simpleIconWidget(Icons.star, Colors.yellow),
+                        itemCount: 5,
+                        itemSize: 18.0,
+                        direction: Axis.horizontal,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Text(
+                    reviewText != null ? reviewText : "",
+                    //style: AppStyles.kDarkGreyStyle,
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Row(
+                    children: [
+                      iconWidget(Icons.calendar_today_outlined,
+                          AppColors.kPrimaryColor, 15.0),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      Text(
+                        dateText != null ? dateText : "",
+                        style: TextStyle(
+                            fontSize: 12.0,
+                            color: AppColors.kPrimaryColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              Spacer(),
-              RatingBarIndicator(
-                rating: review,
-                itemBuilder: (context, index) => Icon(
-                  Icons.star,
-                  color: Colors.yellow,
-                ),
-                itemCount: 5,
-                itemSize: 18.0,
-                direction: Axis.horizontal,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 5.0,
-          ),
-          Text(
-            reviewText != null ? reviewText : "",
-            //style: AppStyles.kDarkGreyStyle,
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          Text(
-            dateText != null ? dateText : "",
-            //style: AppStyles.kDarkGreyStyle,
-          ),
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

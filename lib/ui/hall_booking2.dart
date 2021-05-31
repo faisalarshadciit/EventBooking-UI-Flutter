@@ -1,5 +1,6 @@
 import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/constants/app_styles.dart';
+import 'package:event_book_app/constants/string_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -16,12 +17,17 @@ class _HallBooking2State extends State<HallBooking2> {
   var dateFormat = new DateFormat('dd-MM-yyyy');
   String currentDate, startTime, endTime;
   Color brTileColor = AppColors.kPrimaryColor;
+  Color acTileColor = AppColors.kPrimaryColor;
   Color sdTileColor = AppColors.kPrimaryColor;
   Color etTileColor = AppColors.kPrimaryColor;
-  int brTileValue = 1, sdTileValue = 1, etTileValue = 1;
+  int brTileValue = 1, acTileValue = 1, sdTileValue = 1, etTileValue = 1;
   int selectedImage = 0;
-  double decorationPrice = 0;
+  double decorationPrice = 4100;
+  double bridalRoomPrice = 3000;
+  double acPrice = 12000;
   bool isDecoration = true;
+  bool isBridalRoom = true;
+  bool isAC = true;
 
   final List<String> imagesList = [
     'assets/decoration/stage_decoration_1.jpg',
@@ -37,6 +43,7 @@ class _HallBooking2State extends State<HallBooking2> {
     super.initState();
     getCurrentDate();
     brTileValue = 1;
+    acTileValue = 1;
     sdTileValue = 1;
     etTileValue = 1;
   }
@@ -44,6 +51,12 @@ class _HallBooking2State extends State<HallBooking2> {
   setBridalRoomRadioTile(int val) {
     setState(() {
       brTileValue = val;
+    });
+  }
+
+  setACRadioTile(int val) {
+    setState(() {
+      acTileValue = val;
     });
   }
 
@@ -68,6 +81,7 @@ class _HallBooking2State extends State<HallBooking2> {
 
     setState(() {
       currentDate = formattedDate.toString();
+      StringAssets.kEventDate = currentDate;
     });
   }
 
@@ -94,13 +108,41 @@ class _HallBooking2State extends State<HallBooking2> {
             child: Form(
               child: Column(
                 children: [
+                  Container(
+                      padding: EdgeInsets.all(8.0),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        "Event Date",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )),
+                  SizedBox(height: 10),
                   Row(
                     children: <Widget>[
                       Flexible(
                         flex: 2,
                         fit: FlexFit.tight,
-                        child: OutlinedInputField(
-                          hintText: currentDate.toString(),
+                        child: Container(
+                          margin: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(5.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            shape: BoxShape.rectangle,
+                          ),
+                          child: Text(
+                            currentDate.toString(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              inherit: true,
+                              fontSize: 24.0,
+                              color: AppColors.kPrimaryColor,
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(width: 10),
@@ -137,48 +179,6 @@ class _HallBooking2State extends State<HallBooking2> {
                     ],
                   ),
                   SizedBox(height: 10),
-                  // Row(
-                  //   children: <Widget>[
-                  //     Flexible(
-                  //       flex: 2,
-                  //       fit: FlexFit.tight,
-                  //       child: OutlinedInputField(
-                  //           // hintText: currentDate.toString(),
-                  //           ),
-                  //     ),
-                  //     SizedBox(width: 10),
-                  //     Flexible(
-                  //       flex: 1,
-                  //       fit: FlexFit.tight,
-                  //       child: TextButton.icon(
-                  //         label: Text(
-                  //           "Time",
-                  //           style: TextStyle(
-                  //             color: AppColors.kWhiteColor,
-                  //             fontWeight: FontWeight.bold,
-                  //           ),
-                  //         ),
-                  //         icon: Icon(
-                  //           FontAwesomeIcons.clock,
-                  //           color: AppColors.kWhiteColor,
-                  //         ),
-                  //         style: ButtonStyle(
-                  //           backgroundColor: MaterialStateProperty.all(
-                  //               AppColors.kPrimaryColorLight),
-                  //           shape: MaterialStateProperty.all<
-                  //               RoundedRectangleBorder>(
-                  //             RoundedRectangleBorder(
-                  //               borderRadius: BorderRadius.circular(10.0),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //         onPressed: () {
-                  //           _selectTime(context);
-                  //         },
-                  //       ),
-                  //     )
-                  //   ],
-                  // ),
                   Container(
                       padding: EdgeInsets.all(8.0),
                       width: double.infinity,
@@ -206,6 +206,7 @@ class _HallBooking2State extends State<HallBooking2> {
                                       : Colors.black)),
                           onChanged: (value) {
                             setTimeRadioTile(value);
+                            StringAssets.kEventTime = "Day";
                           },
                         ),
                       ),
@@ -223,6 +224,7 @@ class _HallBooking2State extends State<HallBooking2> {
                                       : Colors.black)),
                           onChanged: (value) {
                             setTimeRadioTile(value);
+                            StringAssets.kEventTime = "Night";
                           },
                         ),
                       )
@@ -256,6 +258,10 @@ class _HallBooking2State extends State<HallBooking2> {
                                       : Colors.black)),
                           onChanged: (value) {
                             setBridalRoomRadioTile(value);
+                            setState(() {
+                              isBridalRoom = true;
+                              StringAssets.kEventBRCharges = bridalRoomPrice;
+                            });
                           },
                         ),
                       ),
@@ -273,10 +279,124 @@ class _HallBooking2State extends State<HallBooking2> {
                                       : Colors.black)),
                           onChanged: (value) {
                             setBridalRoomRadioTile(value);
+                            setState(() {
+                              isBridalRoom = false;
+                            });
                           },
                         ),
                       )
                     ],
+                  ),
+                  Container(
+                    child: isBridalRoom == true
+                        ? Align(
+                            alignment: Alignment.centerLeft,
+                            child: RichText(
+                              text: TextSpan(
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 36),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'Charges : ',
+                                    style: TextStyle(
+                                        color: AppColors.kPrimaryColor),
+                                  ),
+                                  TextSpan(text: 'Rs. '),
+                                  TextSpan(
+                                    text: '$bridalRoomPrice',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  )
+                                ],
+                              ),
+                              textScaleFactor: 0.5,
+                            ),
+                          )
+                        : Container(),
+                  ),
+                  SizedBox(height: 10),
+                  Container(
+                      padding: EdgeInsets.all(8.0),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        "AC",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )),
+                  Row(
+                    children: <Widget>[
+                      Flexible(
+                        fit: FlexFit.loose,
+                        child: RadioListTile(
+                          activeColor: AppColors.kPrimaryColor,
+                          selected: true,
+                          value: 1,
+                          groupValue: acTileValue,
+                          title: Text("Yes",
+                              style: TextStyle(
+                                  color: acTileValue == 1
+                                      ? acTileColor
+                                      : Colors.black)),
+                          onChanged: (value) {
+                            setACRadioTile(value);
+                            setState(() {
+                              isAC = true;
+                              StringAssets.kEventACCharges = acPrice;
+                            });
+                          },
+                        ),
+                      ),
+                      Flexible(
+                        fit: FlexFit.loose,
+                        child: RadioListTile(
+                          activeColor: AppColors.kPrimaryColor,
+                          selected: false,
+                          value: 2,
+                          groupValue: acTileValue,
+                          title: Text("No",
+                              style: TextStyle(
+                                  color: acTileValue == 2
+                                      ? acTileColor
+                                      : Colors.black)),
+                          onChanged: (value) {
+                            setACRadioTile(value);
+                            setState(() {
+                              isAC = false;
+                            });
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                  Container(
+                    child: isAC == true
+                        ? Align(
+                            alignment: Alignment.centerLeft,
+                            child: RichText(
+                              text: TextSpan(
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 36),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'Charges : ',
+                                    style: TextStyle(
+                                        color: AppColors.kPrimaryColor),
+                                  ),
+                                  TextSpan(text: 'Rs. '),
+                                  TextSpan(
+                                    text: '$acPrice',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  )
+                                ],
+                              ),
+                              textScaleFactor: 0.5,
+                            ),
+                          )
+                        : Container(),
                   ),
                   SizedBox(height: 10),
                   Container(
@@ -308,6 +428,7 @@ class _HallBooking2State extends State<HallBooking2> {
                             setStageDecorationRadioTile(value);
                             setState(() {
                               isDecoration = true;
+                              StringAssets.kEventSDCharges = decorationPrice;
                             });
                           },
                         ),
@@ -374,21 +495,8 @@ class _HallBooking2State extends State<HallBooking2> {
                             ),
                           )
                         : Container(),
-                  )
-                  // Container(
-                  //   child: RichText(
-                  //     text: TextSpan(
-                  //       text: 'Charges ',
-                  //       style: DefaultTextStyle.of(context).style,
-                  //       children: <TextSpan>[
-                  //         TextSpan(
-                  //             text: 'Rs. ',
-                  //             style: TextStyle(fontWeight: FontWeight.bold)),
-                  //         TextSpan(text: '2500'),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
+                  ),
+                  SizedBox(height: 20),
                 ],
               ),
             ),
@@ -410,20 +518,47 @@ class _HallBooking2State extends State<HallBooking2> {
   Future<void> _selectDate(BuildContext context) async {
     DateTime dateTime = DateTime.now();
     final DateTime pickedDate = await showDatePicker(
-        context: context,
-        initialDate: dateTime,
-        currentDate: dateTime,
-        initialDatePickerMode: DatePickerMode.day,
-        initialEntryMode: DatePickerEntryMode.calendar,
-        firstDate: DateTime(2021),
-        lastDate: DateTime(2050));
-
+      context: context,
+      initialDate: dateTime,
+      currentDate: dateTime,
+      initialDatePickerMode: DatePickerMode.day,
+      initialEntryMode: DatePickerEntryMode.calendar,
+      firstDate: new DateTime.now().subtract(new Duration(days: 0)),
+      lastDate: new DateTime.now().add(new Duration(days: 30)),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: AppColors.kPrimaryColor, // header background color
+              onPrimary: AppColors.kWhiteColor, // header text color
+              onSurface: Colors.black, // body text color
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: Colors.red, // button text color
+              ),
+            ),
+          ),
+          child: child,
+        );
+      },
+    );
+    // final DateTime pickedDate = await showDatePicker(
+    //     context: context,
+    //     initialDate: dateTime,
+    //     currentDate: dateTime,
+    //     initialDatePickerMode: DatePickerMode.day,
+    //     initialEntryMode: DatePickerEntryMode.calendar,
+    //     firstDate: new DateTime.now().subtract(new Duration(days: 0)),
+    //     lastDate: new DateTime.now().add(new Duration(days: 30))
+    //     );
+    //
     if (pickedDate != null && pickedDate != dateTime)
       setState(() {
         var dateParse = DateTime.parse(pickedDate.toString());
         var formattedDate = dateFormat.format(dateParse);
         currentDate = formattedDate.toString();
-        print(currentDate);
+        StringAssets.kEventDate = currentDate;
       });
   }
   // endregion
