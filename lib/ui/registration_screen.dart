@@ -1,17 +1,20 @@
+import 'dart:convert';
 import 'package:event_book_app/constants/app_colors.dart';
+import 'package:event_book_app/methods/toast_methods.dart';
+import 'package:event_book_app/models/user_model.dart';
+import 'package:event_book_app/shared_preference/SharedPrefs.dart';
+import 'package:event_book_app/storage.dart';
 import 'package:event_book_app/ui/components/signup_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gender_picker/source/enums.dart';
 import 'package:gender_picker/source/gender_picker.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'components/already_have_an_account_acheck.dart';
 import 'components/or_divider.dart';
 import 'components/outlined_input_field.dart';
 import 'components/outlined_password_field.dart';
 import 'components/rounded_button.dart';
-import 'components/rounded_input_field.dart';
-import 'components/rounded_password_field.dart';
 import 'components/social_icon.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -20,8 +23,11 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
+  Storage storage = new Storage();
+  ProgressDialog progressDialog;
   String _name;
   String _email;
+  String _gender;
   String _phone;
   String _password;
   GlobalKey<FormState> _signUpFormKey = GlobalKey<FormState>();
@@ -43,6 +49,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
+    // region Progress Dialog
+    progressDialog = ProgressDialog(context,
+        type: ProgressDialogType.Normal, isDismissible: false);
+    progressDialog.style(message: "Registering User");
+    // endregion
 
     return Scaffold(
       appBar: AppBar(
@@ -87,7 +99,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       return null;
                     }
                   },
-                  icon: FontAwesomeIcons.user,
+                  icon: Icons.person,
                   type: "name",
                 ),
                 SizedBox(height: 20),
@@ -112,7 +124,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       return null;
                     }
                   },
-                  icon: Icons.person,
+                  icon: Icons.email,
                   type: "email",
                 ),
                 getGenderWidget(true, false),
@@ -162,11 +174,53 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 SizedBox(height: 20),
                 RoundedButton(
                   text: "Register",
-                  press: () {
+                  press: () async {
                     if (_signUpFormKey.currentState.validate()) {
                       _signUpFormKey.currentState.save();
-                    } else {
-                      print('Empty Values...');
+
+                      await progressDialog.show();
+
+                      storage.readData().then((value) async {
+                        if (value != "") {
+                          UserModel users =
+                              UserModel.fromJson(json.decode(value));
+                          if (users.userEmail != _email) {
+                            progressDialog.hide();
+
+                            UserModel user = new UserModel(
+                                userId: "user101",
+                                userName: _name,
+                                userEmail: _email,
+                                userPhone: _phone,
+                                userGender: _gender,
+                                userPassword: _password);
+
+                            await storage.writeData(json.encode(user));
+                            await SharedPrefs().addBoolToSF('login', true);
+                            ToastMethod.successToastMessage(
+                                "User Registered Successfully....");
+                            Navigator.pop(context);
+                          } else {
+                            await progressDialog.hide();
+                            ToastMethod.errorToastMessage(
+                                "Error: Email already exists.");
+                          }
+                        } else {
+                          await progressDialog.hide();
+                          UserModel user = new UserModel(
+                              userId: "user101",
+                              userName: _name,
+                              userEmail: _email,
+                              userPhone: _phone,
+                              userGender: _gender,
+                              userPassword: _password);
+                          await storage.writeData(json.encode(user));
+                          await SharedPrefs().addBoolToSF('login', true);
+                          ToastMethod.successToastMessage(
+                              "User Registered Successfully....");
+                          Navigator.pop(context);
+                        }
+                      });
                     }
                   },
                 ),
@@ -217,12 +271,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
         unSelectedGenderTextStyle:
             TextStyle(color: Colors.black, fontWeight: FontWeight.normal),
         onChanged: (Gender gender) {
-          String gen = gender.toString();
-          print(gen);
+          _gender = gender.toString();
         },
         //Alignment between icons
         equallyAligned: true,
-
         animationDuration: Duration(milliseconds: 300),
         isCircular: true,
         // default : true,

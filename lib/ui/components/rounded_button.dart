@@ -1,5 +1,6 @@
 import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/constants/font_family.dart';
+import 'package:event_book_app/ui/widgets/font_text_widget.dart';
 import 'package:flutter/material.dart';
 
 class RoundedButton extends StatelessWidget {
@@ -22,18 +23,13 @@ class RoundedButton extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 0),
       width: size.width * 0.9,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(28),
+        borderRadius: BorderRadius.circular(20),
         child: FlatButton(
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           color: color,
           onPressed: press,
-          child: Text(
-            text,
-            style: TextStyle(
-                color: textColor,
-                fontSize: 18.0,
-                fontFamily: FontFamily.kFontPoppinsBold),
-          ),
+          child: fontTextWidget(
+              text, 18.0, textColor, FontFamily.kFontPoppinsBold),
         ),
       ),
     );

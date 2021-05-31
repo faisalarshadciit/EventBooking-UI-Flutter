@@ -1,4 +1,11 @@
+import 'dart:convert';
 import 'package:event_book_app/constants/app_colors.dart';
+import 'package:event_book_app/methods/toast_methods.dart';
+import 'package:event_book_app/models/user_model.dart';
+import 'package:event_book_app/constants/app_colors.dart';
+import 'package:event_book_app/shared_preference/SharedPrefs.dart';
+import 'package:event_book_app/storage.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:event_book_app/ui/components/rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -6,8 +13,6 @@ import 'components/already_have_an_account_acheck.dart';
 import 'components/login_background.dart';
 import 'components/outlined_input_field.dart';
 import 'components/outlined_password_field.dart';
-import 'components/rounded_input_field.dart';
-import 'components/rounded_password_field.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -15,6 +20,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  Storage storage = new Storage();
+  ProgressDialog progressDialog;
   String _email;
   String _password;
   GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
@@ -32,6 +39,12 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
+    // region Progress Dialog
+    progressDialog = ProgressDialog(context,
+        type: ProgressDialogType.Normal, isDismissible: false);
+    progressDialog.style(message: "SignIn User");
+    // endregion
 
     return Scaffold(
       appBar: AppBar(
@@ -71,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                       return null;
                     }
                   },
-                  icon: Icons.person,
+                  icon: Icons.email,
                   type: "email",
                 ),
                 SizedBox(height: 20),
@@ -93,9 +106,35 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: 20),
                 RoundedButton(
                   text: "Sign In",
-                  press: () {
+                  press: () async {
                     if (_loginFormKey.currentState.validate()) {
                       _loginFormKey.currentState.save();
+
+                      await progressDialog.show();
+
+                      print("Press");
+                      storage.readData().then((value) async {
+                        if (value != "") {
+                          UserModel users =
+                              UserModel.fromJson(json.decode(value));
+
+                          if (users.userEmail == _email &&
+                              users.userPassword == _password) {
+                            await progressDialog.hide();
+                            await SharedPrefs().addBoolToSF('login', true);
+                            ToastMethod.successToastMessage(
+                                "User Login Successfully....");
+                            Navigator.pop(context);
+                          } else {
+                            await progressDialog.hide();
+                            ToastMethod.errorToastMessage(
+                                "Invalid Email or Password.");
+                          }
+                        } else {
+                          await progressDialog.hide();
+                          ToastMethod.errorToastMessage("No user exists.");
+                        }
+                      });
                     } else {
                       print('Empty Values...');
                     }

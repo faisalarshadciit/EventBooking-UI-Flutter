@@ -1,9 +1,9 @@
 import 'details_screen.dart';
-import 'file:///D:/MobileAppDevelopment/Flutter/event_book_app/lib/models/model_class.dart';
 import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/constants/font_family.dart';
 import 'package:event_book_app/methods/json_method.dart';
 import 'package:event_book_app/models/halls_model.dart';
+import 'package:event_book_app/ui/widgets/font_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -56,13 +56,8 @@ class _HomePageState extends State<HomePage> {
                 centerTitle: true,
                 titlePadding: EdgeInsets.only(top: 30.0),
                 title: Center(
-                  child: Text(
-                    "Event Booking",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: FontFamily.kFontPoppinsBold,
-                        fontSize: 18),
-                  ),
+                  child: fontTextWidget("Event Booking", 18.0, Colors.white,
+                      FontFamily.kFontPoppinsBold),
                 ),
               ),
               bottom: PreferredSize(
@@ -133,15 +128,9 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.fromLTRB(5, 0, 10, 0),
-                      child: Text(
-                        'Recommended for you',
-                        style: TextStyle(
-                            fontFamily: FontFamily.kFontPoppinsRegular,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18),
-                      ),
-                    ),
+                        padding: EdgeInsets.fromLTRB(5, 0, 10, 0),
+                        child: fontTextWidget('Recommended for you', 18.0,
+                            Colors.black, FontFamily.kFontPoppinsRegular)),
                     SizedBox(height: 10),
                     Container(
                         height: 200,
@@ -194,15 +183,9 @@ class _HomePageState extends State<HomePage> {
                       height: 15,
                     ),
                     Container(
-                      padding: EdgeInsets.fromLTRB(5, 0, 10, 0),
-                      child: Text(
-                        'Experiences for you',
-                        style: TextStyle(
-                            fontFamily: FontFamily.kFontPoppinsRegular,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18),
-                      ),
-                    ),
+                        padding: EdgeInsets.fromLTRB(5, 0, 10, 0),
+                        child: fontTextWidget('Experiences for you', 18.0,
+                            Colors.black, FontFamily.kFontPoppinsRegular)),
                     SizedBox(height: 10),
                     Container(
                       height: _height * 0.22,

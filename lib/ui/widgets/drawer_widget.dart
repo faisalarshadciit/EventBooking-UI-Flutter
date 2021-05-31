@@ -1,9 +1,49 @@
 import 'package:event_book_app/config/size_config.dart';
 import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/constants/font_family.dart';
+import 'package:event_book_app/constants/string_assets.dart';
+import 'package:event_book_app/methods/toast_methods.dart';
+import 'package:event_book_app/shared_preference/SharedPrefs.dart';
 import 'package:flutter/material.dart';
+import 'color_text_widget.dart';
 
-class AppDrawer extends StatelessWidget {
+bool login = false;
+bool logout = false;
+
+class AppDrawer extends StatefulWidget {
+  const AppDrawer({Key key}) : super(key: key);
+
+  @override
+  _AppDrawerState createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkUserLogin().then((value) async {
+      if (value == false) {
+        setState(() {
+          logout = false;
+          login = true;
+        });
+      } else {
+        if (!await SharedPrefs().getBoolValuesSF("login")) {
+          setState(() {
+            logout = false;
+            login = true;
+          });
+        } else {
+          setState(() {
+            logout = true;
+            login = false;
+          });
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -15,8 +55,8 @@ class AppDrawer extends StatelessWidget {
           children: <Widget>[
             _buildDrawerHeader(),
             ListTile(
-              title: Text('Profile'),
-              leading: Icon(Icons.face),
+              title: colorTextWidget('Profile', 16.0, AppColors.kPrimaryColor),
+              leading: Icon(Icons.face, color: AppColors.kPrimaryColor),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/profile_page');
@@ -24,8 +64,10 @@ class AppDrawer extends StatelessWidget {
             ),
             Divider(),
             ListTile(
-              title: Text('Booked Halls'),
-              leading: Icon(Icons.supervised_user_circle_outlined),
+              title: colorTextWidget(
+                  'Booked Halls', 16.0, AppColors.kPrimaryColor),
+              leading: Icon(Icons.supervised_user_circle_outlined,
+                  color: AppColors.kPrimaryColor),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/booked_halls');
@@ -33,8 +75,9 @@ class AppDrawer extends StatelessWidget {
             ),
             Divider(),
             ListTile(
-              title: Text('Logout'),
-              leading: Icon(Icons.lock_open),
+              title: colorTextWidget(logout == true ? 'Logout' : 'Login', 16.0,
+                  AppColors.kPrimaryColor),
+              leading: Icon(Icons.lock_open, color: AppColors.kPrimaryColor),
               onTap: () {
                 Navigator.pop(context);
               },
@@ -71,10 +114,10 @@ class AppDrawer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'Marriage Halls',
+                  StringAssets.kLoginUserName,
                   style: TextStyle(
                       fontFamily: FontFamily.kFontPoppinsRegular,
-                      fontSize: 20.0,
+                      fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
                 ),
@@ -89,4 +132,25 @@ class AppDrawer extends StatelessWidget {
     );
   }
 // endregion
+
+  // region CheckUserLogin Method
+  checkUserLogin() async {
+    bool boolValue = await SharedPrefs().getBoolValuesSF("login");
+    if (boolValue == true) {
+      login = false;
+      logout = true;
+    } else {
+      login = true;
+      logout = false;
+    }
+  }
+  // endregion
+
+  // region User Logout Method
+  setUserLogout() async {
+    SharedPrefs().addBoolToSF("login", false);
+    ToastMethod.simpleToastMessages("User logout");
+    initState();
+  }
+  // endregion
 }

@@ -1,5 +1,8 @@
 import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/constants/app_styles.dart';
+import 'package:event_book_app/constants/string_assets.dart';
+import 'package:event_book_app/ui/widgets/simple_icon_widget.dart';
+import 'package:event_book_app/ui/widgets/aligned_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -36,24 +39,27 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(height: 20),
               _profileMenuWidget(
                 context,
-                "StringAssets.kLabelName",
-                "boolValue ? user.username : username",
+                StringAssets.kLabelUserName,
+                StringAssets.kLoginUserName,
+                //"boolValue ? user.username : username",
                 //user.username != null ? user.username : username,
                 FontAwesomeIcons.userCircle,
                 () => {},
               ),
               _profileMenuWidget(
                 context,
-                "StringAssets.kLabelEmail",
-                "boolValue ? user.email : email",
+                StringAssets.kLabelUserEmail,
+                StringAssets.kLoginUserEmail,
+                //"boolValue ? user.email : email",
                 //user.email != null ? user.email : email,
                 Icons.email,
                 () => {},
               ),
               _profileMenuWidget(
                 context,
-                "StringAssets.kLabelPhone",
-                "boolValue ? user.phoneNumber : phone",
+                StringAssets.kLabelUserPhone,
+                StringAssets.kLoginUserPhone,
+                //"boolValue ? user.phoneNumber : phone",
                 //user.phoneNumber != null ? user.phoneNumber : phone,
                 Icons.phone,
                 () => {},
@@ -85,10 +91,13 @@ class _ProfilePageState extends State<ProfilePage> {
               child: FlatButton(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50.0),
-                  side: BorderSide(color: AppColors.kWhiteColor),
+                  side: BorderSide(color: AppColors.kPrimaryColor),
                 ),
-                color: AppColors.kProfileColor,
-                child: SvgPicture.asset("assets/icons/camera.svg"),
+                color: AppColors.kPrimaryColor,
+                child: SvgPicture.asset(
+                  "assets/icons/camera.svg",
+                  color: AppColors.kWhiteColor,
+                ),
                 onPressed: () {},
               ),
             ),
@@ -100,11 +109,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget profileMenuWidget(String text, String icon, VoidCallback press) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: FlatButton(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.all(10),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.circular(30.0),
         ),
         color: AppColors.kProfileColor,
         onPressed: press,
@@ -135,46 +144,26 @@ class _ProfilePageState extends State<ProfilePage> {
           width: 0.0,
           color: AppColors.kSmokeWhiteColor,
         ),
-        borderRadius: BorderRadius.all(Radius.circular(7.0)),
-        color: AppColors.kProfileColor,
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        color: AppColors.kPrimaryColor,
       ),
       margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+      padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
       child: Row(
         children: [
-          Icon(
-            icon,
-            color: AppColors.kPrimaryColor,
-          ),
-          // Icon(
-          //   icon,
-          //   size: 32.0,
-          //   color: AppColors.kDarkGreyColor,
-          // ),
-          SizedBox(width: 20),
+          simpleIconWidget(icon, AppColors.kWhiteColor),
+          SizedBox(width: 10),
           Expanded(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                Text(
-                  text,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: AppColors.kDarkGreyColor,
-                  ),
-                ),
+                alignedTextWidget(
+                    text, 16.0, AppColors.kWhiteColor, TextAlign.start),
                 SizedBox(
                   height: 5.0,
                 ),
-                Text(
-                  textValue,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: AppColors.kDarkGreyColor,
-                  ),
-                )
+                alignedTextWidget(
+                    textValue, 12.0, AppColors.kWhiteColor, TextAlign.start),
               ]))
         ],
       ),
