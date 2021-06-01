@@ -4,6 +4,7 @@ import 'package:event_book_app/constants/string_assets.dart';
 import 'package:event_book_app/methods/json_method.dart';
 import 'package:event_book_app/models/custom_menu_model.dart';
 import 'package:event_book_app/ui/receipt_screen.dart';
+import 'package:event_book_app/ui/widgets/colored_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'components/rounded_button.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
@@ -22,6 +23,13 @@ class _CustomMenuSelectionState extends State<CustomMenuSelection> {
 
   List<String> _checked = [];
   List<int> _indexed = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    totalPrice = 0;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,20 +90,18 @@ class _CustomMenuSelectionState extends State<CustomMenuSelection> {
                                     ),
                                   ),
                                   Container(
-                                      margin: EdgeInsets.fromLTRB(
-                                          8.0, 8.0, 8.0, 0.0),
-                                      padding: EdgeInsets.all(5.0),
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey.shade200,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Text(
+                                    margin:
+                                        EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+                                    padding: EdgeInsets.all(5.0),
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: coloredTextWidget(
                                         customMenuModel.menuName,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColors.kPrimaryColor,
-                                            fontSize: 16.0),
-                                      )),
+                                        16.0,
+                                        AppColors.kPrimaryColor),
+                                  ),
                                 ],
                               ),
                             ),
@@ -209,7 +215,7 @@ class _CustomMenuSelectionState extends State<CustomMenuSelection> {
       onSelected: (List selected) => setState(() {
         _checked = selected;
 
-        print(_checked);
+        print(totalPrice);
         totalPrice = totalPrice + menuItemsList[index].perHeadPrice;
       }),
     );

@@ -76,8 +76,8 @@ class _ProfilePageState extends State<ProfilePage> {
       height: 115.0,
       width: 115.0,
       child: Stack(
+        clipBehavior: Clip.none,
         fit: StackFit.expand,
-        overflow: Overflow.visible,
         children: [
           CircleAvatar(
             backgroundImage: AssetImage("assets/images/profile.png"),

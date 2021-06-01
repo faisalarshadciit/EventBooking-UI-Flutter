@@ -49,15 +49,15 @@ class _HomePageState extends State<HomePage> {
               ],
               expandedHeight: _height / 5.5,
               floating: false,
-              pinned: true,
+              pinned: false,
               backgroundColor: AppColors.kPrimaryColor,
               flexibleSpace: FlexibleSpaceBar(
                 collapseMode: CollapseMode.parallax,
                 centerTitle: true,
-                titlePadding: EdgeInsets.only(top: 30.0),
+                titlePadding: EdgeInsets.only(top: 20.0),
                 title: Center(
-                  child: fontTextWidget("Event Booking", 18.0, Colors.white,
-                      FontFamily.kFontPoppinsBold),
+                  child: fontTextWidget("Event Booking", 16.0, Colors.white,
+                      FontFamily.kFontPoppinsSemiBold),
                 ),
               ),
               bottom: PreferredSize(
@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                        padding: EdgeInsets.fromLTRB(5, 0, 10, 0),
+                        padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                         child: fontTextWidget('Recommended for you', 18.0,
                             Colors.black, FontFamily.kFontPoppinsRegular)),
                     SizedBox(height: 10),
@@ -234,6 +234,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: 15,
+                    ),
                   ],
                 ),
               ),
@@ -261,8 +264,8 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Container(
-              height: 50,
-              width: 50,
+              height: 60,
+              width: 60,
               child: ClipRRect(
                 borderRadius: new BorderRadius.circular(70.0),
                 child: Image.asset(
@@ -300,16 +303,19 @@ class _HomePageState extends State<HomePage> {
       },
       child: Container(
         width: 180,
-        height: 200,
         child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               ClipRRect(
                 borderRadius: new BorderRadius.only(
-                    topLeft: Radius.circular(4), topRight: Radius.circular(4)),
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10)),
                 child: Container(
-                    height: _height * 0.15,
+                    height: _height * 0.20,
                     width: _width,
                     child: Image.asset(
                       mHallsModel.imageUrl,
@@ -317,7 +323,7 @@ class _HomePageState extends State<HomePage> {
                     )),
               ),
               Container(
-                padding: EdgeInsets.all(8),
+                padding: EdgeInsets.all(5),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -326,8 +332,8 @@ class _HomePageState extends State<HomePage> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w200),
+                          color: AppColors.kPrimaryColor,
+                          fontWeight: FontWeight.bold),
                     ),
                     // Text(
                     //   address,
@@ -357,16 +363,14 @@ class _HomePageState extends State<HomePage> {
                     )));
       },
       child: Container(
-        width: 180,
+        width: 150,
         height: _height * 0.20,
         child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
           child: ClipRRect(
-            borderRadius: new BorderRadius.only(
-              topLeft: Radius.circular(4),
-              topRight: Radius.circular(4),
-              bottomLeft: Radius.circular(4),
-              bottomRight: Radius.circular(4),
-            ),
+            borderRadius: new BorderRadius.all(Radius.circular(10)),
             child: Container(
                 height: _height * 0.20,
                 width: _width,

@@ -13,6 +13,8 @@ class BookedHall extends StatefulWidget {
 }
 
 class _BookedHallState extends State<BookedHall> {
+  Color statusColor = AppColors.kPrimaryColor;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,214 +45,245 @@ class _BookedHallState extends State<BookedHall> {
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context, int index) {
                         OrdersModel ordersModel = snapshot.data[index];
+
+                        if (ordersModel.orderStatus == "Pending") {
+                          statusColor = Colors.orange;
+                        } else if (ordersModel.orderStatus == "Accepted") {
+                          statusColor = Colors.green;
+                        } else if (ordersModel.orderStatus == "Rejected") {
+                          statusColor = Colors.red;
+                        } else if (ordersModel.orderStatus == "Completed") {
+                          statusColor = AppColors.kPrimaryColorDark;
+                        }
+
                         return Column(
                           children: [
                             Padding(
                               padding: EdgeInsets.all(10.0),
-                              child: Card(
-                                elevation: 5.0,
-                                color: AppColors.kWhiteColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                    bottomRight: Radius.circular(60),
-                                    bottomLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10),
-                                    topLeft: Radius.circular(10),
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        SizedBox(width: 10),
-                                        SizedBox(
-                                          width: 80,
-                                          child: AspectRatio(
-                                            aspectRatio: 1,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color: Colors.red[300],
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                              ),
-                                              padding: EdgeInsets.all(10),
-                                              child: Image.asset(
-                                                  "assets/decoration/stage_decoration_1.jpg",
-                                                  fit: BoxFit.fill),
-                                            ),
-                                          ),
-                                        )
-                                      ],
+                              child: GestureDetector(
+                                onTap: () {
+                                  if (ordersModel.orderStatus == "Completed") {
+                                    Navigator.pushReplacementNamed(
+                                        context, '/rating_page');
+                                  } else {
+                                    print("Pressed...");
+                                  }
+                                },
+                                child: Card(
+                                  elevation: 5.0,
+                                  color: AppColors.kWhiteColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      bottomRight: Radius.circular(60),
+                                      bottomLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10),
+                                      topLeft: Radius.circular(10),
                                     ),
-                                    SizedBox(width: 20),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 10.0, bottom: 15.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Row(
                                         children: [
-                                          SizedBox(height: 10),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  iconWidget(
-                                                      Icons.account_circle,
-                                                      AppColors.kPrimaryColor,
-                                                      20.0),
-                                                  SizedBox(
-                                                    width: 10.0,
-                                                  ),
-                                                  coloredTextWidget(
-                                                      ordersModel.customerName,
-                                                      15.0,
-                                                      AppColors.kPrimaryColor),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(height: 10),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  iconWidget(
-                                                      Icons.phone,
-                                                      AppColors.kPrimaryColor,
-                                                      20.0),
-                                                  SizedBox(
-                                                    width: 10.0,
-                                                  ),
-                                                  coloredTextWidget(
-                                                      ordersModel.customerPhone,
-                                                      15.0,
-                                                      AppColors.kPrimaryColor),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(height: 10),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  iconWidget(
-                                                      Icons
-                                                          .calendar_today_outlined,
-                                                      AppColors.kPrimaryColor,
-                                                      20.0),
-                                                  SizedBox(
-                                                    width: 10.0,
-                                                  ),
-                                                  coloredTextWidget(
-                                                      ordersModel.eventDate,
-                                                      15.0,
-                                                      AppColors.kPrimaryColor),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(height: 10),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  iconWidget(
-                                                      FontAwesomeIcons
-                                                          .firstOrder,
-                                                      AppColors.kPrimaryColor,
-                                                      20.0),
-                                                  SizedBox(
-                                                    width: 10.0,
-                                                  ),
-                                                  coloredTextWidget(
-                                                      ordersModel.orderStatus,
-                                                      15.0,
-                                                      AppColors.kPrimaryColor),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(height: 10),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                child: Container(
-                                                    child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        iconWidget(
-                                                            Icons
-                                                                .airline_seat_legroom_normal,
-                                                            AppColors
-                                                                .kPrimaryColor,
-                                                            20.0),
-                                                        SizedBox(
-                                                          width: 10.0,
-                                                        ),
-                                                        coloredTextWidget(
-                                                            ordersModel
-                                                                .noOfChairs
-                                                                .toString(),
-                                                            15.0,
-                                                            AppColors
-                                                                .kPrimaryColor),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                )),
-                                              ),
-                                              SizedBox(
-                                                width: 40.0,
-                                              ),
-                                              Container(
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        iconWidget(
-                                                            Icons.wb_sunny,
-                                                            AppColors
-                                                                .kPrimaryColor,
-                                                            14.0),
-                                                        SizedBox(
-                                                          width: 10.0,
-                                                        ),
-                                                        coloredTextWidget(
-                                                            ordersModel
-                                                                .eventTime,
-                                                            15.0,
-                                                            AppColors
-                                                                .kPrimaryColor),
-                                                      ],
-                                                    ),
-                                                  ],
+                                          SizedBox(width: 10),
+                                          SizedBox(
+                                            width: 80,
+                                            child: AspectRatio(
+                                              aspectRatio: 1,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.red[300],
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
                                                 ),
-                                              )
-                                            ],
+                                                padding: EdgeInsets.all(10),
+                                                child: Image.asset(
+                                                    "assets/decoration/stage_decoration_1.jpg",
+                                                    fit: BoxFit.fill),
+                                              ),
+                                            ),
                                           )
                                         ],
                                       ),
-                                    )
-                                  ],
+                                      SizedBox(width: 20),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 10.0, bottom: 15.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(height: 10),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    iconWidget(
+                                                        Icons.account_circle,
+                                                        AppColors.kPrimaryColor,
+                                                        20.0),
+                                                    SizedBox(
+                                                      width: 10.0,
+                                                    ),
+                                                    coloredTextWidget(
+                                                        ordersModel
+                                                            .customerName,
+                                                        15.0,
+                                                        AppColors
+                                                            .kPrimaryColor),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 10),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    iconWidget(
+                                                        Icons.phone,
+                                                        AppColors.kPrimaryColor,
+                                                        20.0),
+                                                    SizedBox(
+                                                      width: 10.0,
+                                                    ),
+                                                    coloredTextWidget(
+                                                        ordersModel
+                                                            .customerPhone,
+                                                        15.0,
+                                                        AppColors
+                                                            .kPrimaryColor),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 10),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    iconWidget(
+                                                        Icons
+                                                            .calendar_today_outlined,
+                                                        AppColors.kPrimaryColor,
+                                                        20.0),
+                                                    SizedBox(
+                                                      width: 10.0,
+                                                    ),
+                                                    coloredTextWidget(
+                                                        ordersModel.eventDate,
+                                                        15.0,
+                                                        AppColors
+                                                            .kPrimaryColor),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 10),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    iconWidget(
+                                                        FontAwesomeIcons
+                                                            .firstOrder,
+                                                        AppColors.kPrimaryColor,
+                                                        20.0),
+                                                    SizedBox(
+                                                      width: 10.0,
+                                                    ),
+                                                    coloredTextWidget(
+                                                        ordersModel.orderStatus,
+                                                        15.0,
+                                                        statusColor),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 10),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Container(
+                                                  child: Container(
+                                                      child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          iconWidget(
+                                                              Icons
+                                                                  .airline_seat_legroom_normal,
+                                                              AppColors
+                                                                  .kPrimaryColor,
+                                                              20.0),
+                                                          SizedBox(
+                                                            width: 10.0,
+                                                          ),
+                                                          coloredTextWidget(
+                                                              ordersModel
+                                                                  .noOfChairs
+                                                                  .toString(),
+                                                              15.0,
+                                                              AppColors
+                                                                  .kPrimaryColor),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  )),
+                                                ),
+                                                SizedBox(
+                                                  width: 40.0,
+                                                ),
+                                                Container(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          iconWidget(
+                                                              Icons.wb_sunny,
+                                                              AppColors
+                                                                  .kPrimaryColor,
+                                                              14.0),
+                                                          SizedBox(
+                                                            width: 10.0,
+                                                          ),
+                                                          coloredTextWidget(
+                                                              ordersModel
+                                                                  .eventTime,
+                                                              15.0,
+                                                              AppColors
+                                                                  .kPrimaryColor),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             )

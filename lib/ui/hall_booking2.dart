@@ -1,11 +1,11 @@
 import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/constants/app_styles.dart';
 import 'package:event_book_app/constants/string_assets.dart';
+import 'package:event_book_app/ui/widgets/default_container.dart';
+import 'package:event_book_app/ui/widgets/custome_radiolisttile.dart';
+import 'package:event_book_app/ui/widgets/richtext_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:time_range_picker/time_range_picker.dart';
-import 'components/outlined_input_field.dart';
 import 'components/rounded_button.dart';
 
 class HallBooking2 extends StatefulWidget {
@@ -14,6 +14,7 @@ class HallBooking2 extends StatefulWidget {
 }
 
 class _HallBooking2State extends State<HallBooking2> {
+  GlobalKey<FormState> _hallBooking2FormKey = GlobalKey<FormState>();
   var dateFormat = new DateFormat('dd-MM-yyyy');
   String currentDate, startTime, endTime;
   Color brTileColor = AppColors.kPrimaryColor;
@@ -77,8 +78,6 @@ class _HallBooking2State extends State<HallBooking2> {
     var dateParse = DateTime.parse(date);
     var formattedDate = dateFormat.format(dateParse);
 
-    //var formattedDate = "${dateParse.day}-${dateParse.month}-${dateParse.year}";
-
     setState(() {
       currentDate = formattedDate.toString();
       StringAssets.kEventDate = currentDate;
@@ -106,19 +105,10 @@ class _HallBooking2State extends State<HallBooking2> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Form(
+              key: _hallBooking2FormKey,
               child: Column(
                 children: [
-                  Container(
-                      padding: EdgeInsets.all(8.0),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        "Event Date",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      )),
+                  defaultContainer("Event Date"),
                   SizedBox(height: 10),
                   Row(
                     children: <Widget>[
@@ -179,280 +169,146 @@ class _HallBooking2State extends State<HallBooking2> {
                     ],
                   ),
                   SizedBox(height: 10),
-                  Container(
-                      padding: EdgeInsets.all(8.0),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        "Event Time",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      )),
+                  defaultContainer("Event Time"),
                   Row(
                     children: <Widget>[
-                      Flexible(
-                        fit: FlexFit.loose,
-                        child: RadioListTile(
-                          activeColor: AppColors.kPrimaryColor,
-                          selected: true,
+                      CustomRadioListTile(
+                          flexFit: FlexFit.loose,
+                          isSelected: true,
                           value: 1,
-                          groupValue: etTileValue,
-                          title: Text("Day",
-                              style: TextStyle(
-                                  color: etTileValue == 1
-                                      ? etTileColor
-                                      : Colors.black)),
-                          onChanged: (value) {
+                          tileValue: etTileValue,
+                          tileColor: etTileColor,
+                          tileColorValue: 1,
+                          text: "Day",
+                          onChange: (value) {
                             setTimeRadioTile(value);
                             StringAssets.kEventTime = "Day";
-                          },
-                        ),
-                      ),
-                      Flexible(
-                        fit: FlexFit.loose,
-                        child: RadioListTile(
-                          activeColor: AppColors.kPrimaryColor,
-                          selected: false,
+                          }),
+                      CustomRadioListTile(
+                          flexFit: FlexFit.loose,
+                          isSelected: false,
                           value: 2,
-                          groupValue: etTileValue,
-                          title: Text("Night",
-                              style: TextStyle(
-                                  color: etTileValue == 2
-                                      ? etTileColor
-                                      : Colors.black)),
-                          onChanged: (value) {
+                          tileValue: etTileValue,
+                          tileColor: etTileColor,
+                          tileColorValue: 2,
+                          text: "Night",
+                          onChange: (value) {
                             setTimeRadioTile(value);
                             StringAssets.kEventTime = "Night";
-                          },
-                        ),
-                      )
+                          }),
                     ],
                   ),
                   SizedBox(height: 10),
-                  Container(
-                      padding: EdgeInsets.all(8.0),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        "Bridal Room",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      )),
+                  defaultContainer("Bridal Room"),
                   Row(
                     children: <Widget>[
-                      Flexible(
-                        fit: FlexFit.loose,
-                        child: RadioListTile(
-                          activeColor: AppColors.kPrimaryColor,
-                          selected: true,
+                      CustomRadioListTile(
+                          flexFit: FlexFit.loose,
+                          isSelected: true,
                           value: 1,
-                          groupValue: brTileValue,
-                          title: Text("Yes",
-                              style: TextStyle(
-                                  color: brTileValue == 1
-                                      ? brTileColor
-                                      : Colors.black)),
-                          onChanged: (value) {
+                          tileValue: brTileValue,
+                          tileColor: brTileColor,
+                          tileColorValue: 1,
+                          text: "Yes",
+                          onChange: (value) {
                             setBridalRoomRadioTile(value);
                             setState(() {
                               isBridalRoom = true;
                               StringAssets.kEventBRCharges = bridalRoomPrice;
                             });
-                          },
-                        ),
-                      ),
-                      Flexible(
-                        fit: FlexFit.loose,
-                        child: RadioListTile(
-                          activeColor: AppColors.kPrimaryColor,
-                          selected: false,
+                          }),
+                      CustomRadioListTile(
+                          flexFit: FlexFit.loose,
+                          isSelected: false,
                           value: 2,
-                          groupValue: brTileValue,
-                          title: Text("No",
-                              style: TextStyle(
-                                  color: brTileValue == 2
-                                      ? brTileColor
-                                      : Colors.black)),
-                          onChanged: (value) {
+                          tileValue: brTileValue,
+                          tileColor: brTileColor,
+                          tileColorValue: 2,
+                          text: "No",
+                          onChange: (value) {
                             setBridalRoomRadioTile(value);
                             setState(() {
                               isBridalRoom = false;
                             });
-                          },
-                        ),
-                      )
+                          }),
                     ],
                   ),
                   Container(
                     child: isBridalRoom == true
-                        ? Align(
-                            alignment: Alignment.centerLeft,
-                            child: RichText(
-                              text: TextSpan(
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 36),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: 'Charges : ',
-                                    style: TextStyle(
-                                        color: AppColors.kPrimaryColor),
-                                  ),
-                                  TextSpan(text: 'Rs. '),
-                                  TextSpan(
-                                    text: '$bridalRoomPrice',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              ),
-                              textScaleFactor: 0.5,
-                            ),
-                          )
+                        ? richTextWidget(bridalRoomPrice)
                         : Container(),
                   ),
                   SizedBox(height: 10),
-                  Container(
-                      padding: EdgeInsets.all(8.0),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        "AC",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      )),
+                  defaultContainer("AC"),
                   Row(
                     children: <Widget>[
-                      Flexible(
-                        fit: FlexFit.loose,
-                        child: RadioListTile(
-                          activeColor: AppColors.kPrimaryColor,
-                          selected: true,
+                      CustomRadioListTile(
+                          flexFit: FlexFit.loose,
+                          isSelected: true,
                           value: 1,
-                          groupValue: acTileValue,
-                          title: Text("Yes",
-                              style: TextStyle(
-                                  color: acTileValue == 1
-                                      ? acTileColor
-                                      : Colors.black)),
-                          onChanged: (value) {
+                          tileValue: acTileValue,
+                          tileColor: acTileColor,
+                          tileColorValue: 1,
+                          text: "Yes",
+                          onChange: (value) {
                             setACRadioTile(value);
                             setState(() {
                               isAC = true;
                               StringAssets.kEventACCharges = acPrice;
                             });
-                          },
-                        ),
-                      ),
-                      Flexible(
-                        fit: FlexFit.loose,
-                        child: RadioListTile(
-                          activeColor: AppColors.kPrimaryColor,
-                          selected: false,
+                          }),
+                      CustomRadioListTile(
+                          flexFit: FlexFit.loose,
+                          isSelected: false,
                           value: 2,
-                          groupValue: acTileValue,
-                          title: Text("No",
-                              style: TextStyle(
-                                  color: acTileValue == 2
-                                      ? acTileColor
-                                      : Colors.black)),
-                          onChanged: (value) {
+                          tileValue: acTileValue,
+                          tileColor: acTileColor,
+                          tileColorValue: 2,
+                          text: "No",
+                          onChange: (value) {
                             setACRadioTile(value);
                             setState(() {
                               isAC = false;
                             });
-                          },
-                        ),
-                      )
+                          }),
                     ],
                   ),
                   Container(
-                    child: isAC == true
-                        ? Align(
-                            alignment: Alignment.centerLeft,
-                            child: RichText(
-                              text: TextSpan(
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 36),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: 'Charges : ',
-                                    style: TextStyle(
-                                        color: AppColors.kPrimaryColor),
-                                  ),
-                                  TextSpan(text: 'Rs. '),
-                                  TextSpan(
-                                    text: '$acPrice',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              ),
-                              textScaleFactor: 0.5,
-                            ),
-                          )
-                        : Container(),
+                    child: isAC == true ? richTextWidget(acPrice) : Container(),
                   ),
                   SizedBox(height: 10),
-                  Container(
-                      padding: EdgeInsets.all(8.0),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        "Stage Decoration",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      )),
+                  defaultContainer("Stage Decoration"),
                   Row(
                     children: <Widget>[
-                      Flexible(
-                        fit: FlexFit.loose,
-                        child: RadioListTile(
-                          activeColor: AppColors.kPrimaryColor,
-                          selected: true,
+                      CustomRadioListTile(
+                          flexFit: FlexFit.loose,
+                          isSelected: true,
                           value: 1,
-                          groupValue: sdTileValue,
-                          title: Text("Yes",
-                              style: TextStyle(
-                                  color: sdTileValue == 1
-                                      ? sdTileColor
-                                      : Colors.black)),
-                          onChanged: (value) {
+                          tileValue: sdTileValue,
+                          tileColor: sdTileColor,
+                          tileColorValue: 1,
+                          text: "Yes",
+                          onChange: (value) {
                             setStageDecorationRadioTile(value);
                             setState(() {
                               isDecoration = true;
                               StringAssets.kEventSDCharges = decorationPrice;
                             });
-                          },
-                        ),
-                      ),
-                      Flexible(
-                        fit: FlexFit.loose,
-                        child: RadioListTile(
-                          activeColor: AppColors.kPrimaryColor,
-                          selected: false,
+                          }),
+                      CustomRadioListTile(
+                          flexFit: FlexFit.loose,
+                          isSelected: false,
                           value: 2,
-                          groupValue: sdTileValue,
-                          title: Text("No",
-                              style: TextStyle(
-                                  color: sdTileValue == 2
-                                      ? sdTileColor
-                                      : Colors.black)),
-                          onChanged: (value) {
+                          tileValue: sdTileValue,
+                          tileColor: sdTileColor,
+                          tileColorValue: 2,
+                          text: "No",
+                          onChange: (value) {
                             setStageDecorationRadioTile(value);
                             setState(() {
                               isDecoration = false;
                             });
-                          },
-                        ),
-                      )
+                          }),
                     ],
                   ),
                   SizedBox(height: 10),
@@ -471,29 +327,7 @@ class _HallBooking2State extends State<HallBooking2> {
                   SizedBox(height: 20),
                   Container(
                     child: isDecoration == true
-                        ? Align(
-                            alignment: Alignment.centerLeft,
-                            child: RichText(
-                              text: TextSpan(
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 36),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: 'Charges : ',
-                                    style: TextStyle(
-                                        color: AppColors.kPrimaryColor),
-                                  ),
-                                  TextSpan(text: 'Rs. '),
-                                  TextSpan(
-                                    text: '$decorationPrice',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              ),
-                              textScaleFactor: 0.5,
-                            ),
-                          )
+                        ? richTextWidget(decorationPrice)
                         : Container(),
                   ),
                   SizedBox(height: 20),
@@ -543,16 +377,6 @@ class _HallBooking2State extends State<HallBooking2> {
         );
       },
     );
-    // final DateTime pickedDate = await showDatePicker(
-    //     context: context,
-    //     initialDate: dateTime,
-    //     currentDate: dateTime,
-    //     initialDatePickerMode: DatePickerMode.day,
-    //     initialEntryMode: DatePickerEntryMode.calendar,
-    //     firstDate: new DateTime.now().subtract(new Duration(days: 0)),
-    //     lastDate: new DateTime.now().add(new Duration(days: 30))
-    //     );
-    //
     if (pickedDate != null && pickedDate != dateTime)
       setState(() {
         var dateParse = DateTime.parse(pickedDate.toString());
@@ -560,60 +384,6 @@ class _HallBooking2State extends State<HallBooking2> {
         currentDate = formattedDate.toString();
         StringAssets.kEventDate = currentDate;
       });
-  }
-  // endregion
-
-  // region Time (From-To) Selection
-  Future<void> _selectTime(BuildContext context) async {
-    showTimeRangePicker(
-      context: context,
-      start: TimeOfDay(hour: 9, minute: 0),
-      end: TimeOfDay(hour: 12, minute: 0),
-      onStartChange: (start) {
-        startTime = start.toString();
-        print("start time " + start.toString());
-      },
-      onEndChange: (end) {
-        endTime = end.toString();
-        print("end time " + end.toString());
-      },
-      disabledTime: TimeRange(
-          startTime: TimeOfDay(hour: 22, minute: 0),
-          endTime: TimeOfDay(hour: 8, minute: 0)),
-      disabledColor: Colors.red.withOpacity(0.5),
-      interval: Duration(minutes: 30),
-      use24HourFormat: false,
-      padding: 30,
-      strokeWidth: 12,
-      handlerRadius: 14,
-      ticks: 12,
-      strokeColor: Colors.orange,
-      handlerColor: Colors.orange[700],
-      selectedColor: Colors.amber,
-      backgroundColor: Colors.black.withOpacity(0.3),
-      ticksColor: Colors.white,
-      snap: true,
-      labels: ["12 pm", "3 am", "6 am", "9 am", "12 am", "3 pm", "6 pm", "9 pm"]
-          .asMap()
-          .entries
-          .map((e) {
-        return ClockLabel.fromIndex(idx: e.key, length: 8, text: e.value);
-      }).toList(),
-      labelOffset: -35,
-      rotateLabels: false,
-      labelStyle: TextStyle(
-          fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
-      timeTextStyle: TextStyle(
-          color: Colors.orange[700],
-          fontSize: 22,
-          fontStyle: FontStyle.italic,
-          fontWeight: FontWeight.bold),
-      activeTimeTextStyle: TextStyle(
-          color: Colors.orange,
-          fontSize: 24,
-          fontStyle: FontStyle.italic,
-          fontWeight: FontWeight.bold),
-    );
   }
   // endregion
 

@@ -34,12 +34,15 @@ class MenuModel {
 }
 
 class MenuItemsModel {
-  String itemName;
+  String menuName;
+  String menuItemName;
 
-  MenuItemsModel({this.itemName});
+  MenuItemsModel({this.menuName, this.menuItemName});
 
   factory MenuItemsModel.fromJson(Map<String, dynamic> json) =>
-      new MenuItemsModel(itemName: json["itemName"]);
+      new MenuItemsModel(
+          menuName: json["menuName"], menuItemName: json["menuItemName"]);
 
-  Map<String, dynamic> toJson() => {"itemName": itemName};
+  Map<String, dynamic> toJson() =>
+      {"menuName": menuName, "menuItemName": menuItemName};
 }

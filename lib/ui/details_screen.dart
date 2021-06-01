@@ -1,13 +1,14 @@
 import 'package:event_book_app/constants/app_colors.dart';
+import 'package:event_book_app/ui/widgets/colored_text_widget.dart';
 import 'package:event_book_app/ui/widgets/icon_widget.dart';
 import 'package:event_book_app/ui/widgets/simple_icon_widget.dart';
 import 'package:event_book_app/constants/string_assets.dart';
 import 'package:event_book_app/models/halls_model.dart';
-import 'package:event_book_app/ui/widgets/color_text_widget.dart';
 import 'package:event_book_app/ui/widgets/align_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:image_slider/image_slider.dart';
 import 'components/rounded_button.dart';
 
@@ -18,6 +19,7 @@ double averageRating = 0;
 double totalReviews = 0;
 // endregion
 
+// ignore: must_be_immutable
 class DetailsScreen extends StatefulWidget {
   DetailsScreen({this.hallDetails});
   HallsModel hallDetails;
@@ -58,7 +60,6 @@ class _DetailsScreenState extends State<DetailsScreen>
       averageRating = totalReviews / numOfRatings;
     });
 
-    print("Avg : " + averageRating.toString());
     _tabController = TabController(length: imagesList.length, vsync: this);
   }
 
@@ -124,7 +125,7 @@ class _DetailsScreenState extends State<DetailsScreen>
             ),
           ),
           Container(
-            padding: EdgeInsets.all(3),
+            padding: EdgeInsets.all(2),
             child: Card(
               child: Container(
                 child: Column(
@@ -133,39 +134,24 @@ class _DetailsScreenState extends State<DetailsScreen>
                       padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
                       child: Align(
                         alignment: Alignment.centerLeft,
-                        child: Text(
-                          widget.hallDetails.itemName,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: AppColors.kPrimaryColor),
-                        ),
+                        child: coloredTextWidget(widget.hallDetails.itemName,
+                            20.0, AppColors.kPrimaryColor),
                       ),
                     ),
                     Container(
                       padding: EdgeInsets.fromLTRB(10, 0, 0, 5),
                       child: alignWidget(widget.hallDetails.location, 14.0,
-                          AppColors.kGreyColor, Alignment.centerLeft),
+                          AppColors.kBlackColor, Alignment.centerLeft),
                     ),
                     Container(
                       padding: EdgeInsets.fromLTRB(10, 8, 10, 10),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
                             child: Column(
-                              children: <Widget>[
-                                alignWidget('Rate', 12.0, AppColors.kGreyColor,
-                                    Alignment.centerLeft),
-                                colorTextWidget(
-                                    'Rs 1200', 20.0, AppColors.kPrimaryColor),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            child: Column(
                               children: [
-                                alignWidget('Rating', 12.0,
+                                alignWidget('Rating', 14.0,
                                     AppColors.kGreyColor, Alignment.centerLeft),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -184,14 +170,14 @@ class _DetailsScreenState extends State<DetailsScreen>
                                       ),
                                     ]),
                                 RatingBarIndicator(
-                                  rating: averageRating,
-                                  itemBuilder: (context, index) =>
-                                      simpleIconWidget(
-                                          Icons.star, Colors.yellow),
-                                  itemCount: 5,
-                                  itemSize: 18.0,
-                                  direction: Axis.horizontal,
-                                )
+                                    rating: averageRating,
+                                    itemCount: 5,
+                                    itemSize: 20.0,
+                                    direction: Axis.horizontal,
+                                    itemBuilder: (context, index) {
+                                      return simpleIconWidget(
+                                          Icons.star, Colors.yellow);
+                                    })
                               ],
                             ),
                           ),
@@ -254,39 +240,34 @@ class _DetailsScreenState extends State<DetailsScreen>
                                               int index) {
                                             return Padding(
                                               padding: EdgeInsets.all(5.0),
-                                              child: RichText(
-                                                text: TextSpan(
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 30),
-                                                  children: <TextSpan>[
-                                                    TextSpan(
-                                                      text: widget
+                                              child: Row(
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    "assets/icons/day_${index + 1}.svg",
+                                                    height: 22,
+                                                    width: 22,
+                                                    color:
+                                                        AppColors.kPrimaryColor,
+                                                  ),
+                                                  SizedBox(width: 10),
+                                                  RichText(
+                                                    text: TextSpan(
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 30),
+                                                      children: <TextSpan>[
+                                                        TextSpan(
+                                                          text: widget
                                                               .hallDetails
                                                               .listHallAvailability[
                                                                   index]
-                                                              .day +
-                                                          " ",
-                                                      // style: TextStyle(
-                                                      //     fontWeight:
-                                                      //         FontWeight.bold),
-                                                      style: TextStyle(
-                                                          fontSize: 28.0,
-                                                          color: AppColors
-                                                              .kPrimaryColor,
-                                                          fontWeight:
-                                                              FontWeight.bold),
+                                                              .time,
+                                                        )
+                                                      ],
                                                     ),
-                                                    TextSpan(
-                                                      text: widget
-                                                          .hallDetails
-                                                          .listHallAvailability[
-                                                              index]
-                                                          .time,
-                                                    )
-                                                  ],
-                                                ),
-                                                textScaleFactor: 0.6,
+                                                    textScaleFactor: 0.6,
+                                                  ),
+                                                ],
                                               ),
                                             );
                                           })),
@@ -331,7 +312,7 @@ class _DetailsScreenState extends State<DetailsScreen>
       bottomNavigationBar: Container(
         padding: EdgeInsets.all(10.0),
         child: RoundedButton(
-          text: "BOOK",
+          text: "BOOK NOW",
           press: () {
             StringAssets.kHallName = widget.hallDetails.itemName;
             Navigator.of(context).pushNamed('/hall_booking');

@@ -1003,16 +1003,24 @@
       "menuImage": "assets/images/marriage_hall_8.jpg",
       "itemsList": [
         {
-          "itemName": "Chicken"
+          "menuName": "Rice",
+          "menuItemName": "Vegetable Biryani"
         },
         {
-          "itemName": "Rice"
+          "menuName": "Meat",
+          "menuItemName": "Chicken"
         },
         {
-          "itemName": "Kheer"
+          "menuName": "Meetha",
+          "menuItemName": "Zarda"
         },
         {
-          "itemName": "Bottle"
+          "menuName": "Soft Drinks",
+          "menuItemName": "Regular"
+        },
+        {
+          "menuName": "Water",
+          "menuItemName": "Pure Water"
         }
       ]
     },
@@ -1023,16 +1031,24 @@
       "menuImage": "assets/images/marriage_hall_8.jpg",
       "itemsList": [
         {
-          "itemName": "Beef"
+          "menuName": "Rice",
+          "menuItemName": "Plao"
         },
         {
-          "itemName": "Plao"
+          "menuName": "Meat",
+          "menuItemName": "Beef"
         },
         {
-          "itemName": "Kheer"
+          "menuName": "Meetha",
+          "menuItemName": "Kheer"
         },
         {
-          "itemName": "Chai"
+          "menuName": "Tea",
+          "menuItemName": "Green Tea"
+        },
+        {
+          "menuName": "Water",
+          "menuItemName": "Pure Water"
         }
       ]
     },
@@ -1043,16 +1059,24 @@
       "menuImage": "assets/images/marriage_hall_8.jpg",
       "itemsList": [
         {
-          "itemName": "Mutton"
+          "menuName": "Rice",
+          "menuItemName": "Biryani"
         },
         {
-          "itemName": "Biryani"
+          "menuName": "Meat",
+          "menuItemName": "Mutton"
         },
         {
-          "itemName": "Kheer"
+          "menuName": "Meetha",
+          "menuItemName": "Gajar Halva"
         },
         {
-          "itemName": "Bottle"
+          "menuName": "Soft Drinks",
+          "menuItemName": "Cans"
+        },
+        {
+          "menuName": "Water",
+          "menuItemName": "Pure Water"
         }
       ]
     },
@@ -1063,7 +1087,8 @@
       "menuImage": "assets/images/marriage_hall_8.jpg",
       "itemsList": [
         {
-          "itemName": ""
+          "menuName": "",
+          "menuItemName": ""
         }
       ]
     }
@@ -1235,7 +1260,7 @@
       "eventDate": "25-05-2021",
       "eventTime": "Day",
       "noOfChairs": 150,
-      "orderStatus": "Pending"
+      "orderStatus": "Completed"
     },
     {
       "customerName": "Hamza Iqbal",
@@ -1267,7 +1292,7 @@
       "eventDate": "22-05-2021",
       "eventTime": "Night",
       "noOfChairs": 100,
-      "orderStatus": "Pending"
+      "orderStatus": "Rejected"
     },
     {
       "customerName": "Faisal Arshad",

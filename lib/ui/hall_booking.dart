@@ -3,6 +3,7 @@ import 'package:event_book_app/constants/app_styles.dart';
 import 'package:event_book_app/constants/string_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'components/outlined_input_field.dart';
 import 'components/rounded_button.dart';
 
@@ -46,6 +47,7 @@ class _HallBookingState extends State<HallBooking> {
                 child: Column(
                   children: [
                     OutlinedInputField(
+                      textCapitalization: TextCapitalization.words,
                       inputAction: "next",
                       textInputType: TextInputType.name,
                       hintText: "Enter Your Name",
@@ -57,7 +59,7 @@ class _HallBookingState extends State<HallBooking> {
                       },
                       validator: (value) {
                         if (value.isEmpty) {
-                          return "Empty";
+                          return "Name Required";
                         } else {
                           return null;
                         }
@@ -67,6 +69,7 @@ class _HallBookingState extends State<HallBooking> {
                     ),
                     SizedBox(height: 20),
                     OutlinedInputField(
+                      textCapitalization: TextCapitalization.none,
                       inputAction: "next",
                       textInputType: TextInputType.emailAddress,
                       hintText: "Enter Your Email",
@@ -78,7 +81,7 @@ class _HallBookingState extends State<HallBooking> {
                       },
                       validator: (value) {
                         if (value.isEmpty) {
-                          return "Empty";
+                          return "Email Required";
                         } else {
                           return null;
                         }
@@ -88,6 +91,7 @@ class _HallBookingState extends State<HallBooking> {
                     ),
                     SizedBox(height: 20),
                     OutlinedInputField(
+                      textCapitalization: TextCapitalization.none,
                       inputAction: "next",
                       hintText: "Enter Your Phone",
                       labelText: "Your Phone",
@@ -99,7 +103,7 @@ class _HallBookingState extends State<HallBooking> {
                       },
                       validator: (value) {
                         if (value.isEmpty) {
-                          return "Empty";
+                          return "Phone Required";
                         } else {
                           return null;
                         }
@@ -109,6 +113,7 @@ class _HallBookingState extends State<HallBooking> {
                     ),
                     SizedBox(height: 20),
                     OutlinedInputField(
+                      textCapitalization: TextCapitalization.none,
                       inputAction: "next",
                       labelText: "No. of Guests",
                       hintText: "Enter No. of Guests",
@@ -120,16 +125,17 @@ class _HallBookingState extends State<HallBooking> {
                       },
                       validator: (value) {
                         if (value.isEmpty) {
-                          return "Empty";
+                          return "No. Of Guests Required";
                         } else {
                           return null;
                         }
                       },
-                      icon: Icons.person_add_sharp,
+                      icon: FontAwesomeIcons.users,
                       type: "number",
                     ),
                     SizedBox(height: 20),
                     OutlinedInputField(
+                      textCapitalization: TextCapitalization.none,
                       inputAction: "done",
                       labelText: "No. of Chairs",
                       hintText: "Enter No. of Chairs",
@@ -141,12 +147,12 @@ class _HallBookingState extends State<HallBooking> {
                       },
                       validator: (value) {
                         if (value.isEmpty) {
-                          return "Empty";
+                          return "No. Of Chairs Required";
                         } else {
                           return null;
                         }
                       },
-                      icon: Icons.person_add_sharp,
+                      icon: Icons.airline_seat_legroom_normal,
                       type: "number",
                     ),
                     SizedBox(height: 10),
@@ -162,7 +168,11 @@ class _HallBookingState extends State<HallBooking> {
           child: RoundedButton(
             text: "NEXT",
             press: () {
-              Navigator.pushNamed(context, '/hall_booking2');
+              if (_hallBookingFormKey.currentState.validate()) {
+                _hallBookingFormKey.currentState.save();
+
+                Navigator.pushNamed(context, '/hall_booking2');
+              }
             },
           )),
     );

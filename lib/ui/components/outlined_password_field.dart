@@ -1,6 +1,5 @@
 import 'package:event_book_app/constants/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:event_book_app/ui/components/text_field_container.dart';
 
 // ignore: must_be_immutable
 class OutlinedPasswordField extends StatefulWidget {

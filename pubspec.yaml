@@ -26,12 +26,12 @@ dependencies:
   time_range_picker: ^2.0.1
   flutter_time_range: ^0.0.2
   flutter_neumorphic: ^3.1.0
-  flutter_rating_bar: 3.2.0+1
   grouped_buttons: ^1.0.4
   path_provider: ^2.0.2
   progress_dialog: any
   shared_preferences: any
   fluttertoast: any
+  flutter_rating_bar: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +51,12 @@ flutter:
     - assets/icons/chair.svg
     - assets/icons/camera.svg
     - assets/icons/google-plus.svg
+    - assets/icons/day_1.svg
+    - assets/icons/day_2.svg
+    - assets/icons/day_3.svg
+    - assets/icons/day_4.svg
+    - assets/icons/day_5.svg
+    - assets/icons/day_6.svg
     - assets/images/profile.png
     - assets/images/meetha.jpg
     - assets/images/meat.jpg

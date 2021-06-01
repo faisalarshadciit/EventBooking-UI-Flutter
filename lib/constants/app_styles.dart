@@ -13,4 +13,15 @@ class AppStyles {
       fontFamily: FontFamily.kFontPoppinsRegular);
   // endregion
 
+  // region Review Styles
+  static const TextStyle kMinCounterStyle = TextStyle(
+    fontSize: 14,
+    color: AppColors.kGreyColor,
+  );
+  static const TextStyle kMaxCounterStyle = TextStyle(
+    fontSize: 14,
+    color: AppColors.kRedCardColor,
+  );
+  // endregion
+
 }

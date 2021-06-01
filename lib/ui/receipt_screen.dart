@@ -65,16 +65,14 @@ class _ReceiptPageState extends State<ReceiptPage> {
               padding: EdgeInsets.all(10.0),
               child: Column(
                 children: [
-                  // Text(
-                  //   StringAssets.kHallName,
-                  //   textAlign: TextAlign.center,
-                  //   style: TextStyle(
-                  //       fontSize: 20.0,
-                  //       color: AppColors.kPrimaryColor,
-                  //       fontWeight: FontWeight.bold),
-                  // ),
-                  coloredTextWidget(
-                      StringAssets.kHallName, 20.0, AppColors.kPrimaryColor),
+                  Text(
+                    StringAssets.kHallName,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        color: AppColors.kPrimaryColor,
+                        fontWeight: FontWeight.bold),
+                  ),
                   SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

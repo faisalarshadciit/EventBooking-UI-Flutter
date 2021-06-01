@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/methods/toast_methods.dart';
 import 'package:event_book_app/models/user_model.dart';
-import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/shared_preference/SharedPrefs.dart';
 import 'package:event_book_app/storage.dart';
 import 'package:progress_dialog/progress_dialog.dart';

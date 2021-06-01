@@ -1,5 +1,4 @@
 import 'package:event_book_app/constants/app_colors.dart';
-import 'package:event_book_app/ui/components/text_field_container.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -12,6 +11,7 @@ class OutlinedInputField extends StatelessWidget {
   final ValueChanged<String> onChanged;
   final FormFieldValidator<String> validator;
   final TextEditingController textEditingController;
+  final TextCapitalization textCapitalization;
   final FocusNode currentFocusNode;
   final FocusNode nextFocusNode;
   TextInputType textInputType;
@@ -26,6 +26,7 @@ class OutlinedInputField extends StatelessWidget {
     this.onChanged,
     this.validator,
     this.textEditingController,
+    this.textCapitalization,
     this.currentFocusNode,
     this.nextFocusNode,
     this.textInputType,
@@ -52,6 +53,7 @@ class OutlinedInputField extends StatelessWidget {
     // endregion
 
     return TextFormField(
+      textCapitalization: textCapitalization,
       controller: textEditingController,
       textInputAction:
           inputAction == "next" ? TextInputAction.next : TextInputAction.done,

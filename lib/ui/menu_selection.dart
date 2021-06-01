@@ -1,4 +1,3 @@
-import 'package:event_book_app/config/size_config.dart';
 import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/constants/app_styles.dart';
 import 'package:event_book_app/constants/string_assets.dart';
@@ -7,6 +6,7 @@ import 'package:event_book_app/models/menu_data.dart';
 import 'package:event_book_app/models/menu_model.dart';
 import 'package:event_book_app/ui/receipt_screen.dart';
 import 'package:event_book_app/ui/widgets/colored_text_widget.dart';
+import 'package:event_book_app/ui/widgets/default_container.dart';
 import 'package:event_book_app/ui/widgets/icon_widget.dart';
 import 'package:flutter/material.dart';
 import 'components/rounded_button.dart';
@@ -51,17 +51,7 @@ class _MenuSelectionState extends State<MenuSelection> {
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                Container(
-                    padding: EdgeInsets.all(8.0),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      "Menu Selection",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )),
+                defaultContainer("Menu Selection"),
                 SizedBox(height: 10),
                 SingleChildScrollView(
                   child: Container(
@@ -116,6 +106,13 @@ class _MenuSelectionState extends State<MenuSelection> {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         CustomMenuSelection()));
+                                          } else {
+                                            showDialog(
+                                                context: context,
+                                                builder: (_) =>
+                                                    SelectedDealDialog(
+                                                        menuSelectionModel
+                                                            .menuTitle));
                                           }
                                         });
                                       },
@@ -131,8 +128,8 @@ class _MenuSelectionState extends State<MenuSelection> {
                                               : AppColors.kWhiteColor,
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.only(
-                                              bottomRight: Radius.circular(60),
-                                              bottomLeft: Radius.circular(10),
+                                              bottomRight: Radius.circular(10),
+                                              bottomLeft: Radius.circular(60),
                                               topRight: Radius.circular(10),
                                               topLeft: Radius.circular(10),
                                             ),
@@ -218,6 +215,34 @@ class _MenuSelectionState extends State<MenuSelection> {
           )
         ],
       ),
+    );
+  }
+}
+
+class SelectedDealDialog extends StatelessWidget {
+  SelectedDealDialog(this.dealName);
+  final String dealName;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Container(
+        decoration: BoxDecoration(),
+        child: Column(
+          children: [
+            Text(dealName),
+          ],
+        ),
+      ),
+      content: Text("Alert Dialog body"),
+      actions: <Widget>[
+        FlatButton(
+          child: new Text("OK"),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
     );
   }
 }

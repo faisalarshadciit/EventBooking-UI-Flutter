@@ -13,6 +13,11 @@ class StringAssets {
   static String kLoginUserEmail = "hr@atrule.com";
   static String kLoginUserPhone = "065-4509234";
 
+  static String kLabelComments = "Feedback";
+  static String kHintComments = "Enter Some Comments";
+  static String kCommentNullError = "Please Enter Some Comments";
+  static String kTextSubmit = "Submit";
+
   static String kHallName = "";
   static String kUserName = "";
   static String kUserEmail = "";
