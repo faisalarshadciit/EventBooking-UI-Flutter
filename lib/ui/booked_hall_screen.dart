@@ -34,7 +34,7 @@ class _BookedHallState extends State<BookedHall> {
         child: Column(
           children: [
             FutureBuilder(
-              future: readGetRequest("Orders"),
+              future: readGetRequestOrders(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasData) {
                   print(snapshot.data.length);

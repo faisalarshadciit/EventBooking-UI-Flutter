@@ -79,6 +79,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
                 SizedBox(height: size.height * 0.03),
                 OutlinedInputField(
+                  textCapitalization: TextCapitalization.words,
+                  textInputType: TextInputType.name,
                   inputAction: "next",
                   textEditingController: cName,
                   labelText: "Your Name",
@@ -104,6 +106,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
                 SizedBox(height: 20),
                 OutlinedInputField(
+                  textCapitalization: TextCapitalization.none,
+                  textInputType: TextInputType.emailAddress,
                   inputAction: "next",
                   textEditingController: cEmail,
                   labelText: "Your Email",
@@ -129,6 +133,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
                 getGenderWidget(true, false),
                 OutlinedInputField(
+                  textCapitalization: TextCapitalization.none,
+                  textInputType: TextInputType.phone,
                   inputAction: "next",
                   textEditingController: cPhone,
                   labelText: "Phone Number",

@@ -32,6 +32,8 @@ dependencies:
   shared_preferences: any
   fluttertoast: any
   flutter_rating_bar: ^4.0.0
+  device_preview: any
+  flutter_screenutil: ^5.0.0+2
 
 dev_dependencies:
   flutter_test:

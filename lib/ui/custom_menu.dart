@@ -50,7 +50,7 @@ class _CustomMenuSelectionState extends State<CustomMenuSelection> {
         child: Column(
           children: [
             FutureBuilder(
-              future: readGetRequest("CustomMenu"),
+              future: readGetRequestCustomMenu(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(

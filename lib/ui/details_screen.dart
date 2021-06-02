@@ -1,3 +1,5 @@
+import 'package:event_book_app/config/screen_size.dart';
+import 'package:event_book_app/config/size_config.dart';
 import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/ui/widgets/colored_text_widget.dart';
 import 'package:event_book_app/ui/widgets/icon_widget.dart';
@@ -8,6 +10,7 @@ import 'package:event_book_app/ui/widgets/align_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_slider/image_slider.dart';
 import 'components/rounded_button.dart';
@@ -17,6 +20,8 @@ int numOfRatings = 0;
 int totalRating = 5;
 double averageRating = 0;
 double totalReviews = 0;
+double defaultHeight, defaultWidth;
+double safeHeight, safeWidth;
 // endregion
 
 // ignore: must_be_immutable
@@ -32,9 +37,10 @@ class _DetailsScreenState extends State<DetailsScreen>
     with SingleTickerProviderStateMixin {
   final List<String> imagesList = [];
 
-  TabController _tabController;
+  TabController tabController;
   Color iconColor = AppColors.kGreyColor;
-  double width;
+  double _width;
+  double _height;
 
   @override
   void initState() {
@@ -60,12 +66,31 @@ class _DetailsScreenState extends State<DetailsScreen>
       averageRating = totalReviews / numOfRatings;
     });
 
-    _tabController = TabController(length: imagesList.length, vsync: this);
+    tabController = TabController(length: imagesList.length, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    tabController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    width = MediaQuery.of(context).size.width;
+    // region Screen Height & Width
+    SizeConfig().init(context);
+    defaultHeight = SizeConfig.screenHeight;
+    defaultWidth = SizeConfig.screenWidth;
+    safeHeight = SizeConfig.safeBlockHorizontal;
+    safeWidth = SizeConfig.safeBlockVertical;
+
+    _height = MediaQuery.of(context).size.height;
+    _width = MediaQuery.of(context).size.width;
+    // endregion
+
+    ScreenUtil.init(BoxConstraints(maxWidth: _width, maxHeight: _height),
+        designSize: Size(360, 690), orientation: Orientation.portrait);
 
     return Scaffold(
       body: ListView(
@@ -78,20 +103,19 @@ class _DetailsScreenState extends State<DetailsScreen>
                   tabIndicatorSelectedColor: AppColors.kPrimaryColor,
                   tabIndicatorHeight: 12.0,
                   tabIndicatorSize: 12.0,
-                  tabController: _tabController,
+                  tabController: tabController,
                   curve: Curves.fastOutSlowIn,
-                  width: width,
+                  width: _width,
                   autoSlide: true,
                   duration: Duration(seconds: 10),
                   allowManualSlide: true,
-                  height: 250.0,
+                  height: 220,
                   children: imagesList.map((String imageUrl) {
                     return new ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
                       child: Image.asset(
                         imageUrl,
-                        width: width,
-                        height: 250,
+                        width: _width,
                         fit: BoxFit.cover,
                       ),
                     );
@@ -131,7 +155,7 @@ class _DetailsScreenState extends State<DetailsScreen>
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                      padding: EdgeInsets.fromLTRB(10, 5, 5, 0),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: coloredTextWidget(widget.hallDetails.itemName,
@@ -139,7 +163,7 @@ class _DetailsScreenState extends State<DetailsScreen>
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 5),
+                      padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
                       child: alignWidget(widget.hallDetails.location, 14.0,
                           AppColors.kBlackColor, Alignment.centerLeft),
                     ),
@@ -151,19 +175,28 @@ class _DetailsScreenState extends State<DetailsScreen>
                           Container(
                             child: Column(
                               children: [
-                                alignWidget('Rating', 14.0,
-                                    AppColors.kGreyColor, Alignment.centerLeft),
+                                alignWidget(
+                                    'Rating',
+                                    14.0,
+                                    AppColors.kPrimaryColor,
+                                    Alignment.centerLeft),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
                                         averageRating.toStringAsFixed(2),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
                                       ),
                                       Text(
                                         "/",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
                                       ),
                                       Text(
                                         "$totalRating",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
                                       ),
                                       SizedBox(
                                         width: 10,
@@ -195,110 +228,10 @@ class _DetailsScreenState extends State<DetailsScreen>
                         initialIndex: 0,
                         child: Column(
                           children: [
-                            TabBar(
-                              indicatorColor: AppColors.kPrimaryColor,
-                              labelColor: AppColors.kPrimaryColor,
-                              unselectedLabelColor: Colors.grey,
-                              isScrollable: true,
-                              tabs: [
-                                Tab(
-                                  text: 'Details',
-                                ),
-                                Tab(
-                                  text: 'Availability',
-                                ),
-                                Tab(
-                                  text: 'Reviews',
-                                ),
-                                Tab(
-                                  text: 'Location',
-                                ),
-                              ],
-                            ),
+                            _buildTabBar(),
                             Container(
-                              height: 450,
-                              child: TabBarView(
-                                children: [
-                                  Container(
-                                      margin: EdgeInsets.all(10),
-                                      padding: EdgeInsets.all(10),
-                                      child: Text(
-                                        widget.hallDetails.details != null
-                                            ? widget.hallDetails.details
-                                            : "",
-                                        style: TextStyle(color: Colors.black),
-                                      )),
-                                  Container(
-                                      margin: EdgeInsets.all(10),
-                                      padding: EdgeInsets.all(10),
-                                      child: ListView.builder(
-                                          itemCount: widget.hallDetails
-                                              .listHallAvailability.length,
-                                          scrollDirection: Axis.vertical,
-                                          shrinkWrap: true,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            return Padding(
-                                              padding: EdgeInsets.all(5.0),
-                                              child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    "assets/icons/day_${index + 1}.svg",
-                                                    height: 22,
-                                                    width: 22,
-                                                    color:
-                                                        AppColors.kPrimaryColor,
-                                                  ),
-                                                  SizedBox(width: 10),
-                                                  RichText(
-                                                    text: TextSpan(
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 30),
-                                                      children: <TextSpan>[
-                                                        TextSpan(
-                                                          text: widget
-                                                              .hallDetails
-                                                              .listHallAvailability[
-                                                                  index]
-                                                              .time,
-                                                        )
-                                                      ],
-                                                    ),
-                                                    textScaleFactor: 0.6,
-                                                  ),
-                                                ],
-                                              ),
-                                            );
-                                          })),
-                                  Center(
-                                      child: ListView.builder(
-                                          itemCount: widget.hallDetails
-                                              .listHallReviews.length,
-                                          scrollDirection: Axis.vertical,
-                                          shrinkWrap: true,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            return _buildReviewWidget(
-                                              widget
-                                                  .hallDetails
-                                                  .listHallReviews[index]
-                                                  .username,
-                                              widget
-                                                  .hallDetails
-                                                  .listHallReviews[index]
-                                                  .feedback,
-                                              widget.hallDetails
-                                                  .listHallReviews[index].date,
-                                              widget
-                                                  .hallDetails
-                                                  .listHallReviews[index]
-                                                  .review,
-                                            );
-                                          })),
-                                  Center(child: Text('Location')),
-                                ],
-                              ),
+                              height: _height,
+                              child: _buildTabBarView(),
                             )
                           ],
                         ))
@@ -416,6 +349,94 @@ class _DetailsScreenState extends State<DetailsScreen>
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildTabBar() {
+    return TabBar(
+      indicatorColor: AppColors.kPrimaryColor,
+      labelColor: AppColors.kPrimaryColor,
+      unselectedLabelColor: Colors.grey,
+      isScrollable: true,
+      tabs: [
+        Tab(
+          text: 'Details',
+        ),
+        Tab(
+          text: 'Availability',
+        ),
+        Tab(
+          text: 'Reviews',
+        ),
+        Tab(
+          text: 'Location',
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTabBarView() {
+    return TabBarView(
+      children: [
+        Container(
+            margin: EdgeInsets.all(10),
+            padding: EdgeInsets.all(10),
+            child: Text(
+              widget.hallDetails.details != null
+                  ? widget.hallDetails.details
+                  : "",
+              style: TextStyle(color: Colors.black),
+            )),
+        Container(
+            margin: EdgeInsets.all(10),
+            padding: EdgeInsets.all(10),
+            child: ListView.builder(
+                itemCount: widget.hallDetails.listHallAvailability.length,
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          "assets/icons/day_${index + 1}.svg",
+                          height: 22,
+                          width: 22,
+                          color: AppColors.kPrimaryColor,
+                        ),
+                        SizedBox(width: 10),
+                        RichText(
+                          text: TextSpan(
+                            style: TextStyle(color: Colors.black, fontSize: 30),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: widget.hallDetails
+                                    .listHallAvailability[index].time,
+                              )
+                            ],
+                          ),
+                          textScaleFactor: 0.6,
+                        ),
+                      ],
+                    ),
+                  );
+                })),
+        Container(
+            child: ListView.builder(
+                itemCount: widget.hallDetails.listHallReviews.length,
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, int index) {
+                  return _buildReviewWidget(
+                    widget.hallDetails.listHallReviews[index].username,
+                    widget.hallDetails.listHallReviews[index].feedback,
+                    widget.hallDetails.listHallReviews[index].date,
+                    widget.hallDetails.listHallReviews[index].review,
+                  );
+                })),
+        Center(child: Text('Location')),
+      ],
     );
   }
 }

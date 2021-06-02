@@ -4,12 +4,13 @@ import 'app_colors.dart';
 import 'font_family.dart';
 
 final ThemeData themeData = new ThemeData(
-    fontFamily: FontFamily.kFontPoppinsRegular,
-    //brightness: Brightness.light,
-    primaryColor: AppColors.kPrimaryColor,
-    //primaryColorBrightness: Brightness.light,
-    // accentColor: AppColors.orange[500],
-    accentColorBrightness: Brightness.light);
+  fontFamily: FontFamily.kFontPoppinsRegular,
+  //brightness: Brightness.dark,
+  primaryColor: AppColors.kPrimaryColor,
+  //primaryColorBrightness: Brightness.light,
+  accentColor: AppColors.kPrimaryColorLight,
+  //accentColorBrightness: Brightness.light,
+);
 
 // final ThemeData themeDataDark = ThemeData(
 //

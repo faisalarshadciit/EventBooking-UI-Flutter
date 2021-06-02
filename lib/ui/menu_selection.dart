@@ -9,6 +9,7 @@ import 'package:event_book_app/ui/widgets/colored_text_widget.dart';
 import 'package:event_book_app/ui/widgets/default_container.dart';
 import 'package:event_book_app/ui/widgets/icon_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:grouped_buttons/grouped_buttons.dart';
 import 'components/rounded_button.dart';
 import 'custom_menu.dart';
 
@@ -60,7 +61,7 @@ class _MenuSelectionState extends State<MenuSelection> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         FutureBuilder(
-                          future: readGetRequest("MenuDetails"),
+                          future: readGetRequestMenu(),
                           builder: (BuildContext context,
                               AsyncSnapshot<dynamic> snapshot) {
                             if (snapshot.hasData) {
@@ -111,8 +112,9 @@ class _MenuSelectionState extends State<MenuSelection> {
                                                 context: context,
                                                 builder: (_) =>
                                                     SelectedDealDialog(
+                                                        menuSelectionModel,
                                                         menuSelectionModel
-                                                            .menuTitle));
+                                                            .itemsList.length));
                                           }
                                         });
                                       },
@@ -171,6 +173,7 @@ class _MenuSelectionState extends State<MenuSelection> {
     );
   }
 
+  // region Build Men Item
   Widget _buildMenu(MenuModel mSelectionModel) {
     return Padding(
       padding: EdgeInsets.all(10),
@@ -197,7 +200,7 @@ class _MenuSelectionState extends State<MenuSelection> {
               Text(mSelectionModel.menuItem),
             ],
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 10),
           GestureDetector(
             onTap: () {},
             child: Row(
@@ -217,26 +220,94 @@ class _MenuSelectionState extends State<MenuSelection> {
       ),
     );
   }
+  // endregion
 }
 
 class SelectedDealDialog extends StatelessWidget {
-  SelectedDealDialog(this.dealName);
-  final String dealName;
+  SelectedDealDialog(this.menuModel, this.length);
+  MenuModel menuModel;
+  int length;
 
   @override
   Widget build(BuildContext context) {
+    print(length);
+
     return AlertDialog(
       title: Container(
         decoration: BoxDecoration(),
         child: Column(
           children: [
-            Text(dealName),
+            coloredTextWidget(
+                menuModel.menuTitle, 20.0, AppColors.kPrimaryColor)
           ],
         ),
       ),
-      content: Text("Alert Dialog body"),
+      content: SingleChildScrollView(
+        child: Column(children: [
+          ListView.builder(
+              itemCount: length,
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (BuildContext context, int index) {
+                return Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.fromLTRB(4.0, 4.0, 0.0, 4.0),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 35,
+                            child: AspectRatio(
+                              aspectRatio: 1,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.red[300],
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                padding: EdgeInsets.all(3),
+                                child: Image.asset(menuModel.menuImage,
+                                    fit: BoxFit.fill),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 0.0),
+                            padding: EdgeInsets.fromLTRB(4.0, 4.0, 0.0, 4.0),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: coloredTextWidget(
+                                menuModel.itemsList[index].menuName,
+                                14.0,
+                                AppColors.kPrimaryColor),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _buildCheckBoxes(menuModel.itemsList, index)
+                        // ...List.generate(
+                        //     menuModel.itemsList.length,
+                        //     (position) => _buildCheckBoxes(
+                        //         menuModel.itemsList, position)),
+                      ],
+                    ),
+                  ],
+                );
+              })
+        ]),
+      ),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
           child: new Text("OK"),
           onPressed: () {
             Navigator.of(context).pop();
@@ -244,5 +315,15 @@ class SelectedDealDialog extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Widget _buildCheckBoxes(List<MenuItemsModel> menuItemsList, int index) {
+    return CheckboxGroup(
+        labels: <String>[menuItemsList[index].menuItemName],
+        activeColor: AppColors.kPrimaryColor,
+        checkColor: Colors.white,
+        checked: <String>[menuItemsList[index].menuItemName],
+        onChange: (bool isChecked, String label, int index) => {},
+        onSelected: (List selected) => {});
   }
 }

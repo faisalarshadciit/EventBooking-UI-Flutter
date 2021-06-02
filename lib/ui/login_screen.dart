@@ -68,9 +68,11 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: size.height * 0.03),
                 OutlinedInputField(
+                  textCapitalization: TextCapitalization.none,
                   inputAction: "next",
-                  hintText: "Enter Email",
                   labelText: "Email",
+                  hintText: "Enter Email",
+                  textInputType: TextInputType.emailAddress,
                   onChanged: (value) {
                     setState(() {
                       _email = value;
