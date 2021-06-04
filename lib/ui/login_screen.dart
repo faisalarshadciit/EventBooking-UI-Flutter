@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:event_book_app/constants/app_colors.dart';
+import 'package:event_book_app/constants/string_assets.dart';
+import 'package:event_book_app/constants/images_assets.dart';
 import 'package:event_book_app/methods/toast_methods.dart';
 import 'package:event_book_app/models/user_model.dart';
 import 'package:event_book_app/shared_preference/SharedPrefs.dart';
@@ -12,6 +14,7 @@ import 'components/already_have_an_account_acheck.dart';
 import 'components/login_background.dart';
 import 'components/outlined_input_field.dart';
 import 'components/outlined_password_field.dart';
+import 'widgets/appbar_widget.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -42,19 +45,11 @@ class _LoginPageState extends State<LoginPage> {
     // region Progress Dialog
     progressDialog = ProgressDialog(context,
         type: ProgressDialogType.Normal, isDismissible: false);
-    progressDialog.style(message: "SignIn User");
+    progressDialog.style(message: StringAssets.kDialogTextSignIn);
     // endregion
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Login"),
-        centerTitle: true,
-        backgroundColor: AppColors.kPrimaryColor,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () => Navigator.pop(context, false),
-        ),
-      ),
+      appBar: customAppBar(context, StringAssets.kTextLogin),
       body: LoginBackground(
         child: SingleChildScrollView(
           child: Padding(
@@ -63,15 +58,15 @@ class _LoginPageState extends State<LoginPage> {
               key: _loginFormKey,
               child: Column(children: [
                 SvgPicture.asset(
-                  "assets/icons/login.svg",
+                  ImageAssets.iconsSignInIcon,
                   height: size.height * 0.35,
                 ),
                 SizedBox(height: size.height * 0.03),
                 OutlinedInputField(
                   textCapitalization: TextCapitalization.none,
                   inputAction: "next",
-                  labelText: "Email",
-                  hintText: "Enter Email",
+                  labelText: StringAssets.kLabelEmail,
+                  hintText: StringAssets.kHintEmail,
                   textInputType: TextInputType.emailAddress,
                   onChanged: (value) {
                     setState(() {
@@ -80,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   validator: (value) {
                     if (value.isEmpty) {
-                      return "Empty";
+                      return StringAssets.kEmailNullError;
                     } else {
                       return null;
                     }
@@ -98,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   validator: (value) {
                     if (value.isEmpty) {
-                      return "Empty";
+                      return StringAssets.kPasswordNullError;
                     } else {
                       return null;
                     }
@@ -106,14 +101,13 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 20),
                 RoundedButton(
-                  text: "Sign In",
+                  text: StringAssets.kTextSignIn,
                   press: () async {
                     if (_loginFormKey.currentState.validate()) {
                       _loginFormKey.currentState.save();
 
                       await progressDialog.show();
 
-                      print("Press");
                       storage.readData().then((value) async {
                         if (value != "") {
                           UserModel users =
@@ -136,8 +130,6 @@ class _LoginPageState extends State<LoginPage> {
                           ToastMethod.errorToastMessage("No user exists.");
                         }
                       });
-                    } else {
-                      print('Empty Values...');
                     }
                   },
                 ),

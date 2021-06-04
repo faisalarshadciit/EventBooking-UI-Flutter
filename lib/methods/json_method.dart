@@ -6,6 +6,7 @@ import 'package:event_book_app/models/orders_model.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 
+// region HallsList Method
 Future readGetRequestHalls() async {
   List dataList;
   final String response = await rootBundle.loadString(StringAssets.jsonMyData);
@@ -18,7 +19,9 @@ Future readGetRequestHalls() async {
 
   return dataList;
 }
+// endregion
 
+// region Menu Method
 Future readGetRequestMenu() async {
   List dataList;
   final String response = await rootBundle.loadString(StringAssets.jsonMyData);
@@ -30,7 +33,9 @@ Future readGetRequestMenu() async {
 
   return dataList;
 }
+// endregion
 
+// region Custom Menu
 Future readGetRequestCustomMenu() async {
   List dataList;
   final String response = await rootBundle.loadString(StringAssets.jsonMyData);
@@ -44,7 +49,9 @@ Future readGetRequestCustomMenu() async {
 
   return dataList;
 }
+// endregion
 
+// region OrdersList
 Future readGetRequestOrders() async {
   List dataList;
   final String response = await rootBundle.loadString(StringAssets.jsonMyData);
@@ -57,3 +64,4 @@ Future readGetRequestOrders() async {
 
   return dataList;
 }
+// endregion

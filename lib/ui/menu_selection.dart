@@ -1,5 +1,4 @@
 import 'package:event_book_app/constants/app_colors.dart';
-import 'package:event_book_app/constants/app_styles.dart';
 import 'package:event_book_app/constants/string_assets.dart';
 import 'package:event_book_app/methods/json_method.dart';
 import 'package:event_book_app/models/menu_data.dart';
@@ -7,6 +6,7 @@ import 'package:event_book_app/models/menu_model.dart';
 import 'package:event_book_app/ui/receipt_screen.dart';
 import 'package:event_book_app/ui/widgets/colored_text_widget.dart';
 import 'package:event_book_app/ui/widgets/default_container.dart';
+import 'package:event_book_app/ui/widgets/appbar_widget.dart';
 import 'package:event_book_app/ui/widgets/icon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
@@ -33,18 +33,7 @@ class _MenuSelectionState extends State<MenuSelection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Menu Selection",
-          style: AppStyles.kAppBarStyle,
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.kPrimaryColor,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () => Navigator.pop(context, false),
-        ),
-      ),
+      appBar: customAppBar(context, StringAssets.kTextMenuSelection),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.only(top: 30),
@@ -52,7 +41,7 @@ class _MenuSelectionState extends State<MenuSelection> {
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                defaultContainer("Menu Selection"),
+                defaultContainer(StringAssets.kTextMenuSelection),
                 SizedBox(height: 10),
                 SingleChildScrollView(
                   child: Container(
@@ -121,7 +110,6 @@ class _MenuSelectionState extends State<MenuSelection> {
                                       child: Container(
                                         padding:
                                             EdgeInsets.fromLTRB(10, 10, 10, 0),
-                                        height: 150,
                                         width: double.maxFinite,
                                         child: Card(
                                           elevation: 5.0,
@@ -130,8 +118,8 @@ class _MenuSelectionState extends State<MenuSelection> {
                                               : AppColors.kWhiteColor,
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.only(
-                                              bottomRight: Radius.circular(10),
-                                              bottomLeft: Radius.circular(60),
+                                              bottomRight: Radius.circular(60),
+                                              bottomLeft: Radius.circular(10),
                                               topRight: Radius.circular(10),
                                               topLeft: Radius.circular(10),
                                             ),
@@ -164,7 +152,7 @@ class _MenuSelectionState extends State<MenuSelection> {
       bottomNavigationBar: Container(
           padding: EdgeInsets.all(10.0),
           child: RoundedButton(
-            text: "NEXT",
+            text: StringAssets.kTextNext.toUpperCase(),
             press: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => ReceiptPage()));
@@ -182,40 +170,43 @@ class _MenuSelectionState extends State<MenuSelection> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              coloredTextWidget("Deal Name : ", 14.0, AppColors.kPrimaryColor),
+              coloredTextWidget(StringAssets.kTextMenuDealName, 14.0,
+                  AppColors.kPrimaryColor),
               Text(mSelectionModel.menuTitle),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              coloredTextWidget("Per Head : ", 14.0, AppColors.kPrimaryColor),
+              coloredTextWidget(
+                  StringAssets.kTextMenuPerHead, 14.0, AppColors.kPrimaryColor),
               Text("Rs. ${mSelectionModel.perHeadCharges}"),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              coloredTextWidget("Item : ", 14.0, AppColors.kPrimaryColor),
+              coloredTextWidget(
+                  StringAssets.kTextMenuItem, 14.0, AppColors.kPrimaryColor),
               Text(mSelectionModel.menuItem),
             ],
           ),
-          SizedBox(height: 10),
-          GestureDetector(
-            onTap: () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  "View Details",
-                ),
-                SizedBox(width: 5),
-                iconWidget(
-                    Icons.arrow_forward_ios, AppColors.kPrimaryColor, 20.0)
-              ],
-            ),
-          )
+          // SizedBox(height: 10),
+          // GestureDetector(
+          //   onTap: () {},
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.end,
+          //     crossAxisAlignment: CrossAxisAlignment.end,
+          //     children: [
+          //       Text(
+          //         StringAssets.kTextViewDetails,
+          //       ),
+          //       SizedBox(width: 5),
+          //       iconWidget(
+          //           Icons.arrow_forward_ios, AppColors.kPrimaryColor, 20.0)
+          //     ],
+          //   ),
+          // )
         ],
       ),
     );
@@ -293,13 +284,7 @@ class SelectedDealDialog extends StatelessWidget {
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _buildCheckBoxes(menuModel.itemsList, index)
-                        // ...List.generate(
-                        //     menuModel.itemsList.length,
-                        //     (position) => _buildCheckBoxes(
-                        //         menuModel.itemsList, position)),
-                      ],
+                      children: [_buildCheckBoxes(menuModel.itemsList, index)],
                     ),
                   ],
                 );
@@ -308,7 +293,7 @@ class SelectedDealDialog extends StatelessWidget {
       ),
       actions: <Widget>[
         TextButton(
-          child: new Text("OK"),
+          child: Text(StringAssets.kDialogTextOK),
           onPressed: () {
             Navigator.of(context).pop();
           },

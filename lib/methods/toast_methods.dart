@@ -16,7 +16,7 @@ class ToastMethod {
   }
   // endregion
 
-// region Error Toast
+  // region Error Toast
   static void errorToastMessage(String message) {
     Fluttertoast.showToast(
         msg: message,
@@ -26,9 +26,9 @@ class ToastMethod {
         timeInSecForIosWeb: 1,
         fontSize: 16.0);
   }
-// endregion
+  // endregion
 
-// region Simple Toast
+  // region Simple Toast
   static void simpleToastMessages(String message) {
     Fluttertoast.showToast(
         msg: message,
@@ -37,5 +37,5 @@ class ToastMethod {
         timeInSecForIosWeb: 1,
         fontSize: 16.0);
   }
-// endregion
+  // endregion
 }

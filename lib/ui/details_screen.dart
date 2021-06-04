@@ -1,6 +1,6 @@
-import 'package:event_book_app/config/screen_size.dart';
 import 'package:event_book_app/config/size_config.dart';
 import 'package:event_book_app/constants/app_colors.dart';
+import 'package:event_book_app/shared_preference/SharedPrefs.dart';
 import 'package:event_book_app/ui/widgets/colored_text_widget.dart';
 import 'package:event_book_app/ui/widgets/icon_widget.dart';
 import 'package:event_book_app/ui/widgets/simple_icon_widget.dart';
@@ -14,6 +14,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_slider/image_slider.dart';
 import 'components/rounded_button.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 // region Global Variables
 int numOfRatings = 0;
@@ -35,20 +36,49 @@ class DetailsScreen extends StatefulWidget {
 
 class _DetailsScreenState extends State<DetailsScreen>
     with SingleTickerProviderStateMixin {
-  final List<String> imagesList = [];
+  // region Variables
+  CameraPosition _cameraInitialPosition = CameraPosition(
+    target: LatLng(31.4772251, 74.2788793),
+    zoom: 15.0,
+  );
 
+  CameraPosition _cameraPosition;
+  GoogleMapController _controller;
+  Set<Marker> _markersLahore;
+  final List<String> imagesList = [];
   TabController tabController;
   Color iconColor = AppColors.kGreyColor;
   double _width;
   double _height;
+  // endregion
 
+  // region initState & dispose
   @override
   void initState() {
     super.initState();
+
+    // region Map Position & Marker
+    _cameraPosition = CameraPosition(
+      target: LatLng(widget.hallDetails.latitude, widget.hallDetails.longitude),
+      zoom: 18.0,
+    );
+
+    _markersLahore = {
+      Marker(
+          markerId: MarkerId('<MARKER_ID>'),
+          position:
+              LatLng(widget.hallDetails.latitude, widget.hallDetails.longitude),
+          infoWindow: InfoWindow(title: widget.hallDetails.itemName))
+    };
+    // endregion
+
+    // region SliderImages List
     for (int i = 0; i < widget.hallDetails.listHallImages.length; i++) {
       imagesList.add(widget.hallDetails.listHallImages[i].iUrl);
     }
+    // endregion
 
+    // region Average Rating Calculation
     numOfRatings = widget.hallDetails.listHallReviews.length;
     if (averageRating != 0) {
       averageRating = 0;
@@ -65,6 +95,7 @@ class _DetailsScreenState extends State<DetailsScreen>
     setState(() {
       averageRating = totalReviews / numOfRatings;
     });
+    // endregion
 
     tabController = TabController(length: imagesList.length, vsync: this);
   }
@@ -75,6 +106,18 @@ class _DetailsScreenState extends State<DetailsScreen>
     tabController.dispose();
     super.dispose();
   }
+  // endregion
+
+  // region MapCreation
+  void _onMapCreated(GoogleMapController _gMapController) {
+    _controller = _gMapController;
+    _controller.animateCamera(
+      CameraUpdate.newCameraPosition(
+        _cameraPosition,
+      ),
+    );
+  }
+  // endregion
 
   @override
   Widget build(BuildContext context) {
@@ -87,10 +130,10 @@ class _DetailsScreenState extends State<DetailsScreen>
 
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
-    // endregion
 
     ScreenUtil.init(BoxConstraints(maxWidth: _width, maxHeight: _height),
         designSize: Size(360, 690), orientation: Orientation.portrait);
+    // endregion
 
     return Scaffold(
       body: ListView(
@@ -176,7 +219,7 @@ class _DetailsScreenState extends State<DetailsScreen>
                             child: Column(
                               children: [
                                 alignWidget(
-                                    'Rating',
+                                    StringAssets.kTextRating,
                                     14.0,
                                     AppColors.kPrimaryColor,
                                     Alignment.centerLeft),
@@ -189,7 +232,7 @@ class _DetailsScreenState extends State<DetailsScreen>
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Text(
-                                        "/",
+                                        StringAssets.kTextSlash,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -245,16 +288,16 @@ class _DetailsScreenState extends State<DetailsScreen>
       bottomNavigationBar: Container(
         padding: EdgeInsets.all(10.0),
         child: RoundedButton(
-          text: "BOOK NOW",
+          text: StringAssets.kTextBookNow.toUpperCase(),
           press: () {
-            StringAssets.kHallName = widget.hallDetails.itemName;
-            Navigator.of(context).pushNamed('/hall_booking');
+            checkUserLogin(widget.hallDetails.itemName);
           },
         ),
       ),
     );
   }
 
+  // region Rating Stars
   Widget buildStarIcons(index) {
     List<Widget> widgets = [];
 
@@ -263,20 +306,12 @@ class _DetailsScreenState extends State<DetailsScreen>
     }
     return Row(children: widgets);
   }
+  // endregion
 
+  // region Reviews Widget
   Widget _buildReviewWidget(
       String name, String reviewText, String dateText, double review) {
     return Padding(
-      // decoration: BoxDecoration(
-      //   border: Border.all(
-      //     width: 0.0,
-      //     color: AppColors.kWhiteColor,
-      //   ),
-      //   borderRadius: BorderRadius.all(Radius.circular(0)),
-      //   color: AppColors.kSmokeWhiteColor,
-      // ),
-      // margin: EdgeInsets.symmetric(vertical: 5),
-      // padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
       padding: EdgeInsets.all(5.0),
       child: Card(
         elevation: 5.0,
@@ -303,9 +338,7 @@ class _DetailsScreenState extends State<DetailsScreen>
                           style: TextStyle(
                               fontSize: 15.0,
                               color: AppColors.kPrimaryColor,
-                              fontWeight: FontWeight.bold)
-                          //style: AppStyles.kDarkGreyStyle,
-                          ),
+                              fontWeight: FontWeight.bold)),
                       Spacer(),
                       RatingBarIndicator(
                         rating: review,
@@ -322,7 +355,6 @@ class _DetailsScreenState extends State<DetailsScreen>
                   ),
                   Text(
                     reviewText != null ? reviewText : "",
-                    //style: AppStyles.kDarkGreyStyle,
                   ),
                   SizedBox(
                     height: 10.0,
@@ -351,7 +383,9 @@ class _DetailsScreenState extends State<DetailsScreen>
       ),
     );
   }
+  // endregion
 
+  // region TabBar
   Widget _buildTabBar() {
     return TabBar(
       indicatorColor: AppColors.kPrimaryColor,
@@ -360,21 +394,23 @@ class _DetailsScreenState extends State<DetailsScreen>
       isScrollable: true,
       tabs: [
         Tab(
-          text: 'Details',
+          text: StringAssets.kTabItems[0],
         ),
         Tab(
-          text: 'Availability',
+          text: StringAssets.kTabItems[1],
         ),
         Tab(
-          text: 'Reviews',
+          text: StringAssets.kTabItems[2],
         ),
         Tab(
-          text: 'Location',
+          text: StringAssets.kTabItems[3],
         ),
       ],
     );
   }
+  // endregion
 
+  // region TabBarView
   Widget _buildTabBarView() {
     return TabBarView(
       children: [
@@ -394,6 +430,7 @@ class _DetailsScreenState extends State<DetailsScreen>
                 itemCount: widget.hallDetails.listHallAvailability.length,
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: EdgeInsets.all(5.0),
@@ -427,6 +464,7 @@ class _DetailsScreenState extends State<DetailsScreen>
                 itemCount: widget.hallDetails.listHallReviews.length,
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
+                // physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
                   return _buildReviewWidget(
                     widget.hallDetails.listHallReviews[index].username,
@@ -435,8 +473,37 @@ class _DetailsScreenState extends State<DetailsScreen>
                     widget.hallDetails.listHallReviews[index].review,
                   );
                 })),
-        Center(child: Text('Location')),
+        Container(
+            height: 300.0,
+            width: double.infinity,
+            child: Stack(
+              children: [
+                GoogleMap(
+                    initialCameraPosition: _cameraPosition,
+                    mapType: MapType.normal,
+                    myLocationEnabled: false,
+                    mapToolbarEnabled: true,
+                    zoomControlsEnabled: true,
+                    compassEnabled: true,
+                    markers: _markersLahore,
+                    onMapCreated: _onMapCreated)
+              ],
+            )),
       ],
     );
   }
+  // endregion
+
+  // region Check Login Status
+  void checkUserLogin(String itemName) async {
+    bool boolValue = await SharedPrefs().getBoolValuesSF("login");
+
+    if (boolValue) {
+      StringAssets.kHallName = widget.hallDetails.itemName;
+      Navigator.of(context).pushNamed('/hall_booking');
+    } else {
+      Navigator.of(context).pushNamed('/login_page');
+    }
+  }
+  // endregion
 }

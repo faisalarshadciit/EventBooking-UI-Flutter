@@ -3,6 +3,7 @@ import 'package:event_book_app/constants/app_styles.dart';
 import 'package:event_book_app/constants/string_assets.dart';
 import 'package:event_book_app/ui/components/rounded_button.dart';
 import 'package:event_book_app/ui/widgets/rating_icon_widget.dart';
+import 'package:event_book_app/ui/widgets/appbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -34,18 +35,7 @@ class _RatingPageState extends State<RatingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Rating",
-          style: AppStyles.kAppBarStyle,
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.kPrimaryColor,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () => Navigator.pop(context, false),
-        ),
-      ),
+      appBar: customAppBar(context, StringAssets.kTextRating),
       backgroundColor: AppColors.kWhiteColor,
       body: Container(
           color: AppColors.kWhiteColor,

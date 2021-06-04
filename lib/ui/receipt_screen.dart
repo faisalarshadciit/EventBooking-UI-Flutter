@@ -1,8 +1,8 @@
 import 'package:event_book_app/constants/app_colors.dart';
-import 'package:event_book_app/constants/app_styles.dart';
 import 'package:event_book_app/constants/string_assets.dart';
 import 'package:event_book_app/ui/widgets/colored_text_widget.dart';
 import 'package:event_book_app/ui/widgets/icon_widget.dart';
+import 'package:event_book_app/ui/widgets/appbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'components/rounded_button.dart';
 
@@ -14,15 +14,6 @@ class ReceiptPage extends StatefulWidget {
 }
 
 class _ReceiptPageState extends State<ReceiptPage> {
-  // String name = "Faisal Arshad";
-  // String phone = "+92308-8649850";
-  // int noOfChairs = 250;
-  // double perHeadCharges = 600;
-  // double bridalRoomCharges = 4000;
-  // double stageDecorationCharges = 5500;
-  // String date = "24/05/2020";
-  // String time = "Day";
-  // String selectedMenu = "Deal 1";
   double totalCharges = 0;
 
   @override
@@ -39,18 +30,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Receipt",
-          style: AppStyles.kAppBarStyle,
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.kPrimaryColor,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () => Navigator.pop(context, false),
-        ),
-      ),
+      appBar: customAppBar(context, StringAssets.kTextReceipt),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -248,7 +228,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
                           style: TextStyle(color: Colors.black, fontSize: 30),
                           children: <TextSpan>[
                             TextSpan(
-                              text: "Total Charges : ",
+                              text: StringAssets.kTextTotalCharges,
                               style: TextStyle(
                                   fontSize: 28.0,
                                   color: AppColors.kPrimaryColor,
@@ -272,7 +252,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
       bottomNavigationBar: Container(
         padding: EdgeInsets.all(10.0),
         child: RoundedButton(
-          text: "CONFIRM BOOKING",
+          text: StringAssets.kTextConfirmBooking.toUpperCase(),
           press: () {
             Navigator.of(context).pushNamed('/home_page');
           },

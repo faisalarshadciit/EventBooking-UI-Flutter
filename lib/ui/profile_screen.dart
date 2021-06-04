@@ -1,8 +1,13 @@
+import 'dart:convert';
+import 'package:event_book_app/models/user_model.dart';
+import 'package:event_book_app/shared_preference/SharedPrefs.dart';
+import 'package:event_book_app/storage.dart';
 import 'package:event_book_app/constants/app_colors.dart';
-import 'package:event_book_app/constants/app_styles.dart';
 import 'package:event_book_app/constants/string_assets.dart';
+import 'package:event_book_app/constants/images_assets.dart';
 import 'package:event_book_app/ui/widgets/simple_icon_widget.dart';
 import 'package:event_book_app/ui/widgets/aligned_text_widget.dart';
+import 'package:event_book_app/ui/widgets/appbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -15,21 +20,27 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  Storage storage = new Storage();
+  UserModel user = new UserModel();
+  String username = "";
+  String email = "";
+  String phone = "";
+  bool boolValue = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    //region read data for profile
+    checkUserLogin();
+    //endregion
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Profile",
-            style: AppStyles.kAppBarStyle,
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.kPrimaryColor,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () => Navigator.pop(context, false),
-          ),
-        ),
+        appBar: customAppBar(context, StringAssets.kTextProfile),
         backgroundColor: AppColors.kWhiteColor,
         body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(vertical: 20),
@@ -40,27 +51,21 @@ class _ProfilePageState extends State<ProfilePage> {
               _profileMenuWidget(
                 context,
                 StringAssets.kLabelUserName,
-                StringAssets.kLoginUserName,
-                //"boolValue ? user.username : username",
-                //user.username != null ? user.username : username,
+                boolValue ? user.userName : username,
                 FontAwesomeIcons.userCircle,
                 () => {},
               ),
               _profileMenuWidget(
                 context,
                 StringAssets.kLabelUserEmail,
-                StringAssets.kLoginUserEmail,
-                //"boolValue ? user.email : email",
-                //user.email != null ? user.email : email,
+                boolValue ? user.userEmail : email,
                 Icons.email,
                 () => {},
               ),
               _profileMenuWidget(
                 context,
                 StringAssets.kLabelUserPhone,
-                StringAssets.kLoginUserPhone,
-                //"boolValue ? user.phoneNumber : phone",
-                //user.phoneNumber != null ? user.phoneNumber : phone,
+                boolValue ? user.userPhone : phone,
                 Icons.phone,
                 () => {},
               ),
@@ -80,7 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
         fit: StackFit.expand,
         children: [
           CircleAvatar(
-            backgroundImage: AssetImage("assets/images/profile.png"),
+            backgroundImage: AssetImage(ImageAssets.imagesProfileImage),
           ),
           Positioned(
             right: -16,
@@ -95,7 +100,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 color: AppColors.kPrimaryColor,
                 child: SvgPicture.asset(
-                  "assets/icons/camera.svg",
+                  ImageAssets.iconsCameraImage,
                   color: AppColors.kWhiteColor,
                 ),
                 onPressed: () {},
@@ -169,4 +174,24 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+
+  // region CheckLogin Method
+  checkUserLogin() async {
+    boolValue = await SharedPrefs().getBoolValuesSF("login");
+
+    storage.readData().then((value) async {
+      if (value != "") {
+        setState(() {
+          user = UserModel.fromJson(json.decode(value));
+        });
+      } else {
+        user.userId = "123";
+        username = StringAssets.kLoginUserName;
+        email = StringAssets.kLoginUserEmail;
+        phone = StringAssets.kLabelUserPhone;
+      }
+    });
+  }
+  // endregion
+
 }

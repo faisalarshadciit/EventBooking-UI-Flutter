@@ -10,7 +10,7 @@ class AppStyles {
   static const TextStyle kAppBarStyle = TextStyle(
       color: AppColors.kWhiteColor,
       fontWeight: FontWeight.bold,
-      fontFamily: FontFamily.kFontPoppinsRegular);
+      fontFamily: FontFamily.kFontPoppinsSemiBold);
   // endregion
 
   // region Review Styles

@@ -1,11 +1,12 @@
 import 'package:event_book_app/constants/app_colors.dart';
-import 'package:event_book_app/constants/app_styles.dart';
+import 'package:event_book_app/constants/string_assets.dart';
 import 'package:event_book_app/methods/json_method.dart';
 import 'package:event_book_app/models/orders_model.dart';
 import 'package:event_book_app/ui/widgets/colored_text_widget.dart';
 import 'package:event_book_app/ui/widgets/icon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'widgets/appbar_widget.dart';
 
 class BookedHall extends StatefulWidget {
   @override
@@ -18,18 +19,7 @@ class _BookedHallState extends State<BookedHall> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Booked Halls",
-          style: AppStyles.kAppBarStyle,
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.kPrimaryColor,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () => Navigator.pop(context, false),
-        ),
-      ),
+      appBar: customAppBar(context, StringAssets.kTextBookedHalls),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -46,13 +36,17 @@ class _BookedHallState extends State<BookedHall> {
                       itemBuilder: (BuildContext context, int index) {
                         OrdersModel ordersModel = snapshot.data[index];
 
-                        if (ordersModel.orderStatus == "Pending") {
+                        if (ordersModel.orderStatus ==
+                            StringAssets.kTextPending) {
                           statusColor = Colors.orange;
-                        } else if (ordersModel.orderStatus == "Accepted") {
+                        } else if (ordersModel.orderStatus ==
+                            StringAssets.kTextAccepted) {
                           statusColor = Colors.green;
-                        } else if (ordersModel.orderStatus == "Rejected") {
+                        } else if (ordersModel.orderStatus ==
+                            StringAssets.kTextRejected) {
                           statusColor = Colors.red;
-                        } else if (ordersModel.orderStatus == "Completed") {
+                        } else if (ordersModel.orderStatus ==
+                            StringAssets.kTextCompleted) {
                           statusColor = AppColors.kPrimaryColorDark;
                         }
 
@@ -62,11 +56,10 @@ class _BookedHallState extends State<BookedHall> {
                               padding: EdgeInsets.all(10.0),
                               child: GestureDetector(
                                 onTap: () {
-                                  if (ordersModel.orderStatus == "Completed") {
+                                  if (ordersModel.orderStatus ==
+                                      StringAssets.kTextCompleted) {
                                     Navigator.pushReplacementNamed(
                                         context, '/rating_page');
-                                  } else {
-                                    print("Pressed...");
                                   }
                                 },
                                 child: Card(

@@ -1,4 +1,5 @@
 import 'package:event_book_app/constants/app_colors.dart';
+import 'package:event_book_app/constants/string_assets.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -59,9 +60,9 @@ class _OutlinedPasswordFieldState extends State<OutlinedPasswordField> {
         border: OutlineInputBorder(
             borderSide: const BorderSide(color: AppColors.kPrimaryColor),
             borderRadius: const BorderRadius.all(const Radius.circular(10.0))),
-        labelText: "Password",
+        labelText: StringAssets.kLabelPassword,
         alignLabelWithHint: true,
-        hintText: "Enter Password",
+        hintText: StringAssets.kHintPassword,
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         suffixIcon: IconButton(
           icon: widget.isObscureText == true

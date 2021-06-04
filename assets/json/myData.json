@@ -6,6 +6,8 @@
       "details": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       "address": "Khayaban-e-Firdousi, Lahore",
       "phone": "0321 9435116",
+      "latitude": 31.46115,
+      "longitude": 74.28591,
       "rating_and_reviews": [
         {
           "rUsername": "Abc Xyz",
@@ -83,6 +85,8 @@
       "details": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       "address": "9 Civic Center, Johar Town, Lahore",
       "phone": "0332 4867229",
+      "latitude": 31.464687,
+      "longitude": 74.286563,
       "rating_and_reviews": [
         {
           "rUsername": "Abc Xyz",
@@ -194,6 +198,8 @@
       "details": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       "address": "10 - Aibak Block, Main Bulevard, New Garden Town, Lahore",
       "phone": "(+92)-42-35844052",
+      "latitude": 31.499940,
+      "longitude": 74.317220,
       "rating_and_reviews": [
         {
           "rUsername": "Abc Xyz",
@@ -271,6 +277,8 @@
       "details": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       "address": "Samanabad Town, Lahore",
       "phone": " 0323 7070776",
+      "latitude": 31.546405,
+      "longitude": 74.291301,
       "rating_and_reviews": [
         {
           "rUsername": "Abc Xyz",
@@ -350,6 +358,8 @@
       "details": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       "address": "27-B- 2 College Road, Township Block C Phase 1 Johar Town, Lahore",
       "phone": " 0344 4399306",
+      "latitude": 31.455383,
+      "longitude": 74.300429,
       "rating_and_reviews": [
         {
           "rUsername": "Abc Xyz",
@@ -435,8 +445,10 @@
       "name": "Taj Mahal Banquet Hall",
       "image": "assets/images/marriage_hall_6.jpg",
       "details": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      "address": "Taj Mahal Banquet Hall, Lahore",
+      "address": "9, Abu Bakar Block New Garden Town, Lahore",
       "phone": "(042) 35862553",
+      "latitude": 31.513476,
+      "longitude": 74.327986,
       "rating_and_reviews": [
         {
           "rUsername": "Xyz",
@@ -516,6 +528,8 @@
       "details": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       "address": "Sabzazar Block G Sabzazar Housing Scheme Phase 1 & 2 Lahore",
       "phone": "0345 2411739",
+      "latitude": 31.522657,
+      "longitude": 74.267864,
       "rating_and_reviews": [
         {
           "rUsername": "Abc Xyz",
@@ -601,6 +615,8 @@
       "details": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       "address": "Moon Market, E Block Block E Gulshan-e-Ravi, Lahore",
       "phone": "0321 8864253",
+      "latitude": 31.551022,
+      "longitude": 74.280574,
       "rating_and_reviews": [
         {
           "rUsername": "Abc Xyz",
@@ -690,6 +706,8 @@
       "details": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       "address": "Township, Twp Commercial Area Lahore",
       "phone": " (042) 35123755",
+      "latitude": 31.453424,
+      "longitude": 74.300505,
       "rating_and_reviews": [
         {
           "rUsername": "Abc Xyz",
@@ -773,8 +791,10 @@
       "name": "Topaz Marquee",
       "image": "assets/images/marriage_hall_10.jpg",
       "details": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      "address": "265 R, M A, Phase 2, Johar Town, Lahore",
-      "phone": "(+92) (042) 3594-5456",
+      "address": "R 2 Khayaban-e-Firdousi, Block D2 Block D 2 Phase 1 Johar Town, Lahore",
+      "phone": "0336 3300600",
+      "latitude": 31.460482,
+      "longitude": 74.286157,
       "rating_and_reviews": [
         {
           "rUsername": "Abc Xyz",
@@ -860,6 +880,8 @@
       "details": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       "address": "NESPAK Society Block D 1 Nespak Housing Scheme, Lahore",
       "phone": " 0301 4338813",
+      "latitude": 31.436288,
+      "longitude": 74.278263,
       "rating_and_reviews": [
         {
           "rUsername": "Abc Xyz",
@@ -945,6 +967,8 @@
       "details": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       "address": "Zafar Ali Rd, Gulberg V, Lahore",
       "phone": " (042) 35775471",
+      "latitude": 31.5398735,
+      "longitude": 74.3511048,
       "rating_and_reviews": [
         {
           "rUsername": "Abc Xyz",

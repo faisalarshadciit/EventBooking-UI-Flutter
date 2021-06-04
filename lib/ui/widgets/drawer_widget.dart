@@ -74,13 +74,27 @@ class _AppDrawerState extends State<AppDrawer> {
               },
             ),
             Divider(),
-            ListTile(
-              title: colorTextWidget(logout == true ? 'Logout' : 'Login', 16.0,
-                  AppColors.kPrimaryColor),
-              leading: Icon(Icons.lock_open, color: AppColors.kPrimaryColor),
-              onTap: () {
-                Navigator.pop(context);
-              },
+            Visibility(
+              visible: login,
+              child: ListTile(
+                leading: Icon(Icons.lock_open, color: AppColors.kPrimaryColor),
+                title: colorTextWidget('Login', 16.0, AppColors.kPrimaryColor),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/login_page');
+                },
+              ),
+            ),
+            Visibility(
+              visible: logout,
+              child: ListTile(
+                leading: Icon(Icons.logout, color: AppColors.kPrimaryColor),
+                title: colorTextWidget('Logout', 16.0, AppColors.kPrimaryColor),
+                onTap: () {
+                  Navigator.pop(context);
+                  setUserLogout();
+                },
+              ),
             ),
             Divider()
           ],

@@ -1,19 +1,19 @@
 import 'package:event_book_app/constants/app_colors.dart';
-import 'package:event_book_app/constants/app_styles.dart';
 import 'package:event_book_app/constants/string_assets.dart';
 import 'package:event_book_app/ui/widgets/default_container.dart';
 import 'package:event_book_app/ui/widgets/custome_radiolisttile.dart';
 import 'package:event_book_app/ui/widgets/richtext_widget.dart';
+import 'package:event_book_app/ui/widgets/appbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'components/rounded_button.dart';
 
-class HallBooking2 extends StatefulWidget {
+class DateTimeSelection extends StatefulWidget {
   @override
-  _HallBooking2State createState() => _HallBooking2State();
+  _DateTimeSelectionState createState() => _DateTimeSelectionState();
 }
 
-class _HallBooking2State extends State<HallBooking2> {
+class _DateTimeSelectionState extends State<DateTimeSelection> {
   GlobalKey<FormState> _hallBooking2FormKey = GlobalKey<FormState>();
   var dateFormat = new DateFormat('dd-MM-yyyy');
   String currentDate, startTime, endTime;
@@ -87,18 +87,7 @@ class _HallBooking2State extends State<HallBooking2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Hall Booking",
-          style: AppStyles.kAppBarStyle,
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.kPrimaryColor,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () => Navigator.pop(context, false),
-        ),
-      ),
+      appBar: customAppBar(context, StringAssets.kTextHallBooking),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.only(top: 30),
@@ -108,7 +97,7 @@ class _HallBooking2State extends State<HallBooking2> {
               key: _hallBooking2FormKey,
               child: Column(
                 children: [
-                  defaultContainer("Event Date"),
+                  defaultContainer(StringAssets.kTextEventDate),
                   SizedBox(height: 10),
                   Row(
                     children: <Widget>[
@@ -141,7 +130,7 @@ class _HallBooking2State extends State<HallBooking2> {
                         fit: FlexFit.tight,
                         child: TextButton.icon(
                           label: Text(
-                            "Date",
+                            StringAssets.kTextDate,
                             style: TextStyle(
                               color: AppColors.kWhiteColor,
                               fontWeight: FontWeight.bold,
@@ -169,7 +158,7 @@ class _HallBooking2State extends State<HallBooking2> {
                     ],
                   ),
                   SizedBox(height: 10),
-                  defaultContainer("Event Time"),
+                  defaultContainer(StringAssets.kTextEventTime),
                   Row(
                     children: <Widget>[
                       CustomRadioListTile(
@@ -179,10 +168,10 @@ class _HallBooking2State extends State<HallBooking2> {
                           tileValue: etTileValue,
                           tileColor: etTileColor,
                           tileColorValue: 1,
-                          text: "Day",
+                          text: StringAssets.kTextDay,
                           onChange: (value) {
                             setTimeRadioTile(value);
-                            StringAssets.kEventTime = "Day";
+                            StringAssets.kEventTime = StringAssets.kTextDay;
                           }),
                       CustomRadioListTile(
                           flexFit: FlexFit.loose,
@@ -191,15 +180,15 @@ class _HallBooking2State extends State<HallBooking2> {
                           tileValue: etTileValue,
                           tileColor: etTileColor,
                           tileColorValue: 2,
-                          text: "Night",
+                          text: StringAssets.kTextNight,
                           onChange: (value) {
                             setTimeRadioTile(value);
-                            StringAssets.kEventTime = "Night";
+                            StringAssets.kEventTime = StringAssets.kTextNight;
                           }),
                     ],
                   ),
                   SizedBox(height: 10),
-                  defaultContainer("Bridal Room"),
+                  defaultContainer(StringAssets.kTextBridalRoom),
                   Row(
                     children: <Widget>[
                       CustomRadioListTile(
@@ -209,7 +198,7 @@ class _HallBooking2State extends State<HallBooking2> {
                           tileValue: brTileValue,
                           tileColor: brTileColor,
                           tileColorValue: 1,
-                          text: "Yes",
+                          text: StringAssets.kTileTextYes,
                           onChange: (value) {
                             setBridalRoomRadioTile(value);
                             setState(() {
@@ -224,7 +213,7 @@ class _HallBooking2State extends State<HallBooking2> {
                           tileValue: brTileValue,
                           tileColor: brTileColor,
                           tileColorValue: 2,
-                          text: "No",
+                          text: StringAssets.kTileTextNo,
                           onChange: (value) {
                             setBridalRoomRadioTile(value);
                             setState(() {
@@ -239,7 +228,7 @@ class _HallBooking2State extends State<HallBooking2> {
                         : Container(),
                   ),
                   SizedBox(height: 10),
-                  defaultContainer("AC"),
+                  defaultContainer(StringAssets.kTextAC),
                   Row(
                     children: <Widget>[
                       CustomRadioListTile(
@@ -249,7 +238,7 @@ class _HallBooking2State extends State<HallBooking2> {
                           tileValue: acTileValue,
                           tileColor: acTileColor,
                           tileColorValue: 1,
-                          text: "Yes",
+                          text: StringAssets.kTileTextYes,
                           onChange: (value) {
                             setACRadioTile(value);
                             setState(() {
@@ -264,7 +253,7 @@ class _HallBooking2State extends State<HallBooking2> {
                           tileValue: acTileValue,
                           tileColor: acTileColor,
                           tileColorValue: 2,
-                          text: "No",
+                          text: StringAssets.kTileTextNo,
                           onChange: (value) {
                             setACRadioTile(value);
                             setState(() {
@@ -277,7 +266,7 @@ class _HallBooking2State extends State<HallBooking2> {
                     child: isAC == true ? richTextWidget(acPrice) : Container(),
                   ),
                   SizedBox(height: 10),
-                  defaultContainer("Stage Decoration"),
+                  defaultContainer(StringAssets.kTextStageDecoration),
                   Row(
                     children: <Widget>[
                       CustomRadioListTile(
@@ -287,7 +276,7 @@ class _HallBooking2State extends State<HallBooking2> {
                           tileValue: sdTileValue,
                           tileColor: sdTileColor,
                           tileColorValue: 1,
-                          text: "Yes",
+                          text: StringAssets.kTileTextYes,
                           onChange: (value) {
                             setStageDecorationRadioTile(value);
                             setState(() {
@@ -302,7 +291,7 @@ class _HallBooking2State extends State<HallBooking2> {
                           tileValue: sdTileValue,
                           tileColor: sdTileColor,
                           tileColorValue: 2,
-                          text: "No",
+                          text: StringAssets.kTileTextNo,
                           onChange: (value) {
                             setStageDecorationRadioTile(value);
                             setState(() {
@@ -340,7 +329,7 @@ class _HallBooking2State extends State<HallBooking2> {
       bottomNavigationBar: Container(
           padding: EdgeInsets.all(10.0),
           child: RoundedButton(
-            text: "NEXT",
+            text: StringAssets.kTextNext.toUpperCase(),
             press: () {
               Navigator.pushNamed(context, '/hall_booking3');
             },
@@ -394,8 +383,6 @@ class _HallBooking2State extends State<HallBooking2> {
         onTap: () {
           setState(() {
             selectedImage = index;
-            //_showMyDialog(selectedImage, imagesList[selectedImage]);
-
             switch (selectedImage) {
               case 0:
                 decorationPrice = 4100;

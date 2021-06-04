@@ -10,7 +10,7 @@ class OutlinedInputField extends StatelessWidget {
   final IconData icon;
   final ValueChanged<String> onChanged;
   final FormFieldValidator<String> validator;
-  final TextEditingController textEditingController;
+  TextEditingController textEditingController;
   final TextCapitalization textCapitalization;
   final FocusNode currentFocusNode;
   final FocusNode nextFocusNode;
@@ -53,7 +53,7 @@ class OutlinedInputField extends StatelessWidget {
     // endregion
 
     return TextFormField(
-      //textCapitalization: textCapitalization,
+      textCapitalization: textCapitalization,
       controller: textEditingController,
       textInputAction:
           inputAction == "next" ? TextInputAction.next : TextInputAction.done,

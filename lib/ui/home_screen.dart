@@ -1,4 +1,7 @@
 import 'package:event_book_app/config/screen_size.dart';
+import 'package:event_book_app/constants/string_assets.dart';
+import 'package:event_book_app/methods/toast_methods.dart';
+import 'package:event_book_app/shared_preference/SharedPrefs.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'details_screen.dart';
 import 'package:event_book_app/constants/app_colors.dart';
@@ -12,8 +15,10 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'widgets/drawer_widget.dart';
 import 'package:event_book_app/config/size_config.dart';
 
+// region Global Variables
 double defaultHeight, defaultWidth;
 double safeHeight, safeWidth;
+// endregion
 
 class HomePage extends StatefulWidget {
   @override
@@ -21,8 +26,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  double _width;
-  double _height, thirtyHeight, twentyHeight, tenHeight;
+  double _width, _height, thirtyHeight, twentyHeight, tenHeight;
 
   @override
   void initState() {
@@ -40,14 +44,13 @@ class _HomePageState extends State<HomePage> {
 
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
-    // endregion
-
     ScreenUtil.init(BoxConstraints(maxWidth: _width, maxHeight: _height),
         designSize: Size(360, 690), orientation: Orientation.portrait);
+    // endregion
 
     return Scaffold(
       appBar: AppBar(
-        title: fontTextWidget("Event Booking", 22.0, Colors.white,
+        title: fontTextWidget(StringAssets.kAppName, 22.0, Colors.white,
             FontFamily.kFontPoppinsSemiBold),
         centerTitle: true,
         elevation: 0.0,
@@ -56,7 +59,7 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/login_page');
+              checkUserLogin();
             },
             icon: Icon(FontAwesomeIcons.user),
           ),
@@ -92,14 +95,14 @@ class _HomePageState extends State<HomePage> {
                   },
                 )),
             Padding(
-              padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+              padding: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                      padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                      child: fontTextWidget('Recommended for you', 18.0,
-                          Colors.black, FontFamily.kFontPoppinsRegular)),
+                      padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
+                      child: fontTextWidget(StringAssets.kRecommendedHalls,
+                          18.0, Colors.black, FontFamily.kFontPoppinsRegular)),
                   SizedBox(height: 10),
                   Container(
                       height: ScreenSizeResponsive.screenHeight(context,
@@ -152,7 +155,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Container(
                       padding: EdgeInsets.fromLTRB(5, 0, 10, 0),
-                      child: fontTextWidget('Experiences for you', 18.0,
+                      child: fontTextWidget(StringAssets.kDiscountedHalls, 18.0,
                           Colors.black, FontFamily.kFontPoppinsRegular)),
                   SizedBox(height: 10),
                   Container(
@@ -212,73 +215,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      // NestedScrollView(
-      //   headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-      //     return <Widget>[
-      //       SliverAppBar(
-      //         actions: <Widget>[
-      //           InkWell(
-      //             onTap: () {
-      //               Navigator.pushNamed(context, '/login_page');
-      //             },
-      //             child: Container(
-      //                 padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-      //                 child: Icon(FontAwesomeIcons.user)),
-      //           ),
-      //           SizedBox(
-      //             width: 12,
-      //           )
-      //         ],
-      //         //expandedHeight: ScreenUtil().setHeight(120),
-      //         expandedHeight: _height / 5.5,
-      //         floating: false,
-      //         pinned: false,
-      //         backgroundColor: AppColors.kPrimaryColor,
-      //         flexibleSpace: FlexibleSpaceBar(
-      //           collapseMode: CollapseMode.parallax,
-      //           centerTitle: true,
-      //           titlePadding: EdgeInsets.only(top: 20.0),
-      //           title: Center(
-      //             child: fontTextWidget("Event Booking", 16.0, Colors.white,
-      //                 FontFamily.kFontPoppinsSemiBold),
-      //           ),
-      //         ),
-      //         bottom: PreferredSize(
-      //             child: Container(
-      //               margin: EdgeInsets.only(
-      //                   bottom: 10, left: 10, right: 10, top: 10),
-      //               decoration: BoxDecoration(
-      //                   color: Colors.white,
-      //                   borderRadius: BorderRadius.circular(40)),
-      //               width: _width,
-      //               //height: _height/15,
-      //               alignment: Alignment.topCenter,
-      //               child: TextFormField(
-      //                 cursorColor: Colors.grey,
-      //                 decoration: InputDecoration(
-      //                     contentPadding:
-      //                         EdgeInsets.only(left: 15.0, top: 0.0, bottom: 0),
-      //                     prefixIcon: Icon(
-      //                       Icons.search,
-      //                       size: 20,
-      //                       color: Colors.grey,
-      //                     ),
-      //                     hintText: "Search for Hall, City or Location",
-      //                     hintStyle: TextStyle(
-      //                         fontWeight: FontWeight.w300,
-      //                         fontSize: 14.0,
-      //                         fontFamily: FontFamily.kFontPoppinsRegular),
-      //                     border: OutlineInputBorder(
-      //                         borderRadius: BorderRadius.circular(10),
-      //                         borderSide: BorderSide.none)),
-      //               ),
-      //             ),
-      //             preferredSize: Size(_width, _height / 45)),
-      //       ),
-      //     ];
-      //   },
-      //   body: ,
-      // ),
     );
   }
 
@@ -310,16 +246,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            // Container(
-            //   alignment: Alignment.center,
-            //   child: Text(
-            //     hallName,
-            //     style: TextStyle(
-            //         fontWeight: FontWeight.w500,
-            //         fontSize: 12,
-            //         color: Colors.grey[600]),
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -411,6 +337,17 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+  // endregion
+
+  // region CheckUserLogin Method
+  checkUserLogin() async {
+    bool boolValue = await SharedPrefs().getBoolValuesSF("login");
+    if (boolValue == true) {
+      ToastMethod.simpleToastMessages("User already login");
+    } else {
+      Navigator.pushNamed(context, '/login_page');
+    }
   }
   // endregion
 }

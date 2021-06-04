@@ -3,6 +3,8 @@ class HallsModel {
   String imageUrl;
   String details;
   String location;
+  double latitude;
+  double longitude;
   String contactNo;
   List<HallReviewsModel> listHallReviews;
   List<HallImagesModel> listHallImages;
@@ -13,6 +15,8 @@ class HallsModel {
     this.imageUrl,
     this.details,
     this.location,
+    this.latitude,
+    this.longitude,
     this.contactNo,
     this.listHallReviews,
     this.listHallImages,
@@ -24,6 +28,8 @@ class HallsModel {
       itemName: json["name"],
       details: json["details"],
       location: json["address"],
+      latitude: json["latitude"],
+      longitude: json["longitude"],
       contactNo: json["phone"],
       imageUrl: json["image"] == null ? null : json["image"],
       listHallReviews: new List<HallReviewsModel>.from(
@@ -39,6 +45,8 @@ class HallsModel {
         'name': itemName,
         'details': details,
         'address': location,
+        'latitude': latitude,
+        'longitude': longitude,
         'phone': contactNo,
         'image': imageUrl == null ? null : imageUrl,
         'rating_and_reviews': listHallReviews,

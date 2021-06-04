@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:event_book_app/constants/app_colors.dart';
+import 'package:event_book_app/constants/string_assets.dart';
+import 'package:event_book_app/constants/images_assets.dart';
 import 'package:event_book_app/methods/toast_methods.dart';
 import 'package:event_book_app/models/user_model.dart';
 import 'package:event_book_app/shared_preference/SharedPrefs.dart';
@@ -16,6 +18,7 @@ import 'components/outlined_input_field.dart';
 import 'components/outlined_password_field.dart';
 import 'components/rounded_button.dart';
 import 'components/social_icon.dart';
+import 'widgets/appbar_widget.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -53,19 +56,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
     // region Progress Dialog
     progressDialog = ProgressDialog(context,
         type: ProgressDialogType.Normal, isDismissible: false);
-    progressDialog.style(message: "Registering User");
+    progressDialog.style(message: StringAssets.kDialogTextRegister);
     // endregion
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Sign Up"),
-        centerTitle: true,
-        backgroundColor: AppColors.kPrimaryColor,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () => Navigator.pop(context, false),
-        ),
-      ),
+      appBar: customAppBar(context, StringAssets.kTextSignUp),
       body: SignUpBackground(
         child: SingleChildScrollView(
           child: Padding(
@@ -74,7 +69,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               key: _signUpFormKey,
               child: Column(children: [
                 SvgPicture.asset(
-                  "assets/icons/signup.svg",
+                  ImageAssets.iconsSignUpIcon,
                   height: size.height * 0.35,
                 ),
                 SizedBox(height: size.height * 0.03),
@@ -83,8 +78,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   textInputType: TextInputType.name,
                   inputAction: "next",
                   textEditingController: cName,
-                  labelText: "Your Name",
-                  hintText: "Enter Your Name",
+                  labelText: StringAssets.kLabelUsername,
+                  hintText: StringAssets.kHintUserName,
                   onChanged: (value) {
                     setState(() {
                       _name = value;
@@ -96,7 +91,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   },
                   validator: (value) {
                     if (value.isEmpty) {
-                      return "Empty";
+                      return StringAssets.kNameNullError;
                     } else {
                       return null;
                     }
@@ -110,8 +105,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   textInputType: TextInputType.emailAddress,
                   inputAction: "next",
                   textEditingController: cEmail,
-                  labelText: "Your Email",
-                  hintText: "Enter Your Email",
+                  labelText: StringAssets.kLabelEmail,
+                  hintText: StringAssets.kHintEmail,
                   onChanged: (value) {
                     setState(() {
                       _email = value;
@@ -123,7 +118,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   },
                   validator: (value) {
                     if (value.isEmpty) {
-                      return "Empty";
+                      return StringAssets.kEmailNullError;
                     } else {
                       return null;
                     }
@@ -137,8 +132,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   textInputType: TextInputType.phone,
                   inputAction: "next",
                   textEditingController: cPhone,
-                  labelText: "Phone Number",
-                  hintText: "Enter Your Phone Number",
+                  labelText: StringAssets.kLabelPhone,
+                  hintText: StringAssets.kHintPhone,
                   onChanged: (value) {
                     setState(() {
                       if (value.isNotEmpty) {
@@ -149,7 +144,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   },
                   validator: (value) {
                     if (value.isEmpty) {
-                      return "Empty";
+                      return StringAssets.kPhoneNullError;
                     } else {
                       return null;
                     }
@@ -171,7 +166,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   },
                   validator: (value) {
                     if (value.isEmpty) {
-                      return "Empty";
+                      return StringAssets.kPasswordNullError;
                     } else {
                       return null;
                     }
@@ -242,15 +237,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     SocialIcon(
-                      iconSrc: "assets/icons/facebook.svg",
+                      iconSrc: ImageAssets.iconsFacebookIcon,
                       press: () {},
                     ),
                     SocialIcon(
-                      iconSrc: "assets/icons/twitter.svg",
+                      iconSrc: ImageAssets.iconsTwitterIcon,
                       press: () {},
                     ),
                     SocialIcon(
-                      iconSrc: "assets/icons/google-plus.svg",
+                      iconSrc: ImageAssets.iconsGooglePlusIcon,
                       press: () {},
                     ),
                   ],

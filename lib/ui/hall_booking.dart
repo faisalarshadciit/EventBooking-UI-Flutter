@@ -1,10 +1,12 @@
-import 'package:event_book_app/constants/app_colors.dart';
-import 'package:event_book_app/constants/app_styles.dart';
+import 'dart:convert';
+import 'package:event_book_app/storage.dart';
 import 'package:event_book_app/constants/string_assets.dart';
+import 'package:event_book_app/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'components/outlined_input_field.dart';
+import 'widgets/appbar_widget.dart';
 import 'components/rounded_button.dart';
 
 class HallBooking extends StatefulWidget {
@@ -13,29 +15,36 @@ class HallBooking extends StatefulWidget {
 }
 
 class _HallBookingState extends State<HallBooking> {
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController phoneController = new TextEditingController();
+  Storage storage = new Storage();
+  UserModel user = new UserModel();
   GlobalKey<FormState> _hallBookingFormKey = GlobalKey<FormState>();
+  String username, userEmail, userPhone;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    storage.readData().then((value) async {
+      if (value != "") {
+        setState(() {
+          user = UserModel.fromJson(json.decode(value));
+
+          nameController.value = TextEditingValue(text: user.userName);
+          emailController.value = TextEditingValue(text: user.userEmail);
+          phoneController.value = TextEditingValue(text: user.userPhone);
+        });
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Hall Booking",
-          style: AppStyles.kAppBarStyle,
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.kPrimaryColor,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () => Navigator.pop(context, false),
-        ),
-      ),
+      appBar: customAppBar(context, StringAssets.kTextHallBooking),
       body: SingleChildScrollView(
         child: Center(
           child: Container(
@@ -47,11 +56,12 @@ class _HallBookingState extends State<HallBooking> {
                 child: Column(
                   children: [
                     OutlinedInputField(
+                      textEditingController: nameController,
                       textCapitalization: TextCapitalization.words,
                       inputAction: "next",
                       textInputType: TextInputType.name,
-                      hintText: "Enter Your Name",
-                      labelText: "Your Name",
+                      hintText: StringAssets.kHintUserName,
+                      labelText: StringAssets.kLabelUsername,
                       onChanged: (value) {
                         setState(() {
                           StringAssets.kUserName = value;
@@ -59,7 +69,7 @@ class _HallBookingState extends State<HallBooking> {
                       },
                       validator: (value) {
                         if (value.isEmpty) {
-                          return "Name Required";
+                          return StringAssets.kNameNullError;
                         } else {
                           return null;
                         }
@@ -69,11 +79,12 @@ class _HallBookingState extends State<HallBooking> {
                     ),
                     SizedBox(height: 20),
                     OutlinedInputField(
+                      textEditingController: emailController,
                       textCapitalization: TextCapitalization.none,
                       inputAction: "next",
                       textInputType: TextInputType.emailAddress,
-                      hintText: "Enter Your Email",
-                      labelText: "Your Email",
+                      hintText: StringAssets.kHintEmail,
+                      labelText: StringAssets.kLabelEmail,
                       onChanged: (value) {
                         setState(() {
                           StringAssets.kUserEmail = value;
@@ -81,7 +92,7 @@ class _HallBookingState extends State<HallBooking> {
                       },
                       validator: (value) {
                         if (value.isEmpty) {
-                          return "Email Required";
+                          return StringAssets.kEmailNullError;
                         } else {
                           return null;
                         }
@@ -91,10 +102,11 @@ class _HallBookingState extends State<HallBooking> {
                     ),
                     SizedBox(height: 20),
                     OutlinedInputField(
+                      textEditingController: phoneController,
                       textCapitalization: TextCapitalization.none,
                       inputAction: "next",
-                      hintText: "Enter Your Phone",
-                      labelText: "Your Phone",
+                      hintText: StringAssets.kHintPhone,
+                      labelText: StringAssets.kLabelPhone,
                       textInputType: TextInputType.phone,
                       onChanged: (value) {
                         setState(() {
@@ -103,7 +115,7 @@ class _HallBookingState extends State<HallBooking> {
                       },
                       validator: (value) {
                         if (value.isEmpty) {
-                          return "Phone Required";
+                          return StringAssets.kPhoneNullError;
                         } else {
                           return null;
                         }
@@ -115,8 +127,8 @@ class _HallBookingState extends State<HallBooking> {
                     OutlinedInputField(
                       textCapitalization: TextCapitalization.none,
                       inputAction: "next",
-                      labelText: "No. of Guests",
-                      hintText: "Enter No. of Guests",
+                      labelText: StringAssets.kLabelGuests,
+                      hintText: StringAssets.kHintGuests,
                       textInputType: TextInputType.number,
                       onChanged: (value) {
                         setState(() {
@@ -125,7 +137,7 @@ class _HallBookingState extends State<HallBooking> {
                       },
                       validator: (value) {
                         if (value.isEmpty) {
-                          return "No. Of Guests Required";
+                          return StringAssets.kGuestsNullError;
                         } else {
                           return null;
                         }
@@ -137,8 +149,8 @@ class _HallBookingState extends State<HallBooking> {
                     OutlinedInputField(
                       textCapitalization: TextCapitalization.none,
                       inputAction: "done",
-                      labelText: "No. of Chairs",
-                      hintText: "Enter No. of Chairs",
+                      labelText: StringAssets.kLabelChairs,
+                      hintText: StringAssets.kHintChairs,
                       textInputType: TextInputType.number,
                       onChanged: (value) {
                         setState(() {
@@ -147,7 +159,7 @@ class _HallBookingState extends State<HallBooking> {
                       },
                       validator: (value) {
                         if (value.isEmpty) {
-                          return "No. Of Chairs Required";
+                          return StringAssets.kChairsNullError;
                         } else {
                           return null;
                         }
@@ -166,7 +178,7 @@ class _HallBookingState extends State<HallBooking> {
       bottomNavigationBar: Container(
           padding: EdgeInsets.all(10.0),
           child: RoundedButton(
-            text: "NEXT",
+            text: StringAssets.kTextNext.toUpperCase(),
             press: () {
               if (_hallBookingFormKey.currentState.validate()) {
                 _hallBookingFormKey.currentState.save();
