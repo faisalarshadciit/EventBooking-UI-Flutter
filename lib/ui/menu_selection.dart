@@ -1,6 +1,7 @@
 import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/constants/string_assets.dart';
 import 'package:event_book_app/methods/json_method.dart';
+import 'package:event_book_app/methods/toast_methods.dart';
 import 'package:event_book_app/models/menu_data.dart';
 import 'package:event_book_app/models/menu_model.dart';
 import 'package:event_book_app/ui/receipt_screen.dart';
@@ -91,6 +92,7 @@ class _MenuSelectionState extends State<MenuSelection> {
 
                                           if (index ==
                                               snapshot.data.length - 1) {
+                                            selectedCard = 0;
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -118,10 +120,10 @@ class _MenuSelectionState extends State<MenuSelection> {
                                               : AppColors.kWhiteColor,
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.only(
-                                              bottomRight: Radius.circular(60),
-                                              bottomLeft: Radius.circular(10),
-                                              topRight: Radius.circular(10),
-                                              topLeft: Radius.circular(10),
+                                              bottomRight: Radius.circular(20),
+                                              bottomLeft: Radius.circular(20),
+                                              topRight: Radius.circular(20),
+                                              topLeft: Radius.circular(20),
                                             ),
                                           ),
                                           child: _buildMenu(menuSelectionModel),
@@ -154,8 +156,12 @@ class _MenuSelectionState extends State<MenuSelection> {
           child: RoundedButton(
             text: StringAssets.kTextNext.toUpperCase(),
             press: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ReceiptPage()));
+              if (selectedCard != 0) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ReceiptPage()));
+              } else {
+                ToastMethod.errorToastMessage("Please Select a Menu");
+              }
             },
           )),
     );

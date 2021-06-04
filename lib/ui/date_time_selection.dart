@@ -14,8 +14,9 @@ class DateTimeSelection extends StatefulWidget {
 }
 
 class _DateTimeSelectionState extends State<DateTimeSelection> {
-  GlobalKey<FormState> _hallBooking2FormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _dateTimeSelectionFormKey = GlobalKey<FormState>();
   var dateFormat = new DateFormat('dd-MM-yyyy');
+  String eventTime = "";
   String currentDate, startTime, endTime;
   Color brTileColor = AppColors.kPrimaryColor;
   Color acTileColor = AppColors.kPrimaryColor;
@@ -94,7 +95,7 @@ class _DateTimeSelectionState extends State<DateTimeSelection> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Form(
-              key: _hallBooking2FormKey,
+              key: _dateTimeSelectionFormKey,
               child: Column(
                 children: [
                   defaultContainer(StringAssets.kTextEventDate),
@@ -171,7 +172,6 @@ class _DateTimeSelectionState extends State<DateTimeSelection> {
                           text: StringAssets.kTextDay,
                           onChange: (value) {
                             setTimeRadioTile(value);
-                            StringAssets.kEventTime = StringAssets.kTextDay;
                           }),
                       CustomRadioListTile(
                           flexFit: FlexFit.loose,
@@ -183,7 +183,6 @@ class _DateTimeSelectionState extends State<DateTimeSelection> {
                           text: StringAssets.kTextNight,
                           onChange: (value) {
                             setTimeRadioTile(value);
-                            StringAssets.kEventTime = StringAssets.kTextNight;
                           }),
                     ],
                   ),
@@ -203,7 +202,6 @@ class _DateTimeSelectionState extends State<DateTimeSelection> {
                             setBridalRoomRadioTile(value);
                             setState(() {
                               isBridalRoom = true;
-                              StringAssets.kEventBRCharges = bridalRoomPrice;
                             });
                           }),
                       CustomRadioListTile(
@@ -243,7 +241,6 @@ class _DateTimeSelectionState extends State<DateTimeSelection> {
                             setACRadioTile(value);
                             setState(() {
                               isAC = true;
-                              StringAssets.kEventACCharges = acPrice;
                             });
                           }),
                       CustomRadioListTile(
@@ -281,7 +278,6 @@ class _DateTimeSelectionState extends State<DateTimeSelection> {
                             setStageDecorationRadioTile(value);
                             setState(() {
                               isDecoration = true;
-                              StringAssets.kEventSDCharges = decorationPrice;
                             });
                           }),
                       CustomRadioListTile(
@@ -331,6 +327,30 @@ class _DateTimeSelectionState extends State<DateTimeSelection> {
           child: RoundedButton(
             text: StringAssets.kTextNext.toUpperCase(),
             press: () {
+              if (etTileValue == 1) {
+                StringAssets.kEventTime = StringAssets.kTextDay;
+              } else {
+                StringAssets.kEventTime = StringAssets.kTextNight;
+              }
+
+              if (brTileValue == 1) {
+                StringAssets.kEventBRCharges = bridalRoomPrice;
+              } else {
+                StringAssets.kEventBRCharges = 0;
+              }
+
+              if (acTileValue == 1) {
+                StringAssets.kEventACCharges = acPrice;
+              } else {
+                StringAssets.kEventACCharges = 0;
+              }
+
+              if (sdTileValue == 1) {
+                StringAssets.kEventSDCharges = decorationPrice;
+              } else {
+                StringAssets.kEventSDCharges = 0;
+              }
+
               Navigator.pushNamed(context, '/hall_booking3');
             },
           )),

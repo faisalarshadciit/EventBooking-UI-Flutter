@@ -1,6 +1,7 @@
 import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/constants/string_assets.dart';
 import 'package:event_book_app/methods/json_method.dart';
+import 'package:event_book_app/methods/toast_methods.dart';
 import 'package:event_book_app/models/custom_menu_model.dart';
 import 'package:event_book_app/ui/receipt_screen.dart';
 import 'package:event_book_app/ui/widgets/colored_text_widget.dart';
@@ -151,9 +152,14 @@ class _CustomMenuSelectionState extends State<CustomMenuSelection> {
           child: RoundedButton(
             text: StringAssets.kTextNext.toUpperCase(),
             press: () {
-              StringAssets.kPerHeadCharges = totalPrice;
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ReceiptPage()));
+              if (_checked.length != 0) {
+                StringAssets.kPerHeadCharges = totalPrice;
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ReceiptPage()));
+              } else {
+                ToastMethod.errorToastMessage(
+                    "Please select at least one item");
+              }
             },
           )),
     );

@@ -71,6 +71,7 @@ class _HallBookingState extends State<HallBooking> {
                         if (value.isEmpty) {
                           return StringAssets.kNameNullError;
                         } else {
+                          StringAssets.kUserName = value;
                           return null;
                         }
                       },
@@ -94,6 +95,7 @@ class _HallBookingState extends State<HallBooking> {
                         if (value.isEmpty) {
                           return StringAssets.kEmailNullError;
                         } else {
+                          StringAssets.kUserEmail = value;
                           return null;
                         }
                       },
@@ -117,6 +119,7 @@ class _HallBookingState extends State<HallBooking> {
                         if (value.isEmpty) {
                           return StringAssets.kPhoneNullError;
                         } else {
+                          StringAssets.kUserPhone = value;
                           return null;
                         }
                       },
