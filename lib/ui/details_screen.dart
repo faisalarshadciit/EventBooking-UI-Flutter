@@ -52,7 +52,7 @@ class _DetailsScreenState extends State<DetailsScreen>
   double _height;
   // endregion
 
-  // region initState & dispose
+  // region initState
   @override
   void initState() {
     super.initState();
@@ -98,13 +98,6 @@ class _DetailsScreenState extends State<DetailsScreen>
     // endregion
 
     tabController = TabController(length: imagesList.length, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    tabController.dispose();
-    super.dispose();
   }
   // endregion
 
@@ -462,8 +455,8 @@ class _DetailsScreenState extends State<DetailsScreen>
         Container(
             child: ListView.builder(
                 itemCount: widget.hallDetails.listHallReviews.length,
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
+                // scrollDirection: Axis.vertical,
+                // shrinkWrap: true,
                 // physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
                   return _buildReviewWidget(

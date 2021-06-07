@@ -126,7 +126,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   icon: Icons.email,
                   type: "email",
                 ),
-                getGenderWidget(true, false),
+                getGenderWidget(false, false),
                 OutlinedInputField(
                   textCapitalization: TextCapitalization.none,
                   textInputType: TextInputType.phone,

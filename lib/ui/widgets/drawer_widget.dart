@@ -6,12 +6,20 @@ import 'package:event_book_app/methods/toast_methods.dart';
 import 'package:event_book_app/shared_preference/SharedPrefs.dart';
 import 'package:flutter/material.dart';
 import 'color_text_widget.dart';
+import 'dart:convert';
+import 'package:event_book_app/storage.dart';
+import 'package:event_book_app/models/user_model.dart';
 
 bool login = false;
 bool logout = false;
+Storage storage = new Storage();
+UserModel user = new UserModel();
+String username = "";
+String email = "";
+bool boolValue = false;
 
 class AppDrawer extends StatefulWidget {
-  const AppDrawer({Key key}) : super(key: key);
+  AppDrawer({Key key}) : super(key: key);
 
   @override
   _AppDrawerState createState() => _AppDrawerState();
@@ -124,18 +132,13 @@ class _AppDrawerState extends State<AppDrawer> {
             height: 10,
           ),
           Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  StringAssets.kLoginUserName,
-                  style: TextStyle(
-                      fontFamily: FontFamily.kFontPoppinsRegular,
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-              ],
+            child: Text(
+              username,
+              style: TextStyle(
+                  fontFamily: FontFamily.kFontPoppinsRegular,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
             ),
           ),
         ],
@@ -149,11 +152,24 @@ class _AppDrawerState extends State<AppDrawer> {
 
   // region CheckUserLogin Method
   checkUserLogin() async {
-    bool boolValue = await SharedPrefs().getBoolValuesSF("login");
-    if (boolValue == true) {
+    bool bValue = await SharedPrefs().getBoolValuesSF("login");
+    if (bValue == true) {
       login = false;
       logout = true;
+
+      storage.readData().then((value) async {
+        if (value != "") {
+          setState(() {
+            user = UserModel.fromJson(json.decode(value));
+            username = user.userName;
+          });
+        } else {
+          user.userId = "123";
+          username = StringAssets.kLoginUserName;
+        }
+      });
     } else {
+      username = StringAssets.kLoginUserName;
       login = true;
       logout = false;
     }

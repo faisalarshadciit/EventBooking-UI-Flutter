@@ -1,3 +1,4 @@
+import 'package:checkbox_grouped/checkbox_grouped.dart';
 import 'package:event_book_app/constants/app_colors.dart';
 import 'package:event_book_app/constants/string_assets.dart';
 import 'package:event_book_app/ui/widgets/default_container.dart';
@@ -14,6 +15,7 @@ class DateTimeSelection extends StatefulWidget {
 }
 
 class _DateTimeSelectionState extends State<DateTimeSelection> {
+  GroupController controller = GroupController();
   GlobalKey<FormState> _dateTimeSelectionFormKey = GlobalKey<FormState>();
   var dateFormat = new DateFormat('dd-MM-yyyy');
   String eventTime = "";

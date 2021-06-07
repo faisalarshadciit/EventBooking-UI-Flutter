@@ -1,4 +1,5 @@
 import 'package:event_book_app/config/screen_size.dart';
+import 'package:event_book_app/constants/app_styles.dart';
 import 'package:event_book_app/constants/string_assets.dart';
 import 'package:event_book_app/methods/toast_methods.dart';
 import 'package:event_book_app/shared_preference/SharedPrefs.dart';
@@ -36,6 +37,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     // region Screen Height & Width
+    bool isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
     SizeConfig().init(context);
     defaultHeight = SizeConfig.screenHeight;
     defaultWidth = SizeConfig.screenWidth;
@@ -70,30 +73,31 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: <Widget>[
             Container(
-                height: 80,
-                child: FutureBuilder(
-                  future: readGetRequestHalls(),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                          itemCount: snapshot.data.length,
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemBuilder: (BuildContext context, int index) {
-                            HallsModel hallsModel = snapshot.data[index];
-                            return _buildCircleHalls(hallsModel);
-                          });
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text("${snapshot.error}"));
-                    }
-                    return Center(
-                      child: Container(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  },
-                )),
+              height: 80,
+              child: FutureBuilder(
+                future: readGetRequestHalls(),
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                        itemCount: snapshot.data.length,
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          HallsModel hallsModel = snapshot.data[index];
+                          return _buildCircleHalls(hallsModel);
+                        });
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text("${snapshot.error}"));
+                  }
+                  return Center(
+                    child: Container(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                },
+              ),
+            ),
             Padding(
               padding: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
               child: Column(
@@ -105,8 +109,9 @@ class _HomePageState extends State<HomePage> {
                           18.0, Colors.black, FontFamily.kFontPoppinsRegular)),
                   SizedBox(height: 10),
                   Container(
-                      height: ScreenSizeResponsive.screenHeight(context,
-                          dividedBy: 3.5),
+                      // height: ScreenSizeResponsive.screenHeight(context,
+                      //     dividedBy: 3.5),
+                      height: 250,
                       child: FutureBuilder(
                         future: readGetRequestHalls(),
                         builder: (BuildContext context,
@@ -166,14 +171,43 @@ class _HomePageState extends State<HomePage> {
                       builder: (BuildContext context,
                           AsyncSnapshot<dynamic> snapshot) {
                         if (snapshot.hasData) {
-                          return ListView.builder(
-                              itemCount: snapshot.data.length,
+                          return GridView.builder(
                               scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemBuilder: (BuildContext context, int index) {
-                                HallsModel hallsModel = snapshot
-                                    .data[snapshot.data.length - index - 1];
-                                return _buildDiscountedHalls(hallsModel);
+                              itemCount: snapshot.data.length,
+                              padding: EdgeInsets.all(1.0),
+                              gridDelegate:
+                                  SliverGridDelegateWithMaxCrossAxisExtent(
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                maxCrossAxisExtent: 250,
+                                childAspectRatio:
+                                    isPortrait ? 3 / 2.5 : 3.5 / 7.5,
+                              ),
+                              itemBuilder: (context, index) {
+                                HallsModel hallsModel = snapshot.data[index];
+                                return Card(
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                        color: AppColors.kPrimaryColorLight,
+                                        width: 4),
+                                    borderRadius: BorderRadius.circular(15.0),
+                                  ),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetailsScreen(
+                                                    hallDetails: hallsModel,
+                                                  )));
+                                    },
+                                    child: Card(
+                                      elevation: 5.0,
+                                      child: _buildAllHalls(hallsModel),
+                                    ),
+                                  ),
+                                );
                               });
                         } else if (snapshot.hasError) {
                           return Center(child: Text("${snapshot.error}"));
@@ -186,6 +220,34 @@ class _HomePageState extends State<HomePage> {
                       },
                     ),
                   ),
+                  // Container(
+                  //   height: ScreenSizeResponsive.screenHeight(context,
+                  //       dividedBy: 4.0),
+                  //   child: FutureBuilder(
+                  //     future: readGetRequestHalls(),
+                  //     builder: (BuildContext context,
+                  //         AsyncSnapshot<dynamic> snapshot) {
+                  //       if (snapshot.hasData) {
+                  //         return ListView.builder(
+                  //             itemCount: snapshot.data.length,
+                  //             scrollDirection: Axis.horizontal,
+                  //             shrinkWrap: true,
+                  //             itemBuilder: (BuildContext context, int index) {
+                  //               HallsModel hallsModel = snapshot
+                  //                   .data[snapshot.data.length - index - 1];
+                  //               return _buildDiscountedHalls(hallsModel);
+                  //             });
+                  //       } else if (snapshot.hasError) {
+                  //         return Center(child: Text("${snapshot.error}"));
+                  //       }
+                  //       return Center(
+                  //         child: Container(
+                  //           child: CircularProgressIndicator(),
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
                   SizedBox(
                     height: 15,
                   ),
@@ -255,17 +317,17 @@ class _HomePageState extends State<HomePage> {
 
   // region Recommended Halls
   Widget _buildRecommendedHalls(HallsModel mHallsModel) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => DetailsScreen(
-                      hallDetails: mHallsModel,
-                    )));
-      },
-      child: Container(
-        width: 180.0,
+    return Container(
+      width: 180.0,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DetailsScreen(
+                        hallDetails: mHallsModel,
+                      )));
+        },
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -278,9 +340,10 @@ class _HomePageState extends State<HomePage> {
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10)),
                 child: Container(
-                    height: ScreenSizeResponsive.screenHeight(context,
-                            dividedBy: 3.0) /
-                        2,
+                    // height: ScreenSizeResponsive.screenHeight(context,
+                    //         dividedBy: 3.0) /
+                    //     1.8,
+                    height: 160,
                     width: _width,
                     child: Image.asset(
                       mHallsModel.imageUrl,
@@ -288,6 +351,7 @@ class _HomePageState extends State<HomePage> {
                     )),
               ),
               Container(
+                height: 80,
                 padding: EdgeInsets.all(5),
                 child: Align(
                     alignment: Alignment.center,
@@ -295,7 +359,7 @@ class _HomePageState extends State<HomePage> {
                       mHallsModel.itemName,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 15,
                           color: AppColors.kPrimaryColor,
                           fontWeight: FontWeight.bold),
                     )),
@@ -307,6 +371,44 @@ class _HomePageState extends State<HomePage> {
     );
   }
   // endregion
+
+  Widget _buildAllHalls(HallsModel mHallsModel) {
+    return Stack(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          child: Container(
+            alignment: Alignment.topCenter,
+            child: Image.asset(
+              mHallsModel.imageUrl,
+              height: double.infinity,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        Container(
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              width: double.infinity,
+              color: AppColors.kPrimaryColor.withOpacity(.35),
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+                child: Text(
+                  mHallsModel.itemName,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: AppColors.kWhiteColor,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
 
   // region Discounted Halls
   Widget _buildDiscountedHalls(HallsModel mHallsModel) {

@@ -67,6 +67,9 @@ class _MenuSelectionState extends State<MenuSelection> {
                                     return InkWell(
                                       onTap: () {
                                         setState(() {
+                                          print("Selected Card = " +
+                                              index.toString());
+
                                           if (selectedCard == index + 1) {
                                             selectedCard = 0;
                                           } else {
@@ -92,6 +95,12 @@ class _MenuSelectionState extends State<MenuSelection> {
 
                                           if (index ==
                                               snapshot.data.length - 1) {
+                                            print("Custom Menu " +
+                                                index.toString() +
+                                                " = " +
+                                                (snapshot.data.length - 1)
+                                                    .toString());
+
                                             selectedCard = 0;
                                             Navigator.push(
                                                 context,
@@ -99,6 +108,15 @@ class _MenuSelectionState extends State<MenuSelection> {
                                                     builder: (context) =>
                                                         CustomMenuSelection()));
                                           } else {
+                                            print(index.toString() +
+                                                " = " +
+                                                (snapshot.data.length - 1)
+                                                    .toString() +
+                                                " -> " +
+                                                menuSelectionModel
+                                                    .itemsList.length
+                                                    .toString());
+
                                             showDialog(
                                                 context: context,
                                                 builder: (_) =>
@@ -227,8 +245,7 @@ class SelectedDealDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(length);
-
+    double maxWidth = MediaQuery.of(context).size.width * 0.7;
     return AlertDialog(
       title: Container(
         decoration: BoxDecoration(),
@@ -239,9 +256,10 @@ class SelectedDealDialog extends StatelessWidget {
           ],
         ),
       ),
-      content: SingleChildScrollView(
-        child: Column(children: [
-          ListView.builder(
+      content: Container(
+        width: double.maxFinite,
+        child: SingleChildScrollView(
+          child: ListView.builder(
               itemCount: length,
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
@@ -290,12 +308,14 @@ class SelectedDealDialog extends StatelessWidget {
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [_buildCheckBoxes(menuModel.itemsList, index)],
+                      children: [
+                        _buildCheckBoxes(menuModel.itemsList, index),
+                      ],
                     ),
                   ],
                 );
-              })
-        ]),
+              }),
+        ),
       ),
       actions: <Widget>[
         TextButton(
@@ -310,7 +330,14 @@ class SelectedDealDialog extends StatelessWidget {
 
   Widget _buildCheckBoxes(List<MenuItemsModel> menuItemsList, int index) {
     return CheckboxGroup(
-        labels: <String>[menuItemsList[index].menuItemName],
+        padding: const EdgeInsets.all(0.0),
+        margin: const EdgeInsets.all(0.0),
+        //labels: <String>[menuItemsList[index].menuItemName],
+        labels: <String>[
+          (menuItemsList[index].menuItemName.length <= 20
+              ? menuItemsList[index].menuItemName
+              : menuItemsList[index].menuItemName.substring(0, 20))
+        ],
         activeColor: AppColors.kPrimaryColor,
         checkColor: Colors.white,
         checked: <String>[menuItemsList[index].menuItemName],
