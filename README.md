@@ -1,4 +1,4 @@
-# event_book_app
+# Event Booking UI - Flutter
 
 A new Flutter application.
 
